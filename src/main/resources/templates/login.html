@@ -1,0 +1,64 @@
+<div th:include="header.html" th:remove="tag"></div>
+<style type="text/css">
+	
+</style>
+<body>
+	<div class="container">
+	  <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+	  		<div class="panel panel-info" >
+	  			<div class="panel-heading">
+                    <div class="panel-title">Inicio de sesión</div>
+                     <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">¿Olvidó su contraseña?</a></div>
+                </div> 
+
+                <div style="padding-top:30px" class="panel-body" >
+
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+				
+				
+					
+					
+					<form class="form-horizontal" th:action="@{/login}" th:object="${user}" method="post">
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label">Email:</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									<input type="text" name="email"  class="form-control" placeholder="Ingresa el email"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label">Contraseña:</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+									<input type="password" name="pass" class="form-control">
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<button class="btn btn-lg btn-primary btn-block" type="submit" id="btn-invitacion">
+								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Iniciar sesión
+							</button>
+						</div>
+
+						<div class="form-group">
+                            <div class="col-md-12 control">
+                                <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+                                            No tengo una cuenta! 
+                                    <a th:href="@{/user/register}" onClick="$('#loginbox').hide(); $('#signupbox').show()">
+                                            Registrarse
+                                    </a>
+                                </div>
+                            </div>
+                        </div>    
+					</form>
+					
+				
+			</div>
+	 </div>
+	</div>
+</body>

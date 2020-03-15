@@ -1,0 +1,40 @@
+<div th:include="header.html" th:remove="tag"></div>
+<body>
+	<div class="container">
+		<div class="row main" style="margin-top: 10px;">
+			<div class="main-login main-center">
+			
+			<form class="" th:action="@{/user/sedninvitation}" th:object="${invitation}" method="post">
+				<div class="form-group">
+					<label for="name" class="cols-sm-2 control-label">Email:</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+							<input type="text" th:field="*{email}" class="form-control" placeholder="Ingresa el email"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="name" class="cols-sm-2 control-label">Perfil:</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+							<select th:field="*{perfil}" class="form-control">
+								<option value=0>Agenda</option>
+								<option value=1>Atención Profesional</option>
+							</select>							
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<button class="btn btn-lg btn-primary btn-block" type="submit" id="btn-invitacion">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Enviar
+					</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
