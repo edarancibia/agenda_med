@@ -29,5 +29,10 @@ public class EventServiceImpl implements EventService {
 	public List<Map<String, Object>> getAllEvents() {
 		return eventRepository.getAllEvents();
 	}
+
+	@Override
+	public List<Map<String, Object>> getEventsByProf(int rut_med) {
+		return eventRepository.getEventsByIdProf(rut_med);
+	}
 	
 }

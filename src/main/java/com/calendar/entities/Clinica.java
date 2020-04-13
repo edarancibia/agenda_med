@@ -13,62 +13,51 @@ public class Clinica {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private Long idCentro;
+	@Column(name="idclinica")
+	private long id;
 	
-	@Column(name="nombre")
-	private String nombre;
+	@Column(name="nombreclinica")
+	private String nombreClinica;
 	
-	@Column(name="direccion")
-	private String direccion;
+	@Column(name="direccionclinica")
+	private String direccionClinica;
 	
-	@Column(name="telefono")
-	private String telefono;
-	
-	@Column(name="email")
-	private String email;
+	@Column(name="telefonoclinica")
+	private String telefonoClinica;
 	
 	@Column(name="pais")
 	private String pais;
 
-	public Long getIdCentro() {
-		return idCentro;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdCentro(Long idCentro) {
-		this.idCentro = idCentro;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getNombreClinica() {
+		return nombreClinica;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombreClinica(String nombreClinica) {
+		this.nombreClinica = nombreClinica;
 	}
 
-	public String getDireccion() {
-		return direccion;
+	public String getDireccionClinica() {
+		return direccionClinica;
 	}
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setDireccionClinica(String direccionClinica) {
+		this.direccionClinica = direccionClinica;
 	}
 
-	public String getTelefono() {
-		return telefono;
+	public String getTelefonoClinica() {
+		return telefonoClinica;
 	}
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setTelefonoClinica(String telefonoClinica) {
+		this.telefonoClinica = telefonoClinica;
 	}
 
 	public String getPais() {
@@ -79,12 +68,11 @@ public class Clinica {
 		this.pais = pais;
 	}
 
-	public Clinica(Long idCentro, String nombre, String direccion, String telefono, String email, String pais) {
-		this.idCentro = idCentro;
-		this.nombre = nombre;
-		this.direccion = direccion;
-		this.telefono = telefono;
-		this.email = email;
+	public Clinica(Long id, String nombreClinica, String direccionClinica, String telefonoClinica, String pais) {
+		this.id = id;
+		this.nombreClinica = nombreClinica;
+		this.direccionClinica = direccionClinica;
+		this.telefonoClinica = telefonoClinica;
 		this.pais = pais;
 	}
 
@@ -94,8 +82,8 @@ public class Clinica {
 
 	@Override
 	public String toString() {
-		return "Clinica [idCentro=" + idCentro + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono="
-				+ telefono + ", email=" + email + ", pais=" + pais + "]";
+		return "Clinica [id=" + id + ", nombreClinica=" + nombreClinica + ", direccionClinica=" + direccionClinica + ", telefono="
+				+ telefonoClinica +  ", pais=" + pais + "]";
 	}
 	
 	

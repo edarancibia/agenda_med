@@ -21,9 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.calendar.constant.ViewConstant;
+import com.calendar.entities.Clinica;
 import com.calendar.entities.Invitation;
 import com.calendar.entities.MailForm;
 import com.calendar.entities.User;
+import com.calendar.entities.UsuarioCentro;
+import com.calendar.impl.ProfesionalServiceImpl;
+import com.calendar.impl.UsuarioCentroServiceImpl;
 import com.calendar.repository.ClinicaJpaRepository;
 import com.calendar.repository.UserJpaRepository;
 import com.calendar.service.ClinicaServiceImpl;
@@ -54,13 +58,25 @@ public class UserController {
 	@Autowired
 	private ClinicaJpaRepository clinicaRepo;
 	
+	@Autowired
+	@Qualifier("profesionalServiceImpl")
+	private ProfesionalServiceImpl profesionalServiceImpl;
+	
+	@Autowired
+	@Qualifier("usuarioCentroServiceImpl")
+	private UsuarioCentroServiceImpl usuarioCentroServiceImpl;
+	
+	@Autowired
+	@Qualifier("clinicaServiveImpl")
+	private ClinicaServiceImpl clinicaServiceImpl;
+	
 	//@Autowired
 	//private BCryptPasswordEncoder passwordEncoder;
 	
 	
 	@GetMapping("/register")
 	public String register(Model model,User user,@RequestParam(name="error",required = false)String error,
-			@RequestParam(name="error",required = false)String errormail){
+			@RequestParam(name="error",required = false)String errormail,Clinica clinica){
 		LOG.info("METHOD: register() --PARAMS: errormail="+ errormail);
 		model.addAttribute("errormail",error);
 		model.addAttribute("error",errormail);
@@ -73,10 +89,11 @@ public class UserController {
 	}
 	
 	@PostMapping("/adduser")
-	public String addUser(@ModelAttribute(name = "user") User user, User clinica,
+	public String addUser(@ModelAttribute(name = "user") User user, Clinica clinica,
 			Model model,@ModelAttribute(name="form") MailForm form,
 			@RequestParam("email") String email,
-			@RequestParam("txtclinica") String txtclinica,@RequestParam("txtDireccion") String txtDireccion){
+			@RequestParam("perfil") int perfil,
+			@RequestParam("nombreClinica") String nombreClinica,@RequestParam("direccionClinica") String direccionClinica){
 		
 		if(null != userService.findUserByEmail(email)){
 			return "redirect:/user/register?errormail";
@@ -84,15 +101,29 @@ public class UserController {
 		
 			//user.setPass(passwordEncoder.encode(user.getPass()));
 			if(null != userService.addUser(user)){
+				if(user.getPerfil() == 0) {
+					LOG.info("no es profesional");
+					
+				}else {
+					LOG.info("es profesional");
+					LOG.info("clinica:" + clinica);
+					
+				}
+				//DEBE PREGUNTAR QUE PERFIL TIENE,SI ES PROFESIONAL DEBE GUARDAR EN LA TABLA DEL MISMO NOMBRE
 				model.addAttribute("result", 1);
 				
 				//String message = form.getBody() +"\n\n Datos de contacto: " + "\nNombre: " + form.getName() + "\nE-mail: " + form.getMail();
 		        String message = "Bienvenido a Agenda Online, para inciar sesión haz click aqui: \n" + "http://localhost:8080/calendar";
 				String subject = "Bienvenido";
-		        mailService.sendMail("erwin2211@hotmail.com",email,subject,message);
-		        
-		        LOG.info("datos clinica: "+ txtclinica+" "+txtDireccion);
-				clinicaRepo.addCmed(txtclinica, txtDireccion);
+		        //mailService.sendMail("erwin2211@hotmail.com",email,subject,message);
+				
+				clinicaServiceImpl.addClinica(clinica);
+				
+				//long idCentro = clinicaNew.getId();
+				//long idUsuario = user.getIdusuario();
+				LOG.info("id usuario:" + user.getIdusuario() +' '+ "idCentro:" + clinica.getId());
+				usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), clinica.getId());
+				
 		        return "register";
 			}else {
 				model.addAttribute("result", 0);
@@ -120,4 +151,10 @@ public class UserController {
 
 		return "invitation";
 	}
+	
+	@GetMapping("/profesional")
+	public String profesional() {
+		return "profesional";
+	}
+	
 }

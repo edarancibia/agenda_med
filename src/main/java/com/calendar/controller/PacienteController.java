@@ -37,7 +37,7 @@ public class PacienteController {
 		Paciente paciente = pacienteService.findByDni(rutnum);
         if (paciente == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
-            // You many decide to return HttpStatus.NOT_FOUND
+            // You may decide to return HttpStatus.NOT_FOUND
         }
         return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
     }

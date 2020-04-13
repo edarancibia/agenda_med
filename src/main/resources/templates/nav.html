@@ -19,7 +19,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Configurar Centro</a></li>
-                  <li><a href="#">Agregar profesional</a></li>
+                  <li><a th:href="@{/user/profesional}">Agregar profesional</a></li>
                   <li><a th:href="@{/user/invitation}">Invitar alguien a mi cl�nica</a></li>
                 </ul>
               </li>
@@ -35,11 +35,12 @@
       <!--SESION EXPIRADA-->
 
   <div style="width: max;">
+
     <div style="width: 150px;float:right;">
       <a href="#" class="logout">Cerrar sesión <i class="fa fa-sign-out" aria-hidden="true"></i></a>
     </div>
 
       <div style="width: 300px;float:right;">
-      <p class="fuente"><!-- nombre usuario--></p>
+      <p class="fuente"><span th:text="${model}">Usuario</span></p>
     </div>
   </div>

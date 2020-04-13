@@ -1,0 +1,68 @@
+<div th:include="header.html" th:remove="tag"></div>
+<div th:include="nav.html" th:remove="tag"></div>
+<body>
+	<div class="container">
+		<div id="loginbox" style="margin-top:10px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+                    <div class="panel-title">Registrar un profesional</div> 
+            	</div>
+            	<div style="padding-top:30px" class="panel-body">
+            		<div class="row">
+				        <div class="col-md-12">
+				    		
+				            <div id="custom-search-input" >
+				                <div class="input-group col-md-12">
+				                    <input type="text" class="form-control input-lg" placeholder="Buscar email" id="txtBuscaProf" name="txtBuscaProf" />
+				                    <span class="input-group-btn">
+				                        <button class="btn btn-info btn-lg" type="button" id="btnBuscaEmail">
+				                            <i class="glyphicon glyphicon-search"></i>
+				                        </button>
+				                    </span>
+				                </div>
+				            </div>
+				            <br>
+
+				            <div id="div-datosProf">
+					            <div class="form-group">
+									<label for="name" class="cols-sm-2 control-label">Nombre</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+											<input type="text" id="txtnombreProf" name="txtnombreProf" class="form-control" readonly="true" />
+										</div>
+										<input type="hidden" id="txtHiddenIdUsuario">
+										<input type="hidden" id="txtHiddenApellido">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="name" class="cols-sm-2 control-label">Apellido</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+											<input type="text" id="txtapellidoProf" name="txtapellidoProf" class="form-control" readonly="true" />
+										</div>
+									</div>
+								</div>
+
+								<button class="btn btn-lg btn-primary btn-block" type="button" id="btnOkProf">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Aceptar
+								</button>
+
+								<button class="btn btn-lg btn-danger btn-block" type="button" id="btnCancelProf">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Cancelar
+								</button>
+							</div>
+				        </div>
+					</div>
+            		
+            	</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$('#txtbuscaemail').focus();
+</script>
+</html>

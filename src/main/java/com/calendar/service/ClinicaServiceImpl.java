@@ -13,11 +13,10 @@ public class ClinicaServiceImpl implements ClinicaService {
 	@Autowired
 	@Qualifier("clinicaJpaRepository")
 	private ClinicaJpaRepository clinicaRepository;
-	
+
 	@Override
 	public Clinica addClinica(Clinica clinica) {
-		Clinica clinica_ = clinicaRepository.save(clinica);
-		return clinica_;
+		return clinicaRepository.save(clinica);
 	}
 
 }

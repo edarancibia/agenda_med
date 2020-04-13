@@ -9,14 +9,14 @@
 
                 <div style="padding-top:30px" class="panel-body" >
 			
-					 <form class="" th:action="@{/user/adduser}" th:object="${user}" method="post">
+					 <form class="" th:action="@{/user/adduser}" method="post">
 						
 						  <div class="form-group">
 							<label for="name" class="cols-sm-2 control-label">Nombre</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									<input type="text" id="txt_reg_nombre"  class="form-control" th:field="*{nombre}"  placeholder="Ingresa tu nombre"/>
+									<input type="text" id="txt_reg_nombre" name="nombre" class="form-control" th:field="*{user.nombre}"  placeholder="Ingresa tu nombre"/>
 								</div>
 							</div>
 						</div>
@@ -26,7 +26,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									<input type="text" th:field="*{apat}"  class="form-control" name="name" id="txt_reg_apat"  placeholder="Ingresa tu apellido"/>
+									<input type="text" th:field="*{user.apat}"  class="form-control" name="a_pat" id="txt_reg_apat"  placeholder="Ingresa tu apellido"/>
 								</div>
 							</div>
 						</div>
@@ -36,7 +36,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									<input type="text" th:field="*{amat}"  class="form-control" name="name" id="txt_reg_amat"  placeholder="Ingresa tu apellido"/>
+									<input type="text" th:field="*{user.amat}"  class="form-control" name="a_mat" id="txt_reg_amat"  placeholder="Ingresa tu apellido"/>
 								</div>
 							</div>
 						</div>
@@ -46,7 +46,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="far fa-envelope"></i></span>
-									<input type="email" th:field="*{email}"  pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" name="email" id="txt_reg_email"  placeholder="Ingresa tu Email"/>
+									<input type="email" th:field="*{user.email}"  pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" name="email" id="txt_reg_email"  placeholder="Ingresa tu Email"/>
 								</div>
 							</div>
 						</div>
@@ -67,7 +67,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-									<input type="password" th:field="*{pass}" class="form-control" name="password" id="txt_reg_pass"  placeholder="Ingresa tu Password"/>
+									<input type="password" th:field="*{user.pass}" class="form-control" name="password" id="txt_reg_pass"  placeholder="Ingresa tu Password"/>
 								</div>
 							</div>
 						</div>
@@ -87,7 +87,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-h-square" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="txtclinica" id="txtclinica"  placeholder="Nombre de la Clínica"/>
+									<input type="text" class="form-control" name="nombreClinica" id="nombreClinica"  placeholder="Nombre de la Clínica"/>
 								</div>
 							</div>
 						</div>
@@ -97,7 +97,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="txtDireccion" id="txtDireccion"  placeholder="Dirección"/>
+									<input type="text" class="form-control"  name="direccionClinica" id="direccionClinica" placeholder="Dirección"/>
 								</div>
 							</div>
 						</div>
@@ -107,7 +107,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user-md" aria-hidden="true"></i></span>
-									<select id="cboPefilUser" th:field="*{perfil}"  class="form-control">
+									<select id="cboPefilUser" th:field="*{user.perfil}"  class="form-control">
 										<option value="0">Agenda</option>
 										<option value="1">Atención profesional</option>
 									</select>

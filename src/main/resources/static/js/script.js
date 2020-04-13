@@ -168,4 +168,42 @@ $(document).ready(function(){
 		});
 	})
 
+	//SECCION PROFESIONAL - - - - - - 
+
+	$("#div-datosProf").hide();
+
+	//BUSCA EMAIL
+	$('#btnBuscaEmail').on('click',function(){
+		var email = $('#txtBuscaProf').val();
+
+		$.ajax({
+			type: 'get',
+			url: "/profesional/verificar/"+email,
+			data: {email: email},
+			dataType: "json",
+			success: function(d){
+				if(d != ''){
+					$("#div-datosProf").show();
+					console.log(d);
+					$('#txtnombreProf').val(d.nombre);
+					$('#txtapellidoProf').val(d.apat+' '+d.amat);
+					$('#txtHiddenIdUsuario').val(d.idUsuario);
+				}
+			},
+			error: function(jqXHR,xhr, status, text){
+				if (jqXHR.status == 404){
+					alert('Usuario no encontrado');
+					$('#txtnombreProf').val('');
+					$('#txtapellidoProf').val('');
+				}
+				
+			}
+		});
+	});
+
+	//guarda nuevo profesional
+	$('#btnOkProf').on('click', function(){
+
+	})
+
 });
