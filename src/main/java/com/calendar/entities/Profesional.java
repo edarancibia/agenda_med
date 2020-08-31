@@ -14,7 +14,7 @@ public class Profesional {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idprofesional")
-	private long idprofesional;
+	private Long idProfesional;
 	
 	@Column(name = "fk_idUsuario")
 	private int fk_idUsuario;
@@ -46,8 +46,8 @@ public class Profesional {
 	@Column(name = "email")
 	private String email;
 
-	public long getIdprofesional() {
-		return idprofesional;
+	public Long getIdProfesional() {
+		return idProfesional;
 	}
 
 	public String getEmail() {
@@ -58,8 +58,8 @@ public class Profesional {
 		this.email = email;
 	}
 
-	public void setIdprofesional(long idprofesional) {
-		this.idprofesional = idprofesional;
+	public void setIdProfesional(Long idProfesional) {
+		this.idProfesional = idProfesional;
 	}
 
 	public int getfk_idUsuario() {
@@ -135,10 +135,10 @@ public class Profesional {
 	}
 
 
-	public Profesional(long idprofesional, int fk_idUsuario, String nombre, String a_pat, String a_mat, String direccion,
+	public Profesional(Long idProfesional, int fk_idUsuario, String nombre, String a_pat, String a_mat, String direccion,
 			String telefono, int cod_esp, int tipo_ficha, int cod_centro, String email) {
 		super();
-		this.idprofesional = idprofesional;
+		this.idProfesional = idProfesional;
 		this.fk_idUsuario = fk_idUsuario;
 		this.nombre = nombre;
 		this.a_pat = a_pat;
@@ -157,7 +157,7 @@ public class Profesional {
 
 	@Override
 	public String toString() {
-		return "Profesional [idprofesional=" + idprofesional + ", fk_idUsuario=" + fk_idUsuario + ", nombre=" + nombre + ", a_pat="
+		return "Profesional [idProfesional=" + idProfesional + ", fk_idUsuario=" + fk_idUsuario + ", nombre=" + nombre + ", a_pat="
 				+ a_pat + ", a_mat=" + a_mat + ", direccion=" + direccion + ", telefono=" + telefono + ", cod_esp="
 				+ cod_esp + ", tipo_ficha=" + tipo_ficha + ", cod_centro=" + cod_centro + ", email=" + email + "]";
 	}	

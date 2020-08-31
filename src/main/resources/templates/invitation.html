@@ -1,13 +1,14 @@
 <div th:include="header.html" th:remove="tag"></div>
+<div th:include="nav.html" th:remove="tag"></div>
 <body>
 	<div class="container">
-		<div class="row main" style="margin-top: 10px;">
+		<div class="row col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-2" style="margin-top: 10px;">
 			<div class="main-login main-center">
 			
 			<form class="" th:action="@{/user/sedninvitation}" th:object="${invitation}" method="post">
 				<div class="form-group">
 					<label for="name" class="cols-sm-2 control-label">Email:</label>
-					<div class="cols-sm-10">
+					<div class="cols-sm-6">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
 							<input type="text" th:field="*{email}" class="form-control" placeholder="Ingresa el email"/>
@@ -17,7 +18,7 @@
 				
 				<div class="form-group">
 					<label for="name" class="cols-sm-2 control-label">Perfil:</label>
-					<div class="cols-sm-10">
+					<div class="cols-sm-6">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
 							<select th:field="*{perfil}" class="form-control">

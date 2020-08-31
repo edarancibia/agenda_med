@@ -1,6 +1,7 @@
 package com.calendar.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -33,6 +34,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByEmailAndPass(String email, String pass) {
 		return userRepository.findByEmailAndPass(email, pass);
+	}
+
+	@Override
+	public List<Map<String, Object>> getUserProfesionals(int idCentro) {
+		return userRepository.getUserProfesionals(idCentro);
 	}
 
 	

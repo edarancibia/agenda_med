@@ -1,5 +1,8 @@
 package com.calendar.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,16 @@ public class ProfesionalServiceImpl implements ProfesionalService {
 	@Override
 	public Profesional findByEmail(String email) {
 		return profesionalRepository.findByEmail(email);
+	}
+
+	@Override
+	public List<Map<String, Object>> getProfByCentro(int idCentro) {
+		return profesionalRepository.getProfByCentro(idCentro);
+	}
+
+	@Override
+	public Profesional findProfesionalByIdProfesional(Long idProfesional) {
+		return profesionalRepository.findProfesionalByIdProfesional(idProfesional);
 	}
 
 }

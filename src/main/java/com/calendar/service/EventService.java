@@ -12,4 +12,5 @@ public interface EventService {
 	public abstract Events2 addEvent(Events2 event);
 	public abstract List<Map<String, Object>> getAllEvents();
 	public abstract List<Map<String, Object>> getEventsByProf(int rut_med);
+	public abstract Events2 findEvents2ById(Long id);
 }

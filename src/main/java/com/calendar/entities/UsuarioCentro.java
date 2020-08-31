@@ -13,56 +13,53 @@ public class UsuarioCentro {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idUsuarioCentro;
+	@Column(name = "id")
+	private long id;
 	
 	@Column(name = "idUsuario")
-	private long fk_idUsuario;
+	private long idUsuario;
 	
 	@Column(name = "idCentro")
-	private long fk_idCentro;
+	private long idCentro;
 
-	public long getIdUsuarioCentro() {
-		return idUsuarioCentro;
+	public long getId() {
+		return id;
 	}
 
-	public void setIdUsuarioCentro(long idUsuarioCentro) {
-		this.idUsuarioCentro = idUsuarioCentro;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public long getFk_idUsuario() {
-		return fk_idUsuario;
+	public long getIdUsuario() {
+		return idUsuario;
 	}
 
-	public void setFk_idUsuario(long fk_idUsuario) {
-		this.fk_idUsuario = fk_idUsuario;
+	public void setIdUsuario(long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
-	public long getFk_idCentro() {
-		return fk_idCentro;
+	public long getIdCentro() {
+		return idCentro;
 	}
 
-	public void setFk_idCentro(long fk_idCentro) {
-		this.fk_idCentro = fk_idCentro;
+	public void setIdCentro(long idCentro) {
+		this.idCentro = idCentro;
 	}
 
-	public UsuarioCentro(long idUsuarioCentro, long fk_idUsuario, long fk_idCentro) {
-		
-		this.idUsuarioCentro = idUsuarioCentro;
-		this.fk_idUsuario = fk_idUsuario;
-		this.fk_idCentro = fk_idCentro;
+	public UsuarioCentro(long id, long idUsuario, long idCentro) {
+		this.id = id;
+		this.idUsuario = idUsuario;
+		this.idCentro = idCentro;
 	}
 
 	public UsuarioCentro() {
-		
+
 	}
 
 	@Override
 	public String toString() {
-		return "UsuarioCentro [idUsuarioCentro=" + idUsuarioCentro + ", fk_idUsuario=" + fk_idUsuario + ", fk_idCentro="
-				+ fk_idCentro + "]";
+		return "UsuarioCentro [id=" + id + ", idUsuario=" + idUsuario + ", idCentro="
+				+ idCentro + "]";
 	}
-	
-	
-	
 	
 }

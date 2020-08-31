@@ -18,4 +18,9 @@ public class UsuarioCentroServiceImpl implements UsuarioCentroService {
 		 usuarioCentroRepo.addUsuarioCentro(idUsuario, idCentro);
 	}
 
+	@Override
+	public UsuarioCentro findByIdUsuario(long idUsuario) {
+		return usuarioCentroRepo.findByIdUsuario(idUsuario);
+	}
+
 }

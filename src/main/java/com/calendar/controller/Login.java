@@ -1,11 +1,15 @@
 package com.calendar.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.calendar.entities.User;
@@ -21,18 +25,14 @@ public class Login {
 	/*@GetMapping("/")
 	public String loginForm(User user) {
 		return "login";
-	}
-	
-	@PostMapping("/login")
-	public String login(@ModelAttribute(name="user") User user,
-			@RequestParam("email") String email,
-			@RequestParam("password") String pass) {
-		
-		if(null != userService.findByEmailAndPass(email, pass)) {
-			return "calendar";
-		}else {
-			return "login";
-		}
-	
 	}*/
+	
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request) {
+	    HttpSession session = request.getSession(false);
+	    if (session != null) {
+	        session.invalidate();
+	    }
+	    return "redirect:/";  //Where you go after logout here.
+	}
 }

@@ -17,4 +17,6 @@ public interface UsuarioCentroRepository extends JpaRepository<UsuarioCentro, Lo
 	@Modifying(clearAutomatically = true)
 	@Query(value="insert into usuario_centro (idUsuario,idCentro) values(:idUsuario,:idCentro)", nativeQuery=true)
 	void addUsuarioCentro(@Param("idUsuario")long idUsuario,@Param("idCentro") long idCentro);
+	
+	public abstract UsuarioCentro findByIdUsuario(long idUsuario);
 }

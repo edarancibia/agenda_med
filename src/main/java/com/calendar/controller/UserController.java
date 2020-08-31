@@ -2,6 +2,7 @@ package com.calendar.controller;
 
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
@@ -84,7 +85,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/invitation")
-	public String invitacion(Invitation invitation) {
+	public String invitacion(Invitation invitation, HttpSession session, Model model) {
+		model.addAttribute("activeUser",session.getAttribute("username"));
 		return "invitation";
 	}
 	

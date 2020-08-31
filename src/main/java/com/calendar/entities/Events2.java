@@ -29,7 +29,7 @@ public class Events2 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private long id;
+	private Long id;
 	
 	@Column(name="start")
 	@JsonProperty("start")
@@ -46,9 +46,11 @@ public class Events2 {
 	@Column(name="rut_num")
 	private int rut_num;
 	
-	/*@ManyToOne(optional=true, fetch=FetchType.LAZY)
-	@JoinColumn(name="dni")
-	private Paciente paciente;*/
+	@Column(name = "rut_med")
+	private int rut_med;
+	
+	@Column(name = "estado")
+	private int estado;
 	
 	public int getRut_num() {
 		return rut_num;
@@ -58,11 +60,11 @@ public class Events2 {
 		this.rut_num = rut_num;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -90,15 +92,30 @@ public class Events2 {
 		this.description = description;
 	}
 
-	
+	public int getRut_med() {
+		return rut_med;
+	}
 
-	public Events2(long id, String start, String end, String description, int rut_num) {
+	public void setRut_med(int rut_med) {
+		this.rut_med = rut_med;
+	}	
+
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+	public Events2(Long id, String start, String end, String description, int rut_num, int rut_med, int estado) {
 		this.id = id;
 		this.start = start;
 		this.end = end;
 		this.description = description;
 		this.rut_num = rut_num;
-		
+		this.rut_med = rut_med;
+		this.estado = estado;
 	}
 
 	public Events2() {
@@ -108,8 +125,7 @@ public class Events2 {
 	@Override
 	public String toString() {
 		return "Events2 [id=" + id + ", start=" + start + ", end=" + end + ", description=" + description + ", rut_num="
-				+ rut_num + "]";
+				+ rut_num + ", rut_med=" + rut_med + ", estado=" + estado + "]";
 	}
-	
 	
 }

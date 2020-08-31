@@ -2,13 +2,11 @@ package com.calendar.service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.calendar.entities.Event;
 import com.calendar.entities.Events2;
 import com.calendar.repository.EventJpaRepository;
 
@@ -33,6 +31,11 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public List<Map<String, Object>> getEventsByProf(int rut_med) {
 		return eventRepository.getEventsByIdProf(rut_med);
+	}
+
+	@Override
+	public Events2 findEvents2ById(Long id) {
+		return eventRepository.findEvents2ById(id);
 	}
 	
 }
