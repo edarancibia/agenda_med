@@ -15,14 +15,13 @@ public class PacienteServiceImpl implements PacienteService {
 	private PacienteJpaRepository pacienteRepository;
 
 	@Override
-	public Paciente findByDni(int rutnum) {
-		
-		return pacienteRepository.findByDni(rutnum);
+	public Paciente addPaciente(Paciente paciente) {
+		return pacienteRepository.save(paciente);
 	}
 
 	@Override
-	public Paciente addPaciente(Paciente paciente) {
-		return pacienteRepository.save(paciente);
+	public Paciente getByRut(int rutnum) {
+		return pacienteRepository.getByRut(rutnum);
 	}
 
 

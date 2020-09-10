@@ -19,26 +19,19 @@
 <div th:include="header.html" th:remove="tag"></div>
 <div th:include="nav.html" th:remove="tag"></div>
 <body>
-	<!--<div id='calendar' class="col-xs-9" th:id="calendar"></div>-->
 	<div class="container-fluid">
- 
-      <div class="row col-xs-12">
-          <div class="col-xs-3" id="datepicker">
+    
+      <div style="margin-top:10px;" class="mainbox col-md-9 col-md-offset-2 col-sm-10 col-sm-offset-2">
             
-            <input type="hidden" id="txtTipoUsuario" th:value=${tipoUsuario}>
-            <label>Profesional:</label>
-            <select id="cboProfesional" class="form-control">
-              
-            </select>
-            <br>
+        <input type="hidden" id="txtTipoUsuario" th:value=${tipoUsuario}>
 
-            <input type="hidden" name="txtRutmedHidden" id="txtRutmedHidden" value=''>
-          </div>
+        <input type="hidden" name="txtRutmedHidden" id="txtRutmedHidden" value=''>
         
     <div class="col-xs-9" id='calendar'>
       
     </div>
     </div>
+	</div>
 
 <div class="modal fade" id="modalNew">
           <div class="modal-dialog" role="document">
@@ -164,15 +157,8 @@
   
     var base_url = 'http://localhost:8080/';
     var idCentro = 11;
-    llenaCboProfesionales();
     
     $('#calendar').fullCalendar({
-          
-          header: {
-              left: 'prev,next today',
-              center: 'title',
-              right: 'month,agendaWeek,agendaDay'
-            },
   
           lang: 'es',
   
@@ -190,12 +176,8 @@
               },
 
                 editable: true,
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                defaultView: 'agendaWeek',
+
+                defaultView: 'agendaDay',
                 height: 500,
                 slotMinutes: 15,
   
@@ -258,9 +240,12 @@
 
       $('.fc-event-content, .fc-event-time, .fc-event-title').css('font-size', '12px');
 
-      function getEvents(cboProfesional){
+      
+
+        var idProfesional = $('#txtIdProf').val();
+
         $.ajax({
-          url: base_url +'alleventsByProf/'+cboProfesional,
+          url: base_url +'alleventsByProf/'+idProfesional,
           type: 'GET',
           succes: function(data){
             $.each(data, function(index, event){
@@ -271,37 +256,19 @@
             alert('there was an error while fetching events!');
           }
         });
-      }   
+       
 
     $("#modalNew").on('show.bs.modal', function (event) {    // remove the event listeners when the dialog is dismissed
           $("#txtPaciente").val("");
           $("#txtNomPac").val("");
           $("#txtobs").val("");
     });
-  
-      function llenaCboProfesionales(){
-        $.ajax({
-          type: 'get',
-          url: base_url + 'profesional/get-by-centro/'+idCentro,
-          success: function(data){
-            $('#cboProfesional').empty();
-            $.each(data,function(key, registro) {
-              $('#cboProfesional').append('<option value="0" selected disabled hidden>Seleccione</option>'+'<option value='+registro.id+'>'+registro.prof+'</option>');
-            });        
-          },
-        });
-      }
 
-    $('#cboProfesional').change(function(e){
-      $('#calendar').fullCalendar ('removeEvents');  
-          e.stopImmediatePropagation(); 
-          var idProfesional = $('#cboProfesional').val();
-            // alert(packageid);
-              $('#calendar').fullCalendar('removeEvents');
-
-              $('#calendar').fullCalendar('addEventSource', base_url + 'alleventsByProf/'+idProfesional); 
-              $('.fc-event-content, .fc-event-time, .fc-event-title').css('font-size', '12px');
-    });
+    /*function getEvents(){
+        var idProfesional = $('#txtIdProf').val();
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('addEventSource', base_url + 'alleventsByProf/'+idProfesional);
+    }*/
     
     	//BUSCAR PACIENTE POR RUT AL PRESIONAR BOTON BUSCAR
     //$('#txtPaciente').keypress(function(e) {

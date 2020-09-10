@@ -38,4 +38,9 @@ public class ProfesionalServiceImpl implements ProfesionalService {
 		return profesionalRepository.findProfesionalByIdProfesional(idProfesional);
 	}
 
+	@Override
+	public Profesional findProfesionalByFkIdUsuario(int idUsuario) {
+		return profesionalRepository.findProfesionalByFkIdUsuario(idUsuario);
+	}
+
 }

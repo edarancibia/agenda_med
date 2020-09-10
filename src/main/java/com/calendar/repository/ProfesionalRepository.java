@@ -13,12 +13,6 @@ import org.springframework.data.repository.query.Param;
 import com.calendar.entities.Profesional;
 
 public interface ProfesionalRepository extends JpaRepository<Profesional, Long> {
-
-	/*@Transactional
-	@Modifying
-	@Query(value="insert into profesional (rut,nombre,a_pat,a_mat,direccion,email,cod_centro) "
-			+ "values(:rut,:nombre,:a_pat,:a_mat,:cod_centro)", nativeQuery=true)
-	void addProfesional(@Param("txtclinica")String txtclinica,@Param("txtDireccion") String txtDireccion);*/
 	
 	public abstract Profesional findByEmail(String email);
 	
@@ -30,4 +24,6 @@ public interface ProfesionalRepository extends JpaRepository<Profesional, Long> 
 	List<Map<String, Object>> getProfByCentro(int idCentro);
 	
 	public abstract Profesional findProfesionalByIdProfesional(Long idProfesional);
+	
+	public abstract Profesional findProfesionalByFkIdUsuario(int idUsuario);
 }

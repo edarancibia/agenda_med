@@ -1,60 +1,67 @@
 <div th:include="header.html" th:remove="tag"></div>
 <div th:include="nav.html" th:remove="tag"></div>
+<div class="container">
 <div class="col-md-12">
     <div class="panel panel-info margen">
-        <div class="panel-heading fuente">Nombre del paciente</div>
+        <div class="panel-heading fuente"><label id="lblnombre"></label></div>
         <div class="panel-body" style="padding-top: 0px;">
             <div class="row">
                 <table class="table">
                     <tr>
-                        <td><strong>Rut:</strong> </td>
-    
+                        <td>Rut:
+                            <input type="text" th:value="${rut_pac}" class="form-control" id="txtRutFicha">
+                        </td>
                         <td><strong>Fecha Nac: </strong>
+                            <input type="text" class="form-control" id="txtFnacFicha">
                         </td>
     
                         <td><strong>Edad:</strong>
-                            
+                            <input type="text" class="form-control" id="txtEdadFicha">
                         </td>
     
                         <td><strong>Sexo:</strong>
+                            <input type="text" class="form-control" id="txtSexoFicha">
                             </td>
     
-                        <td></td>
+                        <td> Atenciones anteriores</td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<div class="row col-md-12">
+
 <table class="table">
     <tr>
         <td>
             <label for="txtAntePed">Antecedentes médicos</label>
-            <textarea class="form-control" id="txtAntePed"></textarea>
+            <textarea class="form-control" id="txtAntecedentes"></textarea>
         </td>
         <td>
             <label for="txtMotPed">Motivo consulta</label>
-            <textarea class="form-control" id="txtMotPed"></textarea>
+            <textarea class="form-control" id="txtMotivo"></textarea>
         </td>
     </tr>
     <tr>
         <td>
             <label for="txtExaPed">Exámen físico</label>
-            <textarea class="form-control" id="txtExaPed"></textarea>
+            <textarea class="form-control" id="txtExamen"></textarea>
         </td>
         <td>
             <label for="txtDiagPed">Diagnóstico principal</label>
-            <textarea class="form-control" id="txtDiagPed"></textarea>
+            <textarea class="form-control" id="txtDiagnostico"></textarea>
         </td>
     </tr>
     <tr>
         <td>
             <label for="txtIndiPed">Indicaciones generales</label>
-            <textarea class="form-control" id="txtIndiPed"></textarea>
+            <textarea class="form-control" id="txtIndicaciones"></textarea>
         </td>
         <td>
             <label for="txtSolExPed">Solicitud de exámenes</label>
-            <textarea class="form-control" id="txtSolExPed"></textarea>
+            <textarea class="form-control" id="txtSolEx"></textarea>
         </td>
     </tr>
     <tr>
@@ -63,8 +70,9 @@
         </td>
     </tr>
 </table>
-</div>
 
+
+</div>
 </div>
 
 <!-- set up the modal to start hidden and fade in and out -->
@@ -86,4 +94,43 @@
 </div>
 </div>
 </body>
+<script>
+    $(document).ready(function(){
+        var rutnum = $('#txtRutFicha').val();
+        var base_url = 'http://localhost:8080/';
+
+        $.ajax({
+            type: 'get',
+            url: base_url +'paciente/'+rutnum,
+            success: function(data){
+                console.log(data);
+                $('#lblnombre').text(data.a_pat + ' '+ data.a_mat + ' '+ data.nombre);
+                $('#txtFnacFicha').val(data.fecha_nac);
+            },
+            error: function(){
+                console.log('error al traer datos del paciente');
+            }
+        });
+
+        getFichasAnteriores();
+
+        function getFichasAnteriores(){
+            $.ajax({
+                type:'get',
+                url: base_url + 'ficha/get-by-pac/'+rutnum,
+                success: function(data){
+                    console.log(data);
+                    $.each(data, function( index, value ) {
+                        //alert( index + ": " + value );
+                        console.log(value.fecha);
+                        "<a class='list-group-item list-group-item-action' id='list-profile-list' data-toggle='list' href='#' role='tab' aria-controls='profile' value="+value.fecha+"></a>";
+                    });     
+                },
+                error: function(){
+                    congole.log('error al traer fichas');
+                }
+            });
+        }
+    });
+</script>
 </html>

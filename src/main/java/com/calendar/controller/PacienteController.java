@@ -23,7 +23,7 @@ import com.calendar.entities.Paciente;
 import com.calendar.service.PacienteService;
 import com.calendar.service.PacienteServiceImpl;
 
-@Controller
+@RestController
 public class PacienteController {
 	
 	private static final Log LOG = LogFactory.getLog(PacienteController.class);
@@ -34,7 +34,7 @@ public class PacienteController {
 	
 	@RequestMapping(value = "/paciente/{rutnum}", method = RequestMethod.GET, headers = "Accept=application/json")
     public ResponseEntity<Paciente> findByRut(@PathVariable("rutnum") int rutnum){
-		Paciente paciente = pacienteService.findByDni(rutnum);
+		Paciente paciente = pacienteService.getByRut(rutnum);
         if (paciente == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
             // You may decide to return HttpStatus.NOT_FOUND
@@ -42,11 +42,6 @@ public class PacienteController {
         return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
     }
 	
-	/*@RequestMapping(value="addpaciente", method=RequestMethod.POST)
-	public void addPaciente(@RequestBody Paciente paciente){
-		LOG.info("datos:"+ paciente );
-		pacienteService.addPaciente(paciente);
-	}*/
 	
 	@RequestMapping(value="addpaciente", method=RequestMethod.POST)
 	public ResponseEntity<Paciente> addPaciente(@RequestBody Paciente paciente){

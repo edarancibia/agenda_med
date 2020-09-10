@@ -4,6 +4,6 @@ import com.calendar.entities.Paciente;
 
 public interface PacienteService {
 
-	public abstract Paciente findByDni (int rutnum);
+	public abstract Paciente getByRut(int rutnum);
 	public abstract Paciente addPaciente(Paciente paciente);
 }

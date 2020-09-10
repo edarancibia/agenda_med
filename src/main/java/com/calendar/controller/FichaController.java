@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.calendar.entities.Ficha;
 import com.calendar.impl.FichaServiceImpl;
+import com.calendar.impl.ProfesionalServiceImpl;
 
 @RestController
 @RequestMapping("/ficha")
@@ -27,18 +28,26 @@ public class FichaController {
 	@Autowired
 	public FichaServiceImpl fichaService;
 	
-	@GetMapping("/")
-	public ModelAndView index(HttpSession session, Model model) {
+	@GetMapping("/{rut_num}")
+	public ModelAndView index(HttpSession session, Model model, @PathVariable int rut_num) {
 		ModelAndView modelAndView = new ModelAndView("ficha");
 		model.addAttribute("activeUser",session.getAttribute("username"));
+		model.addAttribute("activePerfil",session.getAttribute("tipoUser"));
+		model.addAttribute("activeProf",session.getAttribute("idProfesional"));
+		model.addAttribute("rut_pac",rut_num);
 		return modelAndView;
 	}
 	
 	//SAVE
 	@PostMapping("/save")
 	public ResponseEntity<?> addFicha(@RequestBody Ficha ficha){
-		ficha = fichaService.addFicha(ficha);
-		return ResponseEntity.status(HttpStatus.CREATED).body(ficha);
+		if(ficha != null) {
+			ficha = fichaService.addFicha(ficha);
+			return ResponseEntity.status(HttpStatus.CREATED).body(ficha);	
+		}else {
+			return null;
+		}
+		
 	}
 	
 	//get by pac

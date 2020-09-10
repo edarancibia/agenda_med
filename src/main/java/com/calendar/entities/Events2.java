@@ -52,6 +52,9 @@ public class Events2 {
 	@Column(name = "estado")
 	private int estado;
 	
+	@Column(name = "fecha")
+	private Date fecha;
+	
 	public int getRut_num() {
 		return rut_num;
 	}
@@ -108,7 +111,16 @@ public class Events2 {
 		this.estado = estado;
 	}
 
-	public Events2(Long id, String start, String end, String description, int rut_num, int rut_med, int estado) {
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Events2(Long id, String start, String end, String description, int rut_num, int rut_med, int estado,
+			Date fecha) {
 		this.id = id;
 		this.start = start;
 		this.end = end;
@@ -116,6 +128,7 @@ public class Events2 {
 		this.rut_num = rut_num;
 		this.rut_med = rut_med;
 		this.estado = estado;
+		this.fecha = fecha;
 	}
 
 	public Events2() {
@@ -125,7 +138,8 @@ public class Events2 {
 	@Override
 	public String toString() {
 		return "Events2 [id=" + id + ", start=" + start + ", end=" + end + ", description=" + description + ", rut_num="
-				+ rut_num + ", rut_med=" + rut_med + ", estado=" + estado + "]";
+				+ rut_num + ", rut_med=" + rut_med + ", estado=" + estado + ", fecha=" + fecha + "]";
 	}
+	
 	
 }

@@ -1,22 +1,11 @@
 package com.calendar.entities;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.ManyToAny;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="paciente")
@@ -24,7 +13,8 @@ public class Paciente {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	@Column(name = "idpaciente")
+	private Long idPaciente;
 	
 	@Column(name="dni")
 	private int dni;
@@ -52,25 +42,13 @@ public class Paciente {
 	
 	@Column(name="fecha_nac")
 	private String fecha_nac;
-	
-	@OneToMany(mappedBy="rut_num", cascade=CascadeType.ALL, fetch= FetchType.LAZY)
-	@JsonIgnore
-	private Set<Events2> events;
 
-	public Set<Events2> getEvents() {
-		return events;
+	public Long getIdPaciente() {
+		return idPaciente;
 	}
 
-	public void setEvents(Set<Events2> events) {
-		this.events = events;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
+	public void setIdPaciente(Long idPaciente) {
+		this.idPaciente = idPaciente;
 	}
 
 	public String getNombre() {
@@ -147,10 +125,10 @@ public class Paciente {
 
 	
 
-	public Paciente(long id, int dni, String nombre, String a_pat, String a_mat, String direccion, String telefono,
-			String email, int sexo, String fecha_nac, Set<Events2> events) {
+	public Paciente(Long idPaciente, int dni, String nombre, String a_pat, String a_mat, String direccion, String telefono,
+			String email, int sexo, String fecha_nac) {
 		
-		this.id = id;
+		this.idPaciente = idPaciente;
 		this.dni = dni;
 		this.nombre = nombre;
 		this.a_pat = a_pat;
@@ -160,7 +138,6 @@ public class Paciente {
 		this.email = email;
 		this.sexo = sexo;
 		this.fecha_nac = fecha_nac;
-		this.events = events;
 	}
 
 	public Paciente() {
@@ -169,9 +146,9 @@ public class Paciente {
 
 	@Override
 	public String toString() {
-		return "Paciente [id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", a_pat=" + a_pat + ", a_mat=" + a_mat
+		return "Paciente [idPaciente=" + idPaciente + ", dni=" + dni + ", nombre=" + nombre + ", a_pat=" + a_pat + ", a_mat=" + a_mat
 				+ ", direccion=" + direccion + ", telefono=" + telefono + ", email=" + email + ", sexo=" + sexo
-				+ ", fecha_nac=" + fecha_nac + ", events=" + events + "]";
+				+ ", fecha_nac=" + fecha_nac + "]";
 	}	
 	
 	

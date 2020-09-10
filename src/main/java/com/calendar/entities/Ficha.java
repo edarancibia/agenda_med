@@ -47,6 +47,9 @@ public class Ficha {
 	
 	@Column(name = "obsgenerales")
 	private String obs;
+	
+	@Column(name = "diagnostico")
+	private String diagnostico;
 
 	public Long getIdFicha() {
 		return idFicha;
@@ -136,8 +139,16 @@ public class Ficha {
 		this.obs = obs;
 	}
 
-	public Ficha(Long idFicha, Date fecha, int rutPac, Double peso, Double estatura, String motivo,
-			String antecedentes, String indicaciones, String examenFisico, int idProfesional, String obs) {
+	public String getDiagnostico() {
+		return diagnostico;
+	}
+
+	public void setDiagnostico(String diagnostico) {
+		this.diagnostico = diagnostico;
+	}
+
+	public Ficha(Long idFicha, Date fecha, int rutPac, Double peso, Double estatura, String motivo, String antecedentes,
+			String indicaciones, String examenFisico, int idProfesional, String obs, String diagnostico) {
 		this.idFicha = idFicha;
 		this.fecha = fecha;
 		this.rutPac = rutPac;
@@ -149,6 +160,7 @@ public class Ficha {
 		this.examenFisico = examenFisico;
 		this.idProfesional = idProfesional;
 		this.obs = obs;
+		this.diagnostico = diagnostico;
 	}
 
 	public Ficha() {

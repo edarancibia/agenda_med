@@ -17,7 +17,7 @@ public class Profesional {
 	private Long idProfesional;
 	
 	@Column(name = "fk_idUsuario")
-	private int fk_idUsuario;
+	private int fkIdUsuario;
 	
 	@Column(name = "nombre")
 	private String nombre;
@@ -62,12 +62,12 @@ public class Profesional {
 		this.idProfesional = idProfesional;
 	}
 
-	public int getfk_idUsuario() {
-		return fk_idUsuario;
+	public int getFkIdUsuario() {
+		return fkIdUsuario;
 	}
 
-	public void setfk_idUsuario(int fk_idUsuario) {
-		this.fk_idUsuario = fk_idUsuario;
+	public void setFkIdUsuario(int fkIdUsuario) {
+		this.fkIdUsuario = fkIdUsuario;
 	}
 
 	public String getNombre() {
@@ -135,11 +135,11 @@ public class Profesional {
 	}
 
 
-	public Profesional(Long idProfesional, int fk_idUsuario, String nombre, String a_pat, String a_mat, String direccion,
+	public Profesional(Long idProfesional, int fkIdUsuario, String nombre, String a_pat, String a_mat, String direccion,
 			String telefono, int cod_esp, int tipo_ficha, int cod_centro, String email) {
 		super();
 		this.idProfesional = idProfesional;
-		this.fk_idUsuario = fk_idUsuario;
+		this.fkIdUsuario = fkIdUsuario;
 		this.nombre = nombre;
 		this.a_pat = a_pat;
 		this.a_mat = a_mat;
@@ -157,7 +157,7 @@ public class Profesional {
 
 	@Override
 	public String toString() {
-		return "Profesional [idProfesional=" + idProfesional + ", fk_idUsuario=" + fk_idUsuario + ", nombre=" + nombre + ", a_pat="
+		return "Profesional [idProfesional=" + idProfesional + ", fkIdUsuario=" + fkIdUsuario + ", nombre=" + nombre + ", a_pat="
 				+ a_pat + ", a_mat=" + a_mat + ", direccion=" + direccion + ", telefono=" + telefono + ", cod_esp="
 				+ cod_esp + ", tipo_ficha=" + tipo_ficha + ", cod_centro=" + cod_centro + ", email=" + email + "]";
 	}	

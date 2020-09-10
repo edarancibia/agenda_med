@@ -30,8 +30,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.calendar.entities.Events2;
+import com.calendar.entities.Profesional;
 import com.calendar.entities.User;
 import com.calendar.entities.UsuarioCentro;
+import com.calendar.impl.ProfesionalServiceImpl;
 import com.calendar.impl.UsuarioCentroServiceImpl;
 import com.calendar.repository.ClinicaJpaRepository;
 import com.calendar.repository.EventJpaRepository;
@@ -41,7 +43,7 @@ import com.calendar.service.UserServiceImpl;
 
 @RestController
 @CrossOrigin(origins="*")
-@SessionAttributes({"activeUser","centro","activeIdUser"})
+@SessionAttributes({"activeUser","centro","activeIdUser","activePerfil","activeProf"})
 public class EventController {
 
 	private static final Log LOG = LogFactory.getLog(EventController.class);
@@ -61,8 +63,12 @@ public class EventController {
 	@Qualifier("usuarioCentroServiceImpl")
 	private UsuarioCentroServiceImpl usuarioCentro;
 	
+	@Autowired
+	public ProfesionalServiceImpl profesionalService;
+	
 	public long centro; 
 	public int idUsuario;
+	public int tipoUsuario;
 	
 	@GetMapping("/")
 	public ModelAndView loginForm(User user) {
@@ -76,17 +82,33 @@ public class EventController {
 			HttpSession session, Model model) {
 		
 		if(null != userService.findByEmailAndPass(email, pass)) {
-			LOG.info("pasa");
+			
 			User username = userService.findUserByEmail(email);
 			session.setAttribute("username",username.getNombre()+' '+ username.getApat()+' '+ username.getAmat());
 			
 			UsuarioCentro usCentro = usuarioCentro.findByIdUsuario(username.getIdusuario());
 			idUsuario = (int) usCentro.getIdUsuario();
+			tipoUsuario = username.getPerfil();
+			session.setAttribute("tipoUser", tipoUsuario);
 			centro = usCentro.getIdCentro();
-			LOG.info("var centro:"+ centro);
-			
+			LOG.info("tipo usuario: "+tipoUsuario);
 			model.addAttribute("activeUser",session.getAttribute("username"));
-			return this.jsoncalendar();
+			model.addAttribute("activePerfil",session.getAttribute("tipoUser"));
+			
+			String vista;
+			
+			if(tipoUsuario == 1) {
+				Profesional prof = profesionalService.findProfesionalByFkIdUsuario(idUsuario);
+				LOG.info("prof: " + prof);
+				model.addAttribute("activeProf", prof.getIdProfesional());
+				session.setAttribute("idProfesional", prof.getIdProfesional());
+				vista = "calendarProf";
+				return new ModelAndView(vista);
+			}else {
+				vista = "calendar";
+				return new ModelAndView(vista);
+			}
+			
 		}else {
 			LOG.info("no pasa");
 			return this.loginForm(user);
@@ -94,8 +116,19 @@ public class EventController {
 	}
 	
 	@RequestMapping(value="/calendar", method=RequestMethod.GET) 
-	public ModelAndView jsoncalendar() {
-		return new ModelAndView("calendar");
+	public ModelAndView jsoncalendar(HttpSession session) {
+		int tipoUser = (int) session.getAttribute("tipoUser");
+		if(tipoUser == 1){
+			return new ModelAndView("calendarProf");
+		}else {
+			return new ModelAndView("calendar");
+		}
+		
+	}
+	
+	@GetMapping("/prof-calendar")
+	public ModelAndView jsoncalendar2() {
+		return new ModelAndView("calendarProf");
 	}
 	
 	@RequestMapping(value="/allevents", method=RequestMethod.GET)

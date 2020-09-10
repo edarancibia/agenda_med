@@ -5,12 +5,53 @@ $(document).ready(function(){
     	this.value = this.value.replace(/[^0-9]/g,'');
 	});
 
+	$('#myModal').on('shown.bs.modal', function (e) {
+		var perfil = $('#txtNavUser').val();
+
+		if(perfil == 0){
+			$('#btnComenzar').prop('disabled',true);
+		}
+	});
+
 	//- - - -SECCION FICHA  - - - - - 
 	// INSERT NUEVA
 	$('#btnComenzar').on('click',function(e){
 		e.stopImmediatePropagation();
 		var idEvento = $('#txtIdEvento').val();
-		window.location.href = base_url + 'ficha?idEvento='+idEvento;
+		var rut_usu = $('#txtHiddenRut').val();
+		
+		window.location.href = base_url + 'ficha/'+rut_usu;
+	});
+
+	//GUARDA FICHA
+	$('#btnGuardaFicha').on('click', function(e){
+		e.stopImmediatePropagation();
+		var form_ficha = {
+			"fecha"   : new Date(),
+			"rutPac"  : $('#txtRutFicha').val(),
+			"peso"    : "",
+			"estatura": "",
+			"motivo"  : $('#txtMotivo').val(),
+			"antecedentes" : $('#txtAntecedentes').val(),
+			"indicaciones" : $('#txtIndicaciones').val(),
+			"examenFisico" : $('#txtExamen').val(),
+			"diagnostico"  : $('#txtDiagnostico').val(),
+			"idProfesional": $('#txtIdProf').val()
+		}
+
+		$.ajax({
+			type: 'post',
+			url: base_url + 'ficha/save',
+			contentType: "application/json; charset=utf-8",
+            dataType: "json",
+			data: JSON.stringify(form_ficha),
+			success: function(){
+				alert('Ficha guardada exitosamente!');
+			},
+			error: function(){
+				alert('Error al guardar la ficha');
+			}
+		});
 	});
 
 

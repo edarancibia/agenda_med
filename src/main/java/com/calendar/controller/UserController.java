@@ -87,6 +87,7 @@ public class UserController {
 	@GetMapping("/invitation")
 	public String invitacion(Invitation invitation, HttpSession session, Model model) {
 		model.addAttribute("activeUser",session.getAttribute("username"));
+		model.addAttribute("activePerfil",session.getAttribute("tipoUser"));
 		return "invitation";
 	}
 	
