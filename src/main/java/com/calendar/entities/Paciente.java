@@ -38,7 +38,7 @@ public class Paciente {
 	private String email;
 	
 	@Column(name="sexo")
-	private int sexo;
+	private String sexo;
 	
 	@Column(name="fecha_nac")
 	private String fecha_nac;
@@ -99,11 +99,11 @@ public class Paciente {
 		this.email = email;
 	}
 
-	public int getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(int sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 
@@ -126,7 +126,7 @@ public class Paciente {
 	
 
 	public Paciente(Long idPaciente, int dni, String nombre, String a_pat, String a_mat, String direccion, String telefono,
-			String email, int sexo, String fecha_nac) {
+			String email, String sexo, String fecha_nac) {
 		
 		this.idPaciente = idPaciente;
 		this.dni = dni;

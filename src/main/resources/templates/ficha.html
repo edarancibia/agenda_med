@@ -5,75 +5,90 @@
     <div class="panel panel-info margen">
         <div class="panel-heading fuente"><label id="lblnombre"></label></div>
         <div class="panel-body" style="padding-top: 0px;">
-            <div class="row">
+                <!--ID FICHA para buscar los datos desde la lista de atenciones anteriores-->
+                <input type="hidden" id="txtIdFichaAnterior" th:value="*{idFicha}">
+                <input type="text" id="txtIdEventoFicha" th:value="*{idEvento}">
                 <table class="table">
                     <tr>
                         <td>Rut:
-                            <input type="text" th:value="${rut_pac}" class="form-control" id="txtRutFicha">
+                            <input type="text" th:value="${rut_pac}" class="form-control" id="txtRutFicha" readonly>
                         </td>
-                        <td><strong>Fecha Nac: </strong>
-                            <input type="text" class="form-control" id="txtFnacFicha">
-                        </td>
-    
-                        <td><strong>Edad:</strong>
-                            <input type="text" class="form-control" id="txtEdadFicha">
+                        <td>Fecha Nac:
+                            <input type="text" class="form-control" id="txtFnacFicha" readonly>
                         </td>
     
-                        <td><strong>Sexo:</strong>
-                            <input type="text" class="form-control" id="txtSexoFicha">
+                        <td>Edad:
+                            <input type="text" class="form-control" id="txtEdadFicha" readonly>
+                        </td>
+    
+                        <td>Sexo:
+                            <input type="text" class="form-control" id="txtSexoFicha" readonly>
                             </td>
-    
-                        <td> Atenciones anteriores</td>
+                    
+                    
+                        <td>Estatura
+                            <input type="text" class="form-control" id="txtEstatura">
+                        </td>
+                        <td>Peso
+                            <input type="text" class="form-control" id="txtPeso">
+                        </td>
                     </tr>
-                </table>
-            </div>
+                </table>      
         </div>
     </div>
 </div>
 
-<div class="row col-md-12">
-
-<table class="table">
-    <tr>
-        <td>
-            <label for="txtAntePed">Antecedentes médicos</label>
-            <textarea class="form-control" id="txtAntecedentes"></textarea>
-        </td>
-        <td>
-            <label for="txtMotPed">Motivo consulta</label>
-            <textarea class="form-control" id="txtMotivo"></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label for="txtExaPed">Exámen físico</label>
-            <textarea class="form-control" id="txtExamen"></textarea>
-        </td>
-        <td>
-            <label for="txtDiagPed">Diagnóstico principal</label>
-            <textarea class="form-control" id="txtDiagnostico"></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label for="txtIndiPed">Indicaciones generales</label>
-            <textarea class="form-control" id="txtIndicaciones"></textarea>
-        </td>
-        <td>
-            <label for="txtSolExPed">Solicitud de exámenes</label>
-            <textarea class="form-control" id="txtSolEx"></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <button type="button" class="btn btn-info" id="btnGuardaFicha">Guardar Atención</button>
-        </td>
-    </tr>
-</table>
-
-
+<div class="row">
+    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+        <table class="table">
+            <tr>
+                <td>
+                    <label for="txtAntePed">Antecedentes médicos</label>
+                    <textarea class="form-control" id="txtAntecedentes"></textarea>
+                </td>
+                <td>
+                    <label for="txtMotPed">Motivo consulta</label>
+                    <textarea class="form-control" id="txtMotivo"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txtExaPed">Exámen físico</label>
+                    <textarea class="form-control" id="txtExamen"></textarea>
+                </td>
+                <td>
+                    <label for="txtDiagPed">Diagnóstico principal</label>
+                    <textarea class="form-control" id="txtDiagnostico"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txtIndiPed">Indicaciones generales</label>
+                    <textarea class="form-control" id="txtIndicaciones"></textarea>
+                </td>
+                <td>
+                    <label for="txtSolExPed">Solicitud de exámenes</label>
+                    <textarea class="form-control" id="txtSolEx"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-info" id="btnGuardaFicha">Guardar Atención</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <table class="table table-hover" id="tableFichasAnteriores">
+            <thead>
+                <th>Atenciones Anteriores</th>
+            </thead>
+        </table>
+    </div>
 </div>
 </div>
+
+
 
 <!-- set up the modal to start hidden and fade in and out -->
 <div id="modalConfirm" class="modal fade">
@@ -81,7 +96,6 @@
 <div class="modal-content">
   <!-- dialog body -->
   <div class="modal-body">
-    <input type="hidden" id="txtIdEvento" name="txtIdEvento">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     ¿Seguro que desea guardar información terminar la atención?
   </div>
@@ -103,9 +117,10 @@
             type: 'get',
             url: base_url +'paciente/'+rutnum,
             success: function(data){
-                console.log(data);
-                $('#lblnombre').text(data.a_pat + ' '+ data.a_mat + ' '+ data.nombre);
-                $('#txtFnacFicha').val(data.fecha_nac);
+                $('#lblnombre').text(data[0].a_pat + ' '+ data[0].a_mat + ' '+ data[0].nombre);
+                $('#txtFnacFicha').val(data[0].fecha_nac);
+                $('#txtEdadFicha').val(data[0].edad);
+                $('#txtSexoFicha').val(data[0].sexo);
             },
             error: function(){
                 console.log('error al traer datos del paciente');
@@ -113,21 +128,56 @@
         });
 
         getFichasAnteriores();
+        getFichaSeleccionada();
 
         function getFichasAnteriores(){
             $.ajax({
                 type:'get',
                 url: base_url + 'ficha/get-by-pac/'+rutnum,
                 success: function(data){
-                    console.log(data);
-                    $.each(data, function( index, value ) {
-                        //alert( index + ": " + value );
-                        console.log(value.fecha);
-                        "<a class='list-group-item list-group-item-action' id='list-profile-list' data-toggle='list' href='#' role='tab' aria-controls='profile' value="+value.fecha+"></a>";
-                    });     
+					$.each(data, function(i, item){
+					$('<tr>').html(
+	        			"<td><a target='blank' href="+base_url+'ficha/history/'+data[i].idficha+">"+data[i].fecha +"</a></td>"+
+                         "</tr>").appendTo('#tableFichasAnteriores');
+                    });
+                        
                 },
                 error: function(){
-                    congole.log('error al traer fichas');
+                    console.log('error al traer fichas');
+                }
+            });
+        }
+
+        function getFichaSeleccionada(){
+            var idFichaAnterior = $('#txtIdFichaAnterior').val();
+
+            $.ajax({
+                type: 'get',
+                url: base_url + 'ficha/get-by-id/'+idFichaAnterior,
+                success: function(data){
+                    console.log(data);
+                    $('#txtRutFicha').val(data.rutPac);
+                    $('#txtPeso').val(data.peso);
+                    $('#txtEstatura').val(data.estatura);
+                    $('#txtAntecedentes').val(data.antecedentes);
+                    $('#txtMotivo').val(data.motivo);
+                    $('#txtExamen').val(data.examenFisico);
+                    $('#txtDiagnostico').val(data.diagnostico);
+                    $('#txtIndicaciones').val(data.indicaciones);
+                    $('#txtSolEx').val(data.solExamen);
+
+                    $('#txtAntecedentes').attr('disabled',true);
+                    $('#txtMotivo').attr('disabled',true);
+                    $('#txtExamen').attr('disabled',true);
+                    $('#txtDiagnostico').attr('disabled',true);
+                    $('#txtIndicaciones').attr('disabled',true);
+                    $('#txtSolEx').attr('disabled',true);
+                    $('#txtPeso').attr('disabled',true);
+                    $('#txtEstatura').attr('disabled',true);
+                    $('#btnGuardaFicha').attr('disabled', true);
+                },
+                error: function(){
+                    console.log('error al traer ficha anterior');
                 }
             });
         }

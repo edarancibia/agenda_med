@@ -1,6 +1,7 @@
 package com.calendar.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,13 @@ public class FichaServiceImpl implements FichaService {
 	}
 
 	@Override
-	public List<Ficha> findFichaByRutPac(int rutPac) {
-		return fichaRepository.findFichaByRutPac(rutPac);
+	public Ficha findFichaByIdFicha(Long idFicha) {
+		return fichaRepository.findFichaByIdFicha(idFicha);
 	}
 
 	@Override
-	public Ficha findFichaByIdFicha(Long idFicha) {
-		return fichaRepository.findFichaByIdFicha(idFicha);
+	public List<Map<String, Object>> findFichasByRutPac(int rutPac) {
+		return fichaRepository.findFichasByRutPac(rutPac);
 	}
 
 }

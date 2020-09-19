@@ -43,7 +43,7 @@ import com.calendar.service.UserServiceImpl;
 
 @RestController
 @CrossOrigin(origins="*")
-@SessionAttributes({"activeUser","centro","activeIdUser","activePerfil","activeProf"})
+@SessionAttributes({"activeUser","centro","activeIdUser","activePerfil","activeProf","activeCentro"})
 public class EventController {
 
 	private static final Log LOG = LogFactory.getLog(EventController.class);
@@ -90,18 +90,22 @@ public class EventController {
 			idUsuario = (int) usCentro.getIdUsuario();
 			tipoUsuario = username.getPerfil();
 			session.setAttribute("tipoUser", tipoUsuario);
+			
 			centro = usCentro.getIdCentro();
-			LOG.info("tipo usuario: "+tipoUsuario);
+			session.setAttribute("activeCentro", centro);
+			
 			model.addAttribute("activeUser",session.getAttribute("username"));
 			model.addAttribute("activePerfil",session.getAttribute("tipoUser"));
+			model.addAttribute("activeCentro",centro);
 			
 			String vista;
 			
 			if(tipoUsuario == 1) {
 				Profesional prof = profesionalService.findProfesionalByFkIdUsuario(idUsuario);
 				LOG.info("prof: " + prof);
-				model.addAttribute("activeProf", prof.getIdProfesional());
+				model.addAttribute("activeProf", username.getIdusuario());
 				session.setAttribute("idProfesional", prof.getIdProfesional());
+				session.setAttribute("activeRutProf", username.getIdusuario());
 				vista = "calendarProf";
 				return new ModelAndView(vista);
 			}else {
@@ -126,10 +130,6 @@ public class EventController {
 		
 	}
 	
-	@GetMapping("/prof-calendar")
-	public ModelAndView jsoncalendar2() {
-		return new ModelAndView("calendarProf");
-	}
 	
 	@RequestMapping(value="/allevents", method=RequestMethod.GET)
 	public @ResponseBody List<Map<String, Object>> events2(){
@@ -154,14 +154,14 @@ public class EventController {
 	//CONFIRMA CITA
 	@PutMapping("/confirmar/{idEvento}")
 	public ResponseEntity<Events2> confirmaEvento(@PathVariable Long idEvento, @RequestBody Events2 events){
-		Events2 evento = eventService.findEvents2ById(idEvento);
+		Events2 eventoDb = eventService.findEvents2ById(idEvento);
 		
-		if(evento == null) {
+		if(eventoDb == null) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		evento.setEstado(2);
-		eventService.addEvent(evento);
+		eventoDb.setEstado(events.getEstado());
+		eventService.addEvent(eventoDb);
 		return ResponseEntity.notFound().build();
 	}
 	

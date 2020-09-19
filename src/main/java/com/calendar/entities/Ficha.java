@@ -25,10 +25,10 @@ public class Ficha {
 	private int rutPac;
 	
 	@Column(name = "peso")
-	private Double peso;
+	private String peso;
 	
 	@Column(name = "estatura")
-	private Double estatura;
+	private String estatura;
 	
 	@Column(name = "motivo")
 	private String motivo;
@@ -50,6 +50,9 @@ public class Ficha {
 	
 	@Column(name = "diagnostico")
 	private String diagnostico;
+	
+	@Column(name = "sol_exam")
+	private String solExamen;
 
 	public Long getIdFicha() {
 		return idFicha;
@@ -75,19 +78,19 @@ public class Ficha {
 		this.rutPac = rutPac;
 	}
 
-	public Double getPeso() {
+	public String getPeso() {
 		return peso;
 	}
 
-	public void setPeso(Double peso) {
+	public void setPeso(String peso) {
 		this.peso = peso;
 	}
 
-	public Double getEstatura() {
+	public String getEstatura() {
 		return estatura;
 	}
 
-	public void setEstatura(Double estatura) {
+	public void setEstatura(String estatura) {
 		this.estatura = estatura;
 	}
 
@@ -146,9 +149,19 @@ public class Ficha {
 	public void setDiagnostico(String diagnostico) {
 		this.diagnostico = diagnostico;
 	}
+	
 
-	public Ficha(Long idFicha, Date fecha, int rutPac, Double peso, Double estatura, String motivo, String antecedentes,
-			String indicaciones, String examenFisico, int idProfesional, String obs, String diagnostico) {
+	public String getSolExamen() {
+		return solExamen;
+	}
+
+	public void setSolExamen(String solExamen) {
+		this.solExamen = solExamen;
+	}
+
+	public Ficha(Long idFicha, Date fecha, int rutPac, String peso, String estatura, String motivo, String antecedentes,
+			String indicaciones, String examenFisico, int idProfesional, String obs, String diagnostico,
+			String solExamen) {
 		this.idFicha = idFicha;
 		this.fecha = fecha;
 		this.rutPac = rutPac;
@@ -161,6 +174,7 @@ public class Ficha {
 		this.idProfesional = idProfesional;
 		this.obs = obs;
 		this.diagnostico = diagnostico;
+		this.solExamen = solExamen;
 	}
 
 	public Ficha() {

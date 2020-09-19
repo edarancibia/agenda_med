@@ -20,23 +20,25 @@ $(document).ready(function(){
 		var idEvento = $('#txtIdEvento').val();
 		var rut_usu = $('#txtHiddenRut').val();
 		
-		window.location.href = base_url + 'ficha/'+rut_usu;
+		window.location.href = base_url + 'ficha/'+rut_usu+'/'+idEvento;
 	});
 
 	//GUARDA FICHA
 	$('#btnGuardaFicha').on('click', function(e){
 		e.stopImmediatePropagation();
+
 		var form_ficha = {
 			"fecha"   : new Date(),
 			"rutPac"  : $('#txtRutFicha').val(),
-			"peso"    : "",
-			"estatura": "",
+			"peso"    : $('#txtPeso').val(),
+			"estatura": $('#txtEstatura').val(),
 			"motivo"  : $('#txtMotivo').val(),
 			"antecedentes" : $('#txtAntecedentes').val(),
 			"indicaciones" : $('#txtIndicaciones').val(),
 			"examenFisico" : $('#txtExamen').val(),
 			"diagnostico"  : $('#txtDiagnostico').val(),
-			"idProfesional": $('#txtIdProf').val()
+			"idProfesional": $('#txtIdProf').val(),
+			"solExamen"    : $('#txtSolEx').val()
 		}
 
 		$.ajax({
@@ -51,7 +53,47 @@ $(document).ready(function(){
 			error: function(){
 				alert('Error al guardar la ficha');
 			}
+		}).done(function(){
+			var idEvento = $('#txtIdEventoFicha').val();
+			var formData = {
+				'estado' : 3
+			}
+			console.log('evento: '+idEvento);
+
+			$.ajax({
+				type: 'put',
+				url: base_url + 'confirmar/'+idEvento,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				data: JSON.stringify(formData),
+				success: function(){
+					console.log('Evento cerrado!');
+				},
+				error: function(){
+					console.log('Error al guardar la ficha');
+				}
+			});
 		});
+	});
+
+	//Historial de atenciones
+	$('#tableFichasAnteriores td').on('click', function (e) {
+		var a = $(this).attr('value');
+			
+		/*$.ajax({
+			type: 'post',
+			url: baseUrl+'Ficha/getFichabyId',
+			data: {idficha: a},
+			success: function(data){
+				var obj = JSON.parse(data);
+				$('#txtMotivo').val(obj.ficha.motivo);
+				$('#txtObsFicha').val(obj.ficha.obsGenerales);
+					
+			},
+			error: function(){
+				console.log('error al buscar ficha by ID');
+			}
+		});*/
 	});
 
 

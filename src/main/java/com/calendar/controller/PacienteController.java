@@ -1,5 +1,8 @@
 package com.calendar.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +32,12 @@ public class PacienteController {
 	private static final Log LOG = LogFactory.getLog(PacienteController.class);
 
 	@Autowired
-	@Qualifier("pacienteServiceImpl")
-	private PacienteService pacienteService;
+	public PacienteServiceImpl pacienteService;
 	
-	@RequestMapping(value = "/paciente/{rutnum}", method = RequestMethod.GET, headers = "Accept=application/json")
-    public ResponseEntity<Paciente> findByRut(@PathVariable("rutnum") int rutnum){
-		Paciente paciente = pacienteService.getByRut(rutnum);
-        if (paciente == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-            // You may decide to return HttpStatus.NOT_FOUND
-        }
-        return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
+	@GetMapping("/paciente/{rutnum}")
+    public List<Map<String, Object>>  findByRut(@PathVariable("rutnum") int rutnum){
+		List<Map<String, Object>>  paciente = pacienteService.obtienePorRut(rutnum);
+        return paciente;
     }
 	
 	

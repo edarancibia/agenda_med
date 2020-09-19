@@ -138,8 +138,8 @@
                 <label>Sexo</label>
                 <select class="form-control" id="cboSexo2">
                   <option selected value="">Seleccione</option>
-                  <option value="1">Hombre</option>
-                  <option value="0">Mujer</option>
+                  <option value="M">Masculino</option>
+                  <option value="F">Femenino</option>
                 </select>
                 <label>Fecha nacimiento</label>
                 <input type="date" id="txtFnac" class="form-control" required>
@@ -223,8 +223,13 @@
                   eventAfterRender: function (event, element, view) {
                       if (event.estado == 2) {
                           //event.color = "#FFB347"; //Em andamento
-                          element.css('background-color', '#FFB347');
-                      }   
+                          element.css('background-color', '#337DFF');
+                      }
+                      
+                      if (event.estado == 3) {
+                          //event.color = "#FFB347"; //Em andamento
+                          element.editable = false;
+                      } 
                   },
                   
                   eventClick: function(event, jsEvent, view){
@@ -321,7 +326,7 @@
 					url: base_url + 'paciente/'+rut,
 					data: {dni: rut},
 					success: function(data){
-					  $('#txtNomPac').val(data.nombre+' '+data.a_pat+' '+data.a_mat);
+					  $('#txtNomPac').val(data[0].nombre+' '+data[0].a_pat+' '+data[0].a_mat);
 					  $('#txtobs').focus();
 	
 					  if (data.rutnum > 1) {
@@ -453,7 +458,7 @@
 		e.stopImmediatePropagation();
 		var idEvento = $("#txtIdEvento").val();
     var formData = {
-      'estado' : 1
+      'estado' : 2
     };
 
 		$.ajax({

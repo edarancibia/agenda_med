@@ -1,18 +1,20 @@
 package com.calendar.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.calendar.entities.Paciente;
-import com.calendar.repository.PacienteJpaRepository;
+import com.calendar.repository.PacienteRepository;
 
-@Service("pacienteServiceImpl")
+@Service
 public class PacienteServiceImpl implements PacienteService {
 
 	@Autowired
-	@Qualifier("pacienteRepository")
-	private PacienteJpaRepository pacienteRepository;
+	public PacienteRepository pacienteRepository;
 
 	@Override
 	public Paciente addPaciente(Paciente paciente) {
@@ -20,11 +22,8 @@ public class PacienteServiceImpl implements PacienteService {
 	}
 
 	@Override
-	public Paciente getByRut(int rutnum) {
-		return pacienteRepository.getByRut(rutnum);
+	public List<Map<String, Object>> obtienePorRut(int rutnum) {
+		return pacienteRepository.obtienePorRut(rutnum);
 	}
-
-
-	
 
 }

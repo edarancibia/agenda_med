@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.calendar.constant.ViewConstant;
@@ -38,6 +39,7 @@ import com.calendar.service.UserServiceImpl;
 
 @Controller
 @RequestMapping("/user")
+@SessionAttributes({"activeUser","centro","activeIdUser","activePerfil","activeProf","activeCentro"})
 public class UserController {
 	
 	private static final Log LOG = LogFactory.getLog(UserController.class);
