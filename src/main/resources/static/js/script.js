@@ -30,6 +30,7 @@ $(document).ready(function(){
 		var form_ficha = {
 			"fecha"   : new Date(),
 			"rutPac"  : $('#txtRutFicha').val(),
+			"edad"    : $('#txtEdadFicha').val(),
 			"peso"    : $('#txtPeso').val(),
 			"estatura": $('#txtEstatura').val(),
 			"motivo"  : $('#txtMotivo').val(),

@@ -7,7 +7,7 @@
         <div class="panel-body" style="padding-top: 0px;">
                 <!--ID FICHA para buscar los datos desde la lista de atenciones anteriores-->
                 <input type="hidden" id="txtIdFichaAnterior" th:value="*{idFicha}">
-                <input type="text" id="txtIdEventoFicha" th:value="*{idEvento}">
+                <input type="hidden" id="txtIdEventoFicha" th:value="*{idEvento}">
                 <table class="table">
                     <tr>
                         <td>Rut:
@@ -158,6 +158,7 @@
                     console.log(data);
                     $('#txtRutFicha').val(data.rutPac);
                     $('#txtPeso').val(data.peso);
+                    $('#txtEdadFicha').val(data.edad);
                     $('#txtEstatura').val(data.estatura);
                     $('#txtAntecedentes').val(data.antecedentes);
                     $('#txtMotivo').val(data.motivo);
@@ -179,6 +180,21 @@
                 error: function(){
                     console.log('error al traer ficha anterior');
                 }
+            }).done(function(){
+                var rutnum = $('#txtRutFicha').val();
+
+                $.ajax({
+                    type: 'get',
+                    url: base_url +'paciente/'+rutnum,
+                    success: function(data){
+                        $('#lblnombre').text(data[0].a_pat + ' '+ data[0].a_mat + ' '+ data[0].nombre);
+                        $('#txtFnacFicha').val(data[0].fecha_nac);
+                        $('#txtSexoFicha').val(data[0].sexo);
+                    },
+                    error: function(){
+                        console.log('error al traer datos del paciente');
+                    }
+                });
             });
         }
     });

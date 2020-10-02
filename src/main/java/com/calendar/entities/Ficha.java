@@ -53,6 +53,9 @@ public class Ficha {
 	
 	@Column(name = "sol_exam")
 	private String solExamen;
+	
+	@Column(name = "edad")
+	private String edad;
 
 	public Long getIdFicha() {
 		return idFicha;
@@ -159,9 +162,17 @@ public class Ficha {
 		this.solExamen = solExamen;
 	}
 
+	public String getEdad() {
+		return edad;
+	}
+
+	public void setEdad(String edad) {
+		this.edad = edad;
+	}
+
 	public Ficha(Long idFicha, Date fecha, int rutPac, String peso, String estatura, String motivo, String antecedentes,
 			String indicaciones, String examenFisico, int idProfesional, String obs, String diagnostico,
-			String solExamen) {
+			String solExamen, String edad) {
 		this.idFicha = idFicha;
 		this.fecha = fecha;
 		this.rutPac = rutPac;
@@ -175,6 +186,7 @@ public class Ficha {
 		this.obs = obs;
 		this.diagnostico = diagnostico;
 		this.solExamen = solExamen;
+		this.edad = edad;
 	}
 
 	public Ficha() {
