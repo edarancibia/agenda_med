@@ -11,7 +11,7 @@
 	<groupId>com.calendar</groupId>
 	<artifactId>calendar</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<!-- <packaging>war</packaging> -->
 	<name>calendar</name>
 	<description>Agenda y Ficha Web</description>
 
