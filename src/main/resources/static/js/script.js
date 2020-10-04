@@ -20,7 +20,7 @@ $(document).ready(function(){
 		var idEvento = $('#txtIdEvento').val();
 		var rut_usu = $('#txtHiddenRut').val();
 		
-		window.location.href = base_url + 'ficha/'+rut_usu+'/'+idEvento;
+		window.location.href = 'https://clinic-calendar.herokuapp.com/ficha/'+rut_usu+'/'+idEvento;
 	});
 
 	//GUARDA FICHA
@@ -44,7 +44,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			type: 'post',
-			url: base_url + 'ficha/save',
+			url: 'https://clinic-calendar.herokuapp.com/ficha/save',
 			contentType: "application/json; charset=utf-8",
             dataType: "json",
 			data: JSON.stringify(form_ficha),
@@ -63,7 +63,7 @@ $(document).ready(function(){
 
 			$.ajax({
 				type: 'put',
-				url: base_url + 'confirmar/'+idEvento,
+				url: 'https://clinic-calendar.herokuapp.com/confirmar/'+idEvento,
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				data: JSON.stringify(formData),
@@ -124,7 +124,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			type: 'get',
-			url: "/profesional/verificar/"+email,
+			url: "https://clinic-calendar.herokuapp.com/profesional/verificar/"+email,
 			data: {email: email},
 			dataType: "json",
 			success: function(d){

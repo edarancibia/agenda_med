@@ -242,7 +242,7 @@
     function getEvents(){
         var idProfesional = $('#txtIdProf').val();
         $('#calendar').fullCalendar('removeEvents');
-        $('#calendar').fullCalendar('addEventSource', base_url + 'alleventsByProf/'+idProfesional);
+        $('#calendar').fullCalendar('addEventSource', 'https://clinic-calendar.herokuapp.com/alleventsByProf/'+idProfesional);
     }
     
     	//BUSCAR PACIENTE POR RUT AL PRESIONAR BOTON BUSCAR
@@ -260,7 +260,7 @@
 				
 				  $.ajax({
 					type: 'get',
-					url: base_url + 'paciente/'+rut,
+					url: 'https://clinic-calendar.herokuapp.com/paciente/'+rut,
 					data: {dni: rut},
 					success: function(data){
 					  $('#txtNomPac').val(data.nombre+' '+data.a_pat+' '+data.a_mat);
@@ -316,7 +316,7 @@
           }else{
             $.ajax({
               type: 'post',
-              url: "addpaciente",
+              url: "https://clinic-calendar.herokuapp.com/addpaciente",
               contentType: "application/json; charset=utf-8",
               dataType: "json",
               data: JSON.stringify(formPac),
@@ -377,7 +377,7 @@
           type:'post',
           contentType: "application/json; charset=utf-8",
           dataType: "json",
-          url: base_url + "addevent",
+          url: "https://clinic-calendar.herokuapp.com/addevent",
           data: JSON.stringify(formData),
           success:function(data){
             console.log(data);
@@ -400,7 +400,7 @@
 
 		$.ajax({
 			type: 'put',
-      url: base_url + 'confirmar/'+ idEvento,
+      url: 'https://clinic-calendar.herokuapp.com/confirmar/'+ idEvento,
       contentType: "application/json; charset=utf-8",
       dataType: "json",
 			data: JSON.stringify(formData),
@@ -426,7 +426,7 @@
 
 		$.ajax({
 			type: 'put',
-      url: base_url + 'cancelar/'+ idEvento,
+      url: 'https://clinic-calendar.herokuapp.com/cancelar/'+ idEvento,
       contentType: "application/json; charset=utf-8",
       dataType: "json",
 			data: JSON.stringify(formData),
