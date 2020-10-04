@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var base_url = 'http://clinic-calendar.herokuapp.com/';
+	var base_url = 'http://clinic-calendar.herokuapp.com:8080/';
 
 	$('.input-number').on('input', function () { 
     	this.value = this.value.replace(/[^0-9]/g,'');
