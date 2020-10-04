@@ -265,7 +265,7 @@
 
       function getEvents(cboProfesional){
         $.ajax({
-          url: base_url +'alleventsByProf/'+cboProfesional,
+          url: 'https://clinic-calendar.herokuapp.com/alleventsByProf/'+cboProfesional,
           type: 'GET',
           succes: function(data){
             $.each(data, function(index, event){
@@ -304,7 +304,7 @@
             // alert(packageid);
               $('#calendar').fullCalendar('removeEvents');
 
-              $('#calendar').fullCalendar('addEventSource', base_url + 'alleventsByProf/'+idProfesional); 
+              $('#calendar').fullCalendar('addEventSource', 'https://clinic-calendar.herokuapp.com/alleventsByProf/'+idProfesional); 
               $('.fc-event-content, .fc-event-time, .fc-event-title').css('font-size', '12px');
     });
     
@@ -323,7 +323,7 @@
 				
 				  $.ajax({
 					type: 'get',
-					url: base_url + 'paciente/'+rut,
+					url: 'https://clinic-calendar.herokuapp.com/paciente/'+rut,
 					data: {dni: rut},
 					success: function(data){
 					  $('#txtNomPac').val(data[0].nombre+' '+data[0].a_pat+' '+data[0].a_mat);
