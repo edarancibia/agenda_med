@@ -122,8 +122,8 @@
                 $('#txtEdadFicha').val(data[0].edad);
                 $('#txtSexoFicha').val(data[0].sexo);
             },
-            error: function(){
-                console.log('error al traer datos del paciente');
+            error: function(xhr, status, error){
+                console.log('error al traer datos del paciente: '+xhr + ' '+status+' '+error);
             }
         });
 
@@ -133,11 +133,11 @@
         function getFichasAnteriores(){
             $.ajax({
                 type:'get',
-                url: 'http://clinic-calendar.herokuapp.com/ficha/get-by-pac/'+rutnum,
+                url: base_url + 'ficha/get-by-pac/'+rutnum,
                 success: function(data){
 					$.each(data, function(i, item){
 					$('<tr>').html(
-	        			"<td><a target='blank' href="+'http://clinic-calendar.herokuapp.com/ficha/get-by-pac/ficha/history/'+data[i].idficha+">"+data[i].fecha +"</a></td>"+
+	        			"<td><a target='blank' href="+base_url+'ficha/history/'+data[i].idficha+">"+data[i].fecha +"</a></td>"+
                          "</tr>").appendTo('#tableFichasAnteriores');
                     });
                         
@@ -153,7 +153,7 @@
 
             $.ajax({
                 type: 'get',
-                url: 'http://clinic-calendar.herokuapp.com/ficha/get-by-id/'+idFichaAnterior,
+                url: base_url + 'ficha/get-by-id/'+idFichaAnterior,
                 success: function(data){
                     console.log(data);
                     $('#txtRutFicha').val(data.rutPac);
@@ -185,7 +185,7 @@
 
                 $.ajax({
                     type: 'get',
-                    url: 'http://clinic-calendar.herokuapp.com/paciente/'+rutnum,
+                    url: base_url +'paciente/'+rutnum,
                     success: function(data){
                         $('#lblnombre').text(data[0].a_pat + ' '+ data[0].a_mat + ' '+ data[0].nombre);
                         $('#txtFnacFicha').val(data[0].fecha_nac);

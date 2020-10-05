@@ -7,10 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -35,14 +33,12 @@ import com.calendar.entities.User;
 import com.calendar.entities.UsuarioCentro;
 import com.calendar.impl.ProfesionalServiceImpl;
 import com.calendar.impl.UsuarioCentroServiceImpl;
-import com.calendar.repository.ClinicaJpaRepository;
 import com.calendar.repository.EventJpaRepository;
-import com.calendar.service.EventService;
 import com.calendar.service.EventServiceImpl;
 import com.calendar.service.UserServiceImpl;
 
 @RestController
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @SessionAttributes({"activeUser","centro","activeIdUser","activePerfil","activeProf","activeCentro"})
 public class EventController {
 
