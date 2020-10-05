@@ -122,8 +122,8 @@
                 $('#txtEdadFicha').val(data[0].edad);
                 $('#txtSexoFicha').val(data[0].sexo);
             },
-            error: function(xhr, status, error){
-                console.log('error al traer datos del paciente: '+xhr + ' '+status+' '+error);
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log('error al traer datos del paciente: '+ XMLHttpRequest + ' '+textStatus+' '+errorThrown);
             }
         });
 
