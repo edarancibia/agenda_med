@@ -137,7 +137,7 @@
                 success: function(data){
 					$.each(data, function(i, item){
 					$('<tr>').html(
-	        			"<td><a target='blank' href="+base_url+'ficha/history/'+data[i].idficha+">"+data[i].fecha +"</a></td>"+
+	        			"<td><a target='blank' href="+'http://clinic-calendar.herokuapp.com/ficha/get-by-pac/ficha/history/'+data[i].idficha+">"+data[i].fecha +"</a></td>"+
                          "</tr>").appendTo('#tableFichasAnteriores');
                     });
                         
