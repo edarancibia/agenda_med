@@ -115,7 +115,7 @@
 
         $.ajax({
             type: 'get',
-            url: 'http://clinic-calendar.herokuapp.com/paciente/'+rutnum,
+            url: 'http://clinic-calendar.herokuapp.com/paciente/'+rutnum,calendar,
             success: function(data){
                 $('#lblnombre').text(data[0].a_pat + ' '+ data[0].a_mat + ' '+ data[0].nombre);
                 $('#txtFnacFicha').val(data[0].fecha_nac);
