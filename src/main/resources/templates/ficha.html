@@ -133,7 +133,7 @@
         function getFichasAnteriores(){
             $.ajax({
                 type:'get',
-                url: base_url + 'ficha/get-by-pac/'+rutnum,
+                url: 'https://clinic-calendar.herokuapp.com/ficha/get-by-pac/'+rutnum,
                 success: function(data){
 					$.each(data, function(i, item){
 					$('<tr>').html(
@@ -153,7 +153,7 @@
 
             $.ajax({
                 type: 'get',
-                url: base_url + 'ficha/get-by-id/'+idFichaAnterior,
+                url: 'https://clinic-calendar.herokuapp.com/ficha/get-by-id/'+idFichaAnterior,
                 success: function(data){
                     console.log(data);
                     $('#txtRutFicha').val(data.rutPac);
@@ -185,7 +185,7 @@
 
                 $.ajax({
                     type: 'get',
-                    url: base_url +'paciente/'+rutnum,
+                    url: 'https://clinic-calendar.herokuapp.com/paciente/'+rutnum,
                     success: function(data){
                         $('#lblnombre').text(data[0].a_pat + ' '+ data[0].a_mat + ' '+ data[0].nombre);
                         $('#txtFnacFicha').val(data[0].fecha_nac);
