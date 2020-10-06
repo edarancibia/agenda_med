@@ -1,6 +1,10 @@
 $(document).ready(function(){
 	var base_url = 'http://clinic-calendar.herokuapp.com:8080/';
 
+	if($('#txtIdCentro').val() == ''){
+		window.location.href = 'https://clinic-calendar.herokuapp.com/';
+	}
+
 	$('.input-number').on('input', function () { 
     	this.value = this.value.replace(/[^0-9]/g,'');
 	});
