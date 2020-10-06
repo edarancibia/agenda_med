@@ -118,7 +118,7 @@ public class EventController {
 	@RequestMapping(value="/calendar", method=RequestMethod.GET) 
 	public ModelAndView jsoncalendar(HttpSession session) {
 		
-		if(session.getAttribute("userName") == null) {
+		if(session.getAttribute("username") == null) {
 			return new ModelAndView("login");
 		}else {
 			int tipoUser = (int) session.getAttribute("tipoUser");
