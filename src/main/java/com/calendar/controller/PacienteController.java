@@ -27,7 +27,7 @@ import com.calendar.service.PacienteService;
 import com.calendar.service.PacienteServiceImpl;
 
 @RestController
-@CrossOrigin(origins = "https://clinic-calendar.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:8080")
 public class PacienteController {
 	
 	private static final Log LOG = LogFactory.getLog(PacienteController.class);
