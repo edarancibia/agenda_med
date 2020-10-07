@@ -27,6 +27,7 @@ import com.calendar.service.PacienteService;
 import com.calendar.service.PacienteServiceImpl;
 
 @RestController
+@CrossOrigin(origins = "https://clinic-calendar.herokuapp.com")
 public class PacienteController {
 	
 	private static final Log LOG = LogFactory.getLog(PacienteController.class);
@@ -34,7 +35,6 @@ public class PacienteController {
 	@Autowired
 	public PacienteServiceImpl pacienteService;
 	
-	@CrossOrigin(origins = "https://clinic-calendar.herokuapp.com")
 	@GetMapping("/paciente/{rutnum}")
     public List<Map<String, Object>>  findByRut(@PathVariable("rutnum") int rutnum){
 		List<Map<String, Object>>  paciente = pacienteService.obtienePorRut(rutnum);
