@@ -116,7 +116,7 @@
               <div class="modal-body">
                 <input type="hidden" id="txtRutPac" name="txtRutPac" class="form-control" disabled>
                 <label>Nombre</label>
-                <input type="text" class="form-control" name="txtNomPac2" id="txtNomPac2">
+                <input type="text" class="form-control" name="txtNomPacReg2" id="txtNomPacReg2">
                 <label>Apellido Paterno</label>
                 <input type="text" name="txtApat" id="txtApat" class="form-control">
                 <label>Apellido Materno</label>
@@ -258,11 +258,12 @@
 					url: 'https://clinic-calendar.herokuapp.com/paciente/'+rut,
 					data: {dni: rut},
 					success: function(data){
+            console.log(data);
 					  $('#txtNomPac2').val(data.nombre+' '+data.a_pat+' '+data.a_mat);
 					  $('#txtobs2').focus();
 	
 					  if (data.rutnum > 1) {
-						$('#btnOK2').attr("disabled", false);
+						  $('#btnOK2').attr("disabled", false);
 					  }
 					},
 					error:function(){
@@ -282,7 +283,7 @@
 		//NUEVO PACIENTE
 		$('#btnGuardaPac').click(function(e){
 		  e.stopImmediatePropagation()
-		  var nom = $('#txtNomPac2').val();
+		  var nom = $('#txtNomPacReg2').val();
 		  var apat = $('#txtApat').val();
 		  var amat = $('#txtAmat').val();
 		  var sexo = $('#cboSexo2').val(); 
@@ -290,7 +291,7 @@
 	
 		  var formPac = {
 			'dni'   : $('#txtRutPac').val(),
-			'nombre'  : $('#txtNomPac2').val(),
+			'nombre'  : $('#txtNomPacReg2').val(),
 			'a_pat'  : $('#txtApat').val(),
 			'a_mat'  : $('#txtAmat').val(),
 			'telefono'   : $('#txtTel').val(),
@@ -337,7 +338,7 @@
 			//$('#btnOK').attr("disabled", true);
 			$('#txtPaciente2').val('');
 			$('#txtobs2').val('');
-			$('#txtNomPac').val('');
+			$('#txtNomPac2').val('');
 		});
 	
 		$('#btnSi').click(function(e){
