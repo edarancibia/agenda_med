@@ -314,10 +314,10 @@
 			e.stopImmediatePropagation();
 	
 			  if($('#cboProfesional').val() < 1){
-				alert('Seleccione un profesional');
+				  alert('Seleccione un profesional');
 			  }else{
 				if($("#txtPaciente").val().length > 0){
-				var rut = $('#txtPaciente').val();
+				  var rut = $('#txtPaciente').val();
 				
 				  $.ajax({
 					type: 'get',

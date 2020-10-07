@@ -247,17 +247,14 @@
     }
     
     	//BUSCAR PACIENTE POR RUT AL PRESIONAR BOTON BUSCAR
-    //$('#txtPaciente').keypress(function(e) {
 		$('#btnBuscaPaciente').on('click',function(e){
-			//var keycode = (e.keyCode ? e.keyCode : e.which);
 			e.stopImmediatePropagation();
-			//if (e.keyCode == 13) {
 	
 			  if($('#cboProfesional').val() < 1){
-				alert('Seleccione un profesional');
+				  alert('Seleccione un profesional');
 			  }else{
 				if($("#txtPaciente").val().length > 0){
-				var rut = $('#txtPaciente').val();
+				  var rut = $('#txtPaciente').val();
 				
 				  $.ajax({
 					type: 'get',
@@ -283,7 +280,6 @@
 				  $('#txtNomPac').val('');
 				}
 		  }
-			//}
 		});
 	
 		//NUEVO PACIENTE
