@@ -41,9 +41,9 @@
                 <label>Documento de indentidad</label>
                 <div id="custom-search-input" >
                   <div class="input-group col-md-12">
-                      <input type="text" class="form-control input-lg" placeholder="Buscar Doc. de Identidad" id="txtPaciente" name="txtPaciente" />
+                      <input type="text" class="form-control input-lg" placeholder="Buscar Doc. de Identidad" id="txtPaciente2" name="txtPaciente2" />
                       <span class="input-group-btn">
-                          <button class="btn btn-info btn-lg" type="button" id="btnBuscaPaciente">
+                          <button class="btn btn-info btn-lg" type="button" id="btnBuscaPaciente2">
                               <i class="glyphicon glyphicon-search"></i>
                           </button>
                       </span>
@@ -51,13 +51,13 @@
               </div>
                 
                 <label>Paciente</label>
-                <input type="text" name="txtNomPac" id="txtNomPac" class="form-control" readonly="true">
+                <input type="text" name="txtNomPac2" id="txtNomPac2" class="form-control" readonly="true">
                 <input type="hidden" id="txtFin" name="txtFin" class="form-control" disabled > 
                 <label>Obs</label>
-                <input type="text" name="txtobs" id="txtobs" class="form-control">
+                <input type="text" name="txtobs2" id="txtobs2" class="form-control">
               </div>
               <div class="modal-footer">
-                <button type="button" id="btnOK" class="btn btn-primary">Aceptar</button>
+                <button type="button" id="btnOK2" class="btn btn-primary">Aceptar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
               </div>
             </div>
@@ -247,39 +247,36 @@
     }
     
     	//BUSCAR PACIENTE POR RUT AL PRESIONAR BOTON BUSCAR
-		$('#btnBuscaPaciente').on('click',function(e){
+		$('#btnBuscaPaciente2').on('click',function(e){
 			e.stopImmediatePropagation();
-	
-			  if($('#cboProfesional').val() < 1){
-				  alert('Seleccione un profesional');
-			  }else{
-				if($("#txtPaciente").val().length > 0){
-				  var rut = $('#txtPaciente').val();
+
+				if($("#txtPaciente2").val().length > 0){
+				  var rut = $('#txtPaciente2').val();
 				
 				  $.ajax({
 					type: 'get',
 					url: 'https://clinic-calendar.herokuapp.com/paciente/'+rut,
 					data: {dni: rut},
 					success: function(data){
-					  $('#txtNomPac').val(data.nombre+' '+data.a_pat+' '+data.a_mat);
-					  $('#txtobs').focus();
+					  $('#txtNomPac2').val(data.nombre+' '+data.a_pat+' '+data.a_mat);
+					  $('#txtobs2').focus();
 	
 					  if (data.rutnum > 1) {
-						$('#btnOK').attr("disabled", false);
+						$('#btnOK2').attr("disabled", false);
 					  }
 					},
 					error:function(){
 						$('#modalPreguntaPac').modal('show');
-						$('#txtNomPac').val('');
-						$('#txtRutPac').val($('#txtPaciente').val());
+						$('#txtNomPac2').val('');
+						$('#txtRutPac2').val($('#txtPaciente2').val());
 					  }
 					});
 				}
 				else{
 				  alert('Ingrese rut');
-				  $('#txtNomPac').val('');
+				  $('#txtNomPac2').val('');
 				}
-		  }
+		  
 		});
 	
 		//NUEVO PACIENTE
@@ -322,7 +319,7 @@
               $('#modalNewPaciente').modal('hide');
               $('#txtNomPac').val(nom+' '+apat+' '+amat);
                 $('#modalNewPaciente').modal('hide');
-              $('#btnOK').attr("disabled", false);
+              $('#btnOK2').attr("disabled", false);
               },
               error: function(){
               console.log('error al guardar paciente');
@@ -338,8 +335,8 @@
 		//limpia inputs cuando el modal se cierra
 		$('#modalNew').on('hidden.bs.modal', function () {
 			//$('#btnOK').attr("disabled", true);
-			$('#txtPaciente').val('');
-			$('#txtobs').val('');
+			$('#txtPaciente2').val('');
+			$('#txtobs2').val('');
 			$('#txtNomPac').val('');
 		});
 	
@@ -350,21 +347,21 @@
 		});
 		
 		//GUARDA EVENTO
-		$('#btnOK').click(function(event) {
+		$('#btnOK2').click(function(event) {
 		  event.stopImmediatePropagation();
-		  var pac = $('#txtPaciente').val();
+		  var pac = $('#txtPaciente2').val();
 	
 		  if(pac == ""){
 			  alert('Ingrese rut');
-			  $('#txtPaciente').focus();
+			  $('#txtPaciente2').focus();
 		  }else{
         var formData = {
-          'title'       : $('#txtPaciente').val(),
+          'title'       : $('#txtPaciente2').val(),
           'start'       : $('#txtIni').val(),
           'end'	        : $('#txtFin').val(),
-          'description' : $('#txtobs').val(),
+          'description' : $('#txtobs2').val(),
           'fecha'       : Date.now(),
-          'rut_num'     : $('#txtPaciente').val(),
+          'rut_num'     : $('#txtPaciente2').val(),
           'rut_med'     : $('#cboProfesional').val(), // cambiar
           'estado'      : 1
         };
