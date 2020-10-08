@@ -255,7 +255,8 @@
 				
 				  $.ajax({
 					type: 'get',
-					url: 'https://clinic-calendar.herokuapp.com/paciente/'+rut,
+					//url: 'https://clinic-calendar.herokuapp.com/paciente/'+rut,
+          url: 'http://localhost:8080/paciente/'+rut,
 					data: {dni: rut},
 					success: function(data){
             console.log(data);
