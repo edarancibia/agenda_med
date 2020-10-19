@@ -41,7 +41,7 @@ public class Profesional {
 	private int tipo_ficha;
 	
 	@Column(name = "cod_centro")
-	private int cod_centro;
+	private Long cod_centro;
 	
 	@Column(name = "email")
 	private String email;
@@ -125,18 +125,17 @@ public class Profesional {
 	public void setTipo_ficha(int tipo_ficha) {
 		this.tipo_ficha = tipo_ficha;
 	}
-
-	public int getCod_centro() {
+	
+	public Long getCod_centro() {
 		return cod_centro;
 	}
 
-	public void setCod_centro(int cod_centro) {
+	public void setCod_centro(Long cod_centro) {
 		this.cod_centro = cod_centro;
 	}
 
-
 	public Profesional(Long idProfesional, int fkIdUsuario, String nombre, String a_pat, String a_mat, String direccion,
-			String telefono, int cod_esp, int tipo_ficha, int cod_centro, String email) {
+			String telefono, int cod_esp, int tipo_ficha, Long cod_centro, String email) {
 		super();
 		this.idProfesional = idProfesional;
 		this.fkIdUsuario = fkIdUsuario;

@@ -13,7 +13,7 @@ public class CalendarApplication {
 		SpringApplication.run(CalendarApplication.class, args);
 	}
 	
-	@Bean
+	/*@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
@@ -21,6 +21,6 @@ public class CalendarApplication {
 				registry.addMapping("/**").allowedOrigins("https://clinic-calendar.herokuapp.com").allowedMethods("*").allowedHeaders("*");
 			}
 		};
-	}
+	}*/
 
 }

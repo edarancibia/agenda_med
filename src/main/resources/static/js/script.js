@@ -1,8 +1,8 @@
 $(document).ready(function(){
-	var base_url = 'http://clinic-calendar.herokuapp.com:8080/';
+	var base_url = 'http://localhost:8080/';
 
 	if($('#txtIdCentro').val() == ''){
-		window.location.href = 'https://clinic-calendar.herokuapp.com/';
+		window.location.href = base_url;
 	}
 
 	$('.input-number').on('input', function () { 
@@ -24,61 +24,71 @@ $(document).ready(function(){
 		var idEvento = $('#txtIdEvento').val();
 		var rut_usu = $('#txtHiddenRut').val();
 		
-		window.location.href = 'https://clinic-calendar.herokuapp.com/ficha/'+rut_usu+'/'+idEvento;
+		window.location.href =  base_url + 'ficha/'+rut_usu+'/'+idEvento;
 	});
 
 	//GUARDA FICHA
 	$('#btnGuardaFicha').on('click', function(e){
 		e.stopImmediatePropagation();
+		$('#modalCierraFicha').modal('show');
 
-		var form_ficha = {
-			"fecha"   : new Date(),
-			"rutPac"  : $('#txtRutFicha').val(),
-			"edad"    : $('#txtEdadFicha').val(),
-			"peso"    : $('#txtPeso').val(),
-			"estatura": $('#txtEstatura').val(),
-			"motivo"  : $('#txtMotivo').val(),
-			"antecedentes" : $('#txtAntecedentes').val(),
-			"indicaciones" : $('#txtIndicaciones').val(),
-			"examenFisico" : $('#txtExamen').val(),
-			"diagnostico"  : $('#txtDiagnostico').val(),
-			"idProfesional": $('#txtIdProf').val(),
-			"solExamen"    : $('#txtSolEx').val()
-		}
+		if($('#btnConfirmFicha').on('click', function(){
 
-		$.ajax({
-			type: 'post',
-			url: 'https://clinic-calendar.herokuapp.com/ficha/save',
-			contentType: "application/json; charset=utf-8",
-            dataType: "json",
-			data: JSON.stringify(form_ficha),
-			success: function(){
-				alert('Ficha guardada exitosamente!');
-			},
-			error: function(){
-				alert('Error al guardar la ficha');
-			}
-		}).done(function(){
-			var idEvento = $('#txtIdEventoFicha').val();
-			var formData = {
-				'estado' : 3
-			}
-			console.log('evento: '+idEvento);
+			if($('#txtMotivo').val() == '' || $('#txtDiagnostico').val() == '' || $('#txtIndicaciones').val() == ''){
+				alert('Debe copletar los datos del formulario');
+			}else{
+				var idEvento = $('#txtIdEventoFicha').val();
 
-			$.ajax({
-				type: 'put',
-				url: 'https://clinic-calendar.herokuapp.com/confirmar/'+idEvento,
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				data: JSON.stringify(formData),
-				success: function(){
-					console.log('Evento cerrado!');
-				},
-				error: function(){
-					console.log('Error al guardar la ficha');
+				var form_ficha = {
+					"fecha"   : new Date(),
+					"rutPac"  : $('#txtRutFicha').val(),
+					"edad"    : $('#txtEdadFicha').val(),
+					"peso"    : $('#txtPeso').val(),
+					"estatura": $('#txtEstatura').val(),
+					"motivo"  : $('#txtMotivo').val(),
+					"antecedentes" : $('#txtAntecedentes').val(),
+					"indicaciones" : $('#txtIndicaciones').val(),
+					"examenFisico" : $('#txtExamen').val(),
+					"diagnostico"  : $('#txtDiagnostico').val(),
+					"idProfesional": $('#txtIdProf').val(),
+					"solExamen"    : $('#txtSolEx').val()
 				}
-			});
-		});
+		
+				$.ajax({
+					type: 'post',
+					url: base_url +  'ficha/save',
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					data: JSON.stringify(form_ficha),
+					success: function(){
+						$('#modalCierraFicha').modal('hide');
+					},
+					error: function(){
+						alert('Error al guardar la ficha');
+					}
+				}).done(function(){
+					var formData = {
+						'estado' : 3
+					}
+
+					$.ajax({
+						type: 'put',
+						url: base_url + 'confirmar/'+idEvento,
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						data: JSON.stringify(formData),
+						success: function(){
+							console.log('Evento cerrado!');
+						},
+						error: function(){
+							alert('Ficha guardada exitosamente!'); // a pesar del error, aquí se guarda bien la ficha y se cierra el evento
+							console.log('Error al cerrar evento, pero se cerró');
+							window.location.href = base_url + 'calendar';
+						}
+					});
+				});
+			}
+		}));
 	});
 
 	//Historial de atenciones
@@ -128,7 +138,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			type: 'get',
-			url: "https://clinic-calendar.herokuapp.com/profesional/verificar/"+email,
+			url: base_url + "profesional/verificar/"+email,
 			data: {email: email},
 			dataType: "json",
 			success: function(d){

@@ -64,7 +64,7 @@
           </div>
     </div>
     
-    <div id="myModal" class="modal fade">
+    <div id="myModal2" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- dialog body -->
@@ -77,7 +77,7 @@
           <!-- dialog buttons -->
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" id="btnComenzar">Comenzar atención</button>
-            <button type="button" class="btn btn-primary" id="btnConfirmar">Confirmar</button>
+            <button type="button" class="btn btn-primary" id="btnConfirmar2">Confirmar</button>
             <button type="button" class="btn btn-primary" id="btnCancelEv">Cancelar</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
           </div>
@@ -86,7 +86,7 @@
     </div>
 
 
-     <div id="modalPreguntaPac" class="modal fade">
+     <div id="modalPreguntaPac2" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- dialog body -->
@@ -104,7 +104,7 @@
     </div>
 
     <!-- REGISTRA PACIENTE-->
-    <div class="modal fade" id="modalNewPaciente">
+    <div class="modal fade" id="modalNewPaciente2">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -148,7 +148,7 @@
 
   $(document).ready(function() {
   
-    var base_url = 'http://clinic-calendar.herokuapp.com/';
+    var base_url = 'http://localhost:8080/';
     var idCentro = $('#txtIdCentro').val();
     
     $('#calendar').fullCalendar({
@@ -189,7 +189,7 @@
                 eventLimit: true, // allow "more" link when too many events
               
               select: function(start, end) {
-                    $('#modalNew').modal('show');
+                    $('#modalNew2').modal('show');
                     $('#txtIni').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
                     $('#txtFin').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
                     //$.getScript('/events/new', function() {});
@@ -208,21 +208,21 @@
                       $("#idEvento").val(event.id);
                       $("#txtIdEvento").val(event.id);
                       $("#txtHiddenRut").val(event.rut);
-                      $("#myModal").on("show", function() {    // wire up the OK button to dismiss the modal when shown  
-                        $("#myModal a.btn").on("click", function(e) {
-                              $("#myModal").modal('hide');     // dismiss the dialog
+                      $("#myModal2").on("show", function() {    // wire up the OK button to dismiss the modal when shown  
+                        $("#myModal2 a.btn").on("click", function(e) {
+                              $("#myModal2").modal('hide');     // dismiss the dialog
                           });
                       });
   
-                      $("#myModal").on("hide", function() {    // remove the event listeners when the dialog is dismissed
-                          $("#myModal a.btn").off("click");
+                      $("#myModal2").on("hide", function() {    // remove the event listeners when the dialog is dismissed
+                          $("#myModal2 a.btn").off("click");
                       });
                       
-                      $("#myModal").on("hidden", function() {  // remove the actual elements from the DOM when fully hidden
-                          $("#myModal").remove();
+                      $("#myModal2").on("hidden", function() {  // remove the actual elements from the DOM when fully hidden
+                          $("#myModal2").remove();
                       });
                       
-                      $("#myModal").modal({                    // wire up the actual modal functionality and show the dialog
+                      $("#myModal2").modal({                    // wire up the actual modal functionality and show the dialog
                         "backdrop"  : "static",
                         "keyboard"  : true,
                         "show"      : true                     // ensure the modal is shown immediately
@@ -243,7 +243,7 @@
     function getEvents(){
         var idProfesional = $('#txtIdProf').val();
         $('#calendar').fullCalendar('removeEvents');
-        $('#calendar').fullCalendar('addEventSource', 'https://clinic-calendar.herokuapp.com/alleventsByProf/'+idProfesional);
+        $('#calendar').fullCalendar('addEventSource', base_url + 'alleventsByProf/'+idProfesional);
     }
     
     	//BUSCAR PACIENTE POR RUT AL PRESIONAR BOTON BUSCAR
@@ -256,11 +256,11 @@
 				  $.ajax({
 					type: 'get',
 					//url: 'https://clinic-calendar.herokuapp.com/paciente/'+rut,
-          url: 'http://localhost:8080/paciente/'+rut,
+          url: base_url+ 'paciente/'+rut,
 					data: {dni: rut},
 					success: function(data){
             console.log(data);
-					  $('#txtNomPac2').val(data.nombre+' '+data.a_pat+' '+data.a_mat);
+					  $('#txtNomPac2').val(data[0].nombre+' '+data[0].a_pat+' '+data[0].a_mat);
 					  $('#txtobs2').focus();
 	
 					  if (data.rutnum > 1) {
@@ -268,7 +268,7 @@
 					  }
 					},
 					error:function(){
-						$('#modalPreguntaPac').modal('show');
+						$('#modalPreguntaPac2').modal('show');
 						$('#txtNomPac2').val('');
 						$('#txtRutPac2').val($('#txtPaciente2').val());
 					  }
@@ -312,15 +312,15 @@
           }else{
             $.ajax({
               type: 'post',
-              url: "https://clinic-calendar.herokuapp.com/addpaciente",
+              url: base_url + "addpaciente",
               contentType: "application/json; charset=utf-8",
               dataType: "json",
               data: JSON.stringify(formPac),
               success: function(){
               //toastr.success('Paciente guardado!');
-              $('#modalNewPaciente').modal('hide');
+              $('#modalNewPaciente2').modal('hide');
               $('#txtNomPac').val(nom+' '+apat+' '+amat);
-                $('#modalNewPaciente').modal('hide');
+                $('#modalNewPaciente2').modal('hide');
               $('#btnOK2').attr("disabled", false);
               },
               error: function(){
@@ -335,7 +335,7 @@
 		});
 	
 		//limpia inputs cuando el modal se cierra
-		$('#modalNew').on('hidden.bs.modal', function () {
+		$('#modalNew2').on('hidden.bs.modal', function () {
 			//$('#btnOK').attr("disabled", true);
 			$('#txtPaciente2').val('');
 			$('#txtobs2').val('');
@@ -344,14 +344,14 @@
 	
 		$('#btnSi').click(function(e){
 		  e.stopImmediatePropagation()
-		  $('#modalPreguntaPac').modal('hide');
-		  $('#modalNewPaciente').modal('show');
+		  $('#modalPreguntaPac2').modal('hide');
+		  $('#modalNewPaciente2').modal('show');
 		});
 		
 		//GUARDA EVENTO
 		$('#btnOK2').click(function(event) {
 		  event.stopImmediatePropagation();
-		  var pac = $('#txtPaciente2').val();
+		  var pac = $('#txtNomPac2').val();
 	
 		  if(pac == ""){
 			  alert('Ingrese rut');
@@ -364,7 +364,7 @@
           'description' : $('#txtobs2').val(),
           'fecha'       : Date.now(),
           'rut_num'     : $('#txtPaciente2').val(),
-          'rut_med'     : $('#cboProfesional').val(), // cambiar
+          'rut_med'     : $('#txtIdProf').val(), // cambiar
           'estado'      : 1
         };
 			
@@ -373,11 +373,11 @@
           type:'post',
           contentType: "application/json; charset=utf-8",
           dataType: "json",
-          url: "https://clinic-calendar.herokuapp.com/addevent",
+          url: base_url + "addevent",
           data: JSON.stringify(formData),
           success:function(data){
             console.log(data);
-            $('#modalNew').modal('hide');
+            $('#modalNew2').modal('hide');
             $('#calendar').fullCalendar( 'refetchEvents' );
           },
         });
@@ -387,25 +387,25 @@
 
 
 	//CONFIRMAR CITA
-	$('#btnConfirmar').on('click', function(e){
+	$('#btnConfirmar2').on('click', function(e){
 		e.stopImmediatePropagation();
 		var idEvento = $("#txtIdEvento").val();
     var formData = {
-      'estado' : 1
+      'estado' : 2
     };
 
 		$.ajax({
 			type: 'put',
-      url: 'https://clinic-calendar.herokuapp.com/confirmar/'+ idEvento,
+      url: base_url + 'confirmar/'+ idEvento,
       contentType: "application/json; charset=utf-8",
       dataType: "json",
 			data: JSON.stringify(formData),
 			success: function(){
-				$('#myModal').modal('hide');
+				$('#myModal2').modal('hide');
         $('#calendar').fullCalendar( 'refetchEvents' );
       },
       error: function(){
-        $('#myModal').modal('hide');
+        $('#myModal2').modal('hide');
         $('#calendar').fullCalendar( 'refetchEvents' );
         console.log('error al confirmar cita');
       }
@@ -422,16 +422,16 @@
 
 		$.ajax({
 			type: 'put',
-      url: 'https://clinic-calendar.herokuapp.com/cancelar/'+ idEvento,
+      url: base_url + 'cancelar/'+ idEvento,
       contentType: "application/json; charset=utf-8",
       dataType: "json",
 			data: JSON.stringify(formData),
 			success: function(){
-				$('#myModal').modal('hide');
+				$('#myModal2').modal('hide');
         $('#calendar').fullCalendar( 'refetchEvents' );
       },
       error: function(){
-        $('#myModal').modal('hide');
+        $('#myModal2').modal('hide');
         $('#calendar').fullCalendar( 'refetchEvents' );
         console.log('error al cancelar cita');
       }

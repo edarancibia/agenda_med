@@ -91,13 +91,13 @@
 
 
 <!-- set up the modal to start hidden and fade in and out -->
-<div id="modalConfirm" class="modal fade">
+<div id="modalCierraFicha" class="modal fade">
 <div class="modal-dialog">
 <div class="modal-content">
   <!-- dialog body -->
   <div class="modal-body">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    ¿Seguro que desea guardar información terminar la atención?
+    ¿Seguro que desea guardar la Ficha y terminar la atención?
   </div>
   <!-- dialog buttons -->
   <div class="modal-footer">
@@ -111,11 +111,11 @@
 <script>
     $(document).ready(function(){
         var rutnum = $('#txtRutFicha').val();
-        var base_url = 'http://clinic-calendar.herokuapp.com/';
+        var base_url = 'http://localhost:8080/';
 
         $.ajax({
             type: 'get',
-            url: 'https://clinic-calendar.herokuapp.com/paciente/'+rutnum,
+            url: base_url + 'paciente/'+rutnum,
             success: function(data){
                 $('#lblnombre').text(data[0].a_pat + ' '+ data[0].a_mat + ' '+ data[0].nombre);
                 $('#txtFnacFicha').val(data[0].fecha_nac);
@@ -133,7 +133,7 @@
         function getFichasAnteriores(){
             $.ajax({
                 type:'get',
-                url: 'https://clinic-calendar.herokuapp.com/ficha/get-by-pac/'+rutnum,
+                url: base_url + 'ficha/get-by-pac/'+rutnum,
                 success: function(data){
 					$.each(data, function(i, item){
 					$('<tr>').html(
@@ -153,7 +153,7 @@
 
             $.ajax({
                 type: 'get',
-                url: 'https://clinic-calendar.herokuapp.com/ficha/get-by-id/'+idFichaAnterior,
+                url: base_url + 'ficha/get-by-id/'+idFichaAnterior,
                 success: function(data){
                     console.log(data);
                     $('#txtRutFicha').val(data.rutPac);
@@ -185,7 +185,7 @@
 
                 $.ajax({
                     type: 'get',
-                    url: 'https://clinic-calendar.herokuapp.com/paciente/'+rutnum,
+                    url: base_url + 'paciente/'+rutnum,
                     success: function(data){
                         $('#lblnombre').text(data[0].a_pat + ' '+ data[0].a_mat + ' '+ data[0].nombre);
                         $('#txtFnacFicha').val(data[0].fecha_nac);

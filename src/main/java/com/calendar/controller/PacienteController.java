@@ -26,7 +26,7 @@ import com.calendar.entities.Paciente;
 import com.calendar.service.PacienteService;
 import com.calendar.service.PacienteServiceImpl;
 
-@CrossOrigin(origins = "https://localhost:8080")
+//@CrossOrigin(origins = "https://localhost:8080")
 @RestController
 public class PacienteController {
 	
@@ -35,7 +35,7 @@ public class PacienteController {
 	@Autowired
 	public PacienteServiceImpl pacienteService;
 	
-	@CrossOrigin(origins = "https://clinic-calendar.herokuapp.com")
+	//@CrossOrigin(origins = "https://clinic-calendar.herokuapp.com")
 	@GetMapping("/paciente/{rutnum}")
     public List<Map<String, Object>>  findByRut(@PathVariable("rutnum") int rutnum){
 		List<Map<String, Object>>  paciente = pacienteService.obtienePorRut(rutnum);

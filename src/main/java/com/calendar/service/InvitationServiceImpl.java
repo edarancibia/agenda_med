@@ -18,6 +18,10 @@ public class InvitationServiceImpl implements InvitationService{
 	public Invitation addInvitation(Invitation invitation) {
 		return invitationRepository.save(invitation);
 	}
-	
+
+	@Override
+	public Invitation findInvitationByEmailAndEstado(String email, int estado) {
+		return invitationRepository.findInvitationByEmailAndEstado(email, estado);
+	}
 	
 }

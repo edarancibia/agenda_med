@@ -1,17 +1,23 @@
 <div th:include="header.html" th:remove="tag"></div>
 <div th:include="nav.html" th:remove="tag"></div>
 <body>
+	
 	<div class="container">
+		<div class="jumbotron">
+			<p><h4>Puedes invitar a otras personas a unirse a tu clínica, sólo debes indicar su correo electrónico y la función que realizará, ya sea agendar citar o atención Profesional</h4></p>
+		</div>
+
 		<div class="row col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-2" style="margin-top: 10px;">
 			<div class="main-login main-center">
 			
-			<form class="" th:action="@{/user/sedninvitation}" th:object="${invitation}" method="post">
+			<form class="" th:action="@{/user/sendninvitation}" th:object="${invitation}" method="post">
+				<input type="hidden" th:field="*{fk_idClinica}" id="txtidcentro_" name="txtidcentro_">
 				<div class="form-group">
 					<label for="name" class="cols-sm-2 control-label">Email:</label>
 					<div class="cols-sm-6">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-							<input type="text" th:field="*{email}" class="form-control" placeholder="Ingresa el email"/>
+							<span class="input-group-addon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+							<input type="text" id="txtEmailInvita" th:field="*{email}" class="form-control" placeholder="Ingresa el email" required/>
 						</div>
 					</div>
 				</div>
@@ -20,7 +26,7 @@
 					<label for="name" class="cols-sm-2 control-label">Perfil:</label>
 					<div class="cols-sm-6">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+							<span class="input-group-addon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
 							<select th:field="*{perfil}" class="form-control">
 								<option value=0>Agenda</option>
 								<option value=1>Atención Profesional</option>
@@ -30,7 +36,7 @@
 				</div>
 				
 				<div class="form-group">
-					<button class="btn btn-lg btn-primary btn-block" type="submit" id="btn-invitacion">
+					<button class="btn btn-lg btn-primary btn-block" type="submit" id="btn-invitacion" >
 						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Enviar
 					</button>
 				</div>
@@ -38,4 +44,14 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	$(document).one('ready', function(e){
+		e.stopImmediatePropagation();
+
+		var idclinica = $('#txtIdCentro').val();
+		console.log('centro: '+ idclinica);
+		$('#txtidcentro_').val(idclinica);
+	});
+	</script>
 </body>
+</html>

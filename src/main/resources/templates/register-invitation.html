@@ -9,7 +9,7 @@
 
                 <div style="padding-top:30px" class="panel-body" >
 			
-					 <form class="" th:action="@{/user/adduser}" method="post">
+					 <form class="" th:action="@{/user/adduserinvitation}" method="post">
 						
 						  <div class="form-group">
 							<label for="name" class="cols-sm-2 control-label">Nombre</label>
@@ -56,7 +56,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-									<input type="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" name="email_confirm" id="txt_mail_confirm"  placeholder="Confirma tu Email" />
+									<input type="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" name="email_confirm" id="txt_mail_confirm"  placeholder="Confirma tu Email"/>
 								</div>
 							</div>
 						</div>
@@ -78,26 +78,6 @@
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 									<input type="password" class="form-control" name="confirm" id="confirmPass"  placeholder="Confirma tu Password"/>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="confirm" class="cols-sm-2 control-label">¿Cómo se llama tu Clínica?</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-h-square" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="nombreClinica" id="nombreClinica"  placeholder="Nombre de la Clínica"/>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="confirm" class="cols-sm-2 control-label">¿Cuál es la dirección de la Clínica?</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i></span>
-									<input type="text" class="form-control"  name="direccionClinica" id="direccionClinica" placeholder="Dirección"/>
 								</div>
 							</div>
 						</div>
@@ -128,23 +108,10 @@
 						</div> 
 						
 					</form>
-
-					<div th:if="${errormail}" th:text="${message}" th:class="${'alert ' + alertClass}"/>
 				</div>
 				</div>
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-		function validaEmails(){
-			var email1 = document.getElementById("txt_reg_email");
-			var email2 = document.getElementById("txt_mail_confirm");
-
-			if(email1 != email2){
-				alert('Los correos no coinciden!');
-				document.getElementById("txt_reg_email").focus();
-			}
-		}
-		</script>
 </body>
 </html>

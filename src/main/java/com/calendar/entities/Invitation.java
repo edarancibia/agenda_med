@@ -1,5 +1,7 @@
 package com.calendar.entities;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +15,7 @@ public class Invitation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idInvitacion")
+	@Column(name = "idinvitacion")
 	private Long idInvitacion;
 	
 	@Column(name = "email")
@@ -23,10 +25,16 @@ public class Invitation {
 	private int fk_idUsuario;
 	
 	@Column(name = "fk_idClinica")
-	private int fk_idClinica;
+	private Long fk_idClinica;
 	
 	@Column(name = "perfil")
 	private int perfil;
+	
+	@Column(name = "estado")
+	private int estado;
+	
+	@Column(name = "fecha")
+	private Date fecha;
 
 	public Long getIdInvitacion() {
 		return idInvitacion;
@@ -52,11 +60,11 @@ public class Invitation {
 		this.fk_idUsuario = fk_idUsuario;
 	}
 
-	public int getFk_idClinica() {
+	public Long getFk_idClinica() {
 		return fk_idClinica;
 	}
 
-	public void setFk_idClinica(int fk_idClinica) {
+	public void setFk_idClinica(Long fk_idClinica) {
 		this.fk_idClinica = fk_idClinica;
 	}
 
@@ -68,13 +76,33 @@ public class Invitation {
 		this.perfil = perfil;
 	}
 
-	public Invitation(Long idInvitacion, String email, int fk_idUsuario, int fk_idClinica, int perfil) {
-		
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	
+
+	public Invitation(Long idInvitacion, String email, int fk_idUsuario, Long fk_idClinica, int perfil, int estado,
+			Date fecha) {
 		this.idInvitacion = idInvitacion;
 		this.email = email;
 		this.fk_idUsuario = fk_idUsuario;
 		this.fk_idClinica = fk_idClinica;
 		this.perfil = perfil;
+		this.estado = estado;
+		this.fecha = fecha;
 	}
 
 	public Invitation() {
@@ -84,8 +112,8 @@ public class Invitation {
 	@Override
 	public String toString() {
 		return "Invitation [idInvitacion=" + idInvitacion + ", email=" + email + ", fk_idUsuario=" + fk_idUsuario
-				+ ", fk_idClinica=" + fk_idClinica + ", perfil=" + perfil + "]";
+				+ ", fk_idClinica=" + fk_idClinica + ", perfil=" + perfil + ", estado=" + estado + ", fecha=" + fecha
+				+ "]";
 	}
-	
 	
 }

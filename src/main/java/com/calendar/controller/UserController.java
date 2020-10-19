@@ -1,5 +1,7 @@
 package com.calendar.controller;
 
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
@@ -26,6 +28,7 @@ import com.calendar.constant.ViewConstant;
 import com.calendar.entities.Clinica;
 import com.calendar.entities.Invitation;
 import com.calendar.entities.MailForm;
+import com.calendar.entities.Profesional;
 import com.calendar.entities.User;
 import com.calendar.entities.UsuarioCentro;
 import com.calendar.impl.ProfesionalServiceImpl;
@@ -59,9 +62,6 @@ public class UserController {
 	private SendMailService mailService;
 	
 	@Autowired
-	private ClinicaJpaRepository clinicaRepo;
-	
-	@Autowired
 	@Qualifier("profesionalServiceImpl")
 	private ProfesionalServiceImpl profesionalServiceImpl;
 	
@@ -72,6 +72,9 @@ public class UserController {
 	@Autowired
 	@Qualifier("clinicaServiveImpl")
 	private ClinicaServiceImpl clinicaServiceImpl;
+	
+	@Autowired
+	private InvitationServiceImpl invitationService;
 	
 	//@Autowired
 	//private BCryptPasswordEncoder passwordEncoder;
@@ -93,6 +96,7 @@ public class UserController {
 		return "invitation";
 	}
 	
+	//registro de usuario desde register.html
 	@PostMapping("/adduser")
 	public String addUser(@ModelAttribute(name = "user") User user, Clinica clinica,
 			Model model,@ModelAttribute(name="form") MailForm form,
@@ -100,29 +104,42 @@ public class UserController {
 			@RequestParam("perfil") int perfil,
 			@RequestParam("nombreClinica") String nombreClinica,@RequestParam("direccionClinica") String direccionClinica){
 		
-		if(null != userService.findUserByEmail(email)){
+		User userDb = userService.findUserByEmail(email);
+		LOG.info("resultado: "+userDb);
+		if(userDb != null){
+			LOG.info("usuario ya existe");
+			model.addAttribute("errormail",true);
 			return "redirect:/user/register?errormail";
 		}else{
 		
 			//user.setPass(passwordEncoder.encode(user.getPass()));
 			if(null != userService.addUser(user)){
+				//DEBE PREGUNTAR QUE PERFIL TIENE,SI ES PROFESIONAL DEBE GUARDAR EN LA TABLA DEL MISMO NOMBRE
 				if(user.getPerfil() == 0) {
 					LOG.info("no es profesional");
-					
+					clinicaServiceImpl.addClinica(clinica);
 				}else {
 					LOG.info("es profesional");
-					LOG.info("clinica:" + clinica);
+					clinicaServiceImpl.addClinica(clinica);
+					
+					Profesional profesional = new Profesional();
+					profesional.setFkIdUsuario((int) user.getIdusuario());
+					profesional.setNombre(user.getNombre());
+					profesional.setA_pat(user.getApat());
+					profesional.setA_mat(user.getAmat());
+					profesional.setEmail(user.getEmail());
+					profesional.setCod_centro(clinica.getId());
+					profesionalServiceImpl.addProfesional(profesional);
+					LOG.info("profesional guardado ok");
 					
 				}
-				//DEBE PREGUNTAR QUE PERFIL TIENE,SI ES PROFESIONAL DEBE GUARDAR EN LA TABLA DEL MISMO NOMBRE
+				
 				model.addAttribute("result", 1);
 				
 				//String message = form.getBody() +"\n\n Datos de contacto: " + "\nNombre: " + form.getName() + "\nE-mail: " + form.getMail();
 		        String message = "Bienvenido a Agenda Online, para inciar sesión haz click aqui: \n" + "http://localhost:8080/calendar";
 				String subject = "Bienvenido";
-		        //mailService.sendMail("erwin2211@hotmail.com",email,subject,message);
-				
-				clinicaServiceImpl.addClinica(clinica);
+		        mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
 				
 				//long idCentro = clinicaNew.getId();
 				//long idUsuario = user.getIdusuario();
@@ -137,25 +154,91 @@ public class UserController {
 		return "register";
 	}
 	
-	@PostMapping("/sedninvitation")
+	@PostMapping("/sendninvitation")
 	public String sendInvitation(@ModelAttribute(name = "invitation") Invitation invitation, Model model,
 			@RequestParam("email") String email_inv,
-			@RequestParam("perfil") String perfil_inv) {
+			@RequestParam("perfil") String perfil_inv, HttpSession session) {
 		
 		if(null != email_inv) {
-			if(null != invitationServiceImpl.addInvitation(invitation)) {
-				
-				//envia correo al invitado
-				String message = "Has sido invitado a utilizar Agenda Online, para inciar sesión haz click aqui: \n" + "http://localhost:8080/user/invitationregister";
-				String subject = "Invitación a utilizar Agenda Online";
-		        mailService.sendMail("erwin2211@hotmail.com",email_inv,subject,message);
+			if( null != userService.findUserByEmail(email_inv)) {
+				//el usuario ya está registrado
+				return "redirect:/user/register?errormail";
+			}else {
+				if(null != invitationServiceImpl.addInvitation(invitation)) {
+					
+					//envia correo al invitado
+					String message = "Has sido invitado a utilizar Agenda Online por "+session.getAttribute("username") +". Para inciar sesión haz click aqui: \n" + "http://localhost:8080/user/invitationregister";
+					String subject = "Invitación a utilizar Agenda Online";
+			        mailService.sendMail("clinic-calendar@outlook.com",email_inv,subject,message);
+				}
 			}
+
 		}else {
 			return "invitation";
 		}
 
 		return "invitation";
 	}
+	
+	@GetMapping("/invitationregister")
+	public String invitationRegister(Model model, User user) {	
+		return ViewConstant.REGISTERINV;
+	}
+	
+	//registro de usuario desde invitationregister.html
+	@PostMapping("/adduserinvitation")
+	public String addUserInvitation(@ModelAttribute(name = "user") User user,
+			Model model,@ModelAttribute(name="form") MailForm form,
+			@RequestParam("email") String email){
+		
+		User userDb = userService.findUserByEmail(email);
+		Invitation invitation = invitationService.findInvitationByEmailAndEstado(email, 1);
+		
+		LOG.info("resultado: "+userDb);
+		if(userDb != null){
+			LOG.info("usuario ya existe");
+			model.addAttribute("errormail",true);
+			return "redirect:/user/register?errormail";
+		}else{
+		
+			//user.setPass(passwordEncoder.encode(user.getPass()));
+			if(null != userService.addUser(user)){
+				//DEBE PREGUNTAR QUE PERFIL TIENE,SI ES PROFESIONAL DEBE GUARDAR EN LA TABLA DEL MISMO NOMBRE
+				if(user.getPerfil() == 0) {
+					LOG.info("no es profesional");
+					
+				}else {
+					LOG.info("es profesional");
+					
+					Profesional profesional = new Profesional();
+					profesional.setFkIdUsuario((int) user.getIdusuario());
+					profesional.setNombre(user.getNombre());
+					profesional.setA_pat(user.getApat());
+					profesional.setA_mat(user.getAmat());
+					profesional.setEmail(user.getEmail());
+					profesional.setCod_centro(invitation.getFk_idClinica());
+					profesionalServiceImpl.addProfesional(profesional);
+					LOG.info("profesional guardado ok");
+					
+				}
+				
+				model.addAttribute("result", 1);
+				
+				//String message = form.getBody() +"\n\n Datos de contacto: " + "\nNombre: " + form.getName() + "\nE-mail: " + form.getMail();
+		        String message = "Bienvenido a Agenda Online, para inciar sesión haz click aqui: \n" + "http://localhost:8080/calendar";
+				String subject = "Bienvenido";
+		        mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
+				
+				usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), invitation.getFk_idClinica());
+				
+		        return "register-invitation";
+			}else {
+				model.addAttribute("result", 0);
+			}
+		}
+		return "register-invitation";
+	}
+
 	
 	@GetMapping("/profesional")
 	public String profesional() {

@@ -37,7 +37,7 @@ import com.calendar.repository.EventJpaRepository;
 import com.calendar.service.EventServiceImpl;
 import com.calendar.service.UserServiceImpl;
 
-@CrossOrigin(origins = "https://clinic-calendar.herokuapp.com")
+//@CrossOrigin(origins = "https://clinic-calendar.herokuapp.com")
 @RestController
 @SessionAttributes({"activeUser","centro","activeIdUser","activePerfil","activeProf","activeCentro"})
 public class EventController {
@@ -86,6 +86,7 @@ public class EventController {
 			idUsuario = (int) usCentro.getIdUsuario();
 			tipoUsuario = username.getPerfil();
 			session.setAttribute("tipoUser", tipoUsuario);
+			session.setAttribute("idUsuario", idUsuario);
 			
 			centro = usCentro.getIdCentro();
 			session.setAttribute("activeCentro", centro);

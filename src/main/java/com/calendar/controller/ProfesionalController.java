@@ -78,7 +78,7 @@ public class ProfesionalController {
 	}
 	
 	//lista de profesionales por centro para combo
-	@CrossOrigin(origins = "https://clinic-calendar.herokuapp.com")
+	//@CrossOrigin(origins = "https://clinic-calendar.herokuapp.com")
 	@GetMapping("/get-by-centro/{idCentro}")
 	public @ResponseBody List<Map<String, Object>> getByCentro(@PathVariable int idCentro){
 		List<Map<String, Object>> profesionales = profesionalService.getProfByCentro(idCentro);

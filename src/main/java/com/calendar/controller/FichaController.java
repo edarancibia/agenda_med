@@ -40,7 +40,7 @@ public class FichaController {
 		ModelAndView modelAndView = new ModelAndView("ficha");
 		model.addAttribute("activeUser",session.getAttribute("username"));
 		model.addAttribute("activePerfil",session.getAttribute("tipoUser"));
-		model.addAttribute("activeProf",session.getAttribute("idProfesional"));
+		model.addAttribute("activeProf",session.getAttribute("activeProf"));
 		model.addAttribute("rut_pac",rut_num);
 		model.addAttribute("idEvento",idEvento);
 		return modelAndView;
