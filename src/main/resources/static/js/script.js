@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var base_url = 'http://clinic-calendar.herokuapp.com/';
+	var base_url = 'https://clinic-calendar.herokuapp.com/';
 
 	if($('#txtIdCentro').val() == ''){
 		window.location.href = base_url;
