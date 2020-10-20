@@ -37,8 +37,8 @@ import com.calendar.repository.EventJpaRepository;
 import com.calendar.service.EventServiceImpl;
 import com.calendar.service.UserServiceImpl;
 
-//@CrossOrigin(origins = "https://clinic-calendar.herokuapp.com")
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @SessionAttributes({"activeUser","centro","activeIdUser","activePerfil","activeProf","activeCentro"})
 public class EventController {
 
