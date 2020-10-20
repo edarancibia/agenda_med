@@ -244,8 +244,9 @@ public class UserController {
 
 	
 	@GetMapping("/profesional")
-	public String profesional() {
-		return "profesional";
+	public ModelAndView profesional() {
+		ModelAndView mv = new ModelAndView("profesional");
+		return mv;
 	}
 	
 }
