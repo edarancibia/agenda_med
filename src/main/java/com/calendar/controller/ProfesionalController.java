@@ -33,6 +33,7 @@ import com.calendar.service.ProfesionalService;
 import com.calendar.service.UserServiceImpl;
 
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @RequestMapping("/profesional")
 public class ProfesionalController {
 

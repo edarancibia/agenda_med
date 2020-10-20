@@ -105,7 +105,6 @@ public class UserController {
 			@RequestParam("nombreClinica") String nombreClinica,@RequestParam("direccionClinica") String direccionClinica){
 		
 		User userDb = userService.findUserByEmail(email);
-		LOG.info("resultado: "+userDb);
 		if(userDb != null){
 			LOG.info("usuario ya existe");
 			model.addAttribute("errormail",true);
