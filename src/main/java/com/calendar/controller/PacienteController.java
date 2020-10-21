@@ -26,8 +26,8 @@ import com.calendar.entities.Paciente;
 import com.calendar.service.PacienteService;
 import com.calendar.service.PacienteServiceImpl;
 
-//@CrossOrigin(origins = "https://localhost:8080")
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class PacienteController {
 	
 	private static final Log LOG = LogFactory.getLog(PacienteController.class);
