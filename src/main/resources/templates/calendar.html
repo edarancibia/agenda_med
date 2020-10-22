@@ -329,7 +329,7 @@
 					success: function(data){
             console.log(data);
 
-            if(data != null){
+            if(data.length > 0){
               $('#txtNomPac').val(data[0].nombre+' '+data[0].a_pat+' '+data[0].a_mat);
               $('#txtobs').focus();
     
