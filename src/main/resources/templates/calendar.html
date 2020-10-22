@@ -328,12 +328,20 @@
 					data: {dni: rut},
 					success: function(data){
             console.log(data);
-					  $('#txtNomPac').val(data[0].nombre+' '+data[0].a_pat+' '+data[0].a_mat);
-					  $('#txtobs').focus();
-	
-					  if (data.rutnum > 1) {
-						$('#btnOK').attr("disabled", false);
-					  }
+
+            if(data != null){
+              $('#txtNomPac').val(data[0].nombre+' '+data[0].a_pat+' '+data[0].a_mat);
+              $('#txtobs').focus();
+    
+              if (data.rutnum > 1) {
+                $('#btnOK').attr("disabled", false);
+              }
+            }else{
+              $('#modalPreguntaPac').modal('show');
+              $('#txtNomPac').val('');
+              $('#txtRutPac').val($('#txtPaciente').val());
+              }
+            }
 					},
 					error:function(){
 						$('#modalPreguntaPac').modal('show');
