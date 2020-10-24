@@ -9,5 +9,8 @@ public interface ClinicaService {
 
 	public abstract Clinica addClinica(Clinica clinica);
 	
-	List<Map<String, Object>> getClinicaByUser(int idUser, int idCmed);
+	List<Map<String, Object>> getClinicaByUser(int idUser, long idCmed);
+	
+	public abstract Clinica findClinicaById(Long idClinica);
+
 }

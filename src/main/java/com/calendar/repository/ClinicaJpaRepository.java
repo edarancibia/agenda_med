@@ -14,7 +14,9 @@ public interface ClinicaJpaRepository extends JpaRepository<Clinica, Long> {
 
 	@Query(value = "select c.id as idCentro,c.nombreClinica as nombreCmed\n" + 
 			"from usuario_centro uc, cmed c \n" + 
-			"where uc.idCentro = c.id and c.id = :idCmed and uc.idUsuario = :idUser;", nativeQuery = true)
-	List<Map<String, Object>> getClinicaByUser(int idUser, int idCmed);
+			"where uc.idCentro = c.id and c.id = :idCmed and uc.idUsuario = :idUser", nativeQuery = true)
+	List<Map<String, Object>> getClinicaByUser(int idUser, long idCmed);
+	
+	public abstract Clinica findClinicaById(Long idClinica);
 	
 }

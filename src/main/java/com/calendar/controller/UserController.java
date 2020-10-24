@@ -43,7 +43,7 @@ import com.calendar.service.InvitationServiceImpl;
 import com.calendar.service.SendMailService;
 import com.calendar.service.UserServiceImpl;
 
-@RestController
+@Controller
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @RequestMapping("/user")
 @SessionAttributes({"activeUser","centro","activeIdUser","activePerfil","activeProf","activeCentro"})
@@ -85,19 +85,19 @@ public class UserController {
 	
 	
 	@GetMapping("/register")
-	public String register(Model model,User user,@RequestParam(name="error",required = false)String error,
-			@RequestParam(name="error",required = false)String errormail,Clinica clinica){
-		LOG.info("METHOD: register() --PARAMS: errormail="+ errormail);
-		model.addAttribute("errormail",error);
-		model.addAttribute("error",errormail);
+	public String register(Model model,User user,@RequestParam(name="errormail",required = false)String errormail,
+			@RequestParam(name="success",required = false)String success,Clinica clinica){
+		model.addAttribute("success",success);
+		model.addAttribute("errormail",errormail);
 		return ViewConstant.REGISTER;
 	}
 	
 	@GetMapping("/invitation")
-	public String invitacion(Invitation invitation, HttpSession session, Model model) {
+	public ModelAndView invitacion(Invitation invitation, HttpSession session, Model model) {
+		ModelAndView mv = new ModelAndView("invitation");
 		model.addAttribute("activeUser",session.getAttribute("username"));
 		model.addAttribute("activePerfil",session.getAttribute("tipoUser"));
-		return "invitation";
+		return mv;
 	}
 	
 	//registro de usuario desde register.html
@@ -110,9 +110,9 @@ public class UserController {
 		
 		User userDb = userService.findUserByEmail(email);
 		if(userDb != null){
-			LOG.info("usuario ya existe");
-			model.addAttribute("errormail",true);
-			return "redirect:/user/register?errormail";
+			model.addAttribute("errormail","el correo ya existe");
+			LOG.info("usuario ya existe "+ model.getAttribute("errormail"));
+			return "redirect:/user/register?errormail=1";
 		}else{
 		
 			//user.setPass(passwordEncoder.encode(user.getPass()));
@@ -122,7 +122,7 @@ public class UserController {
 					LOG.info("no es profesional");
 					clinicaServiceImpl.addClinica(clinica);
 				}else {
-					LOG.info("es profesional");
+					
 					clinicaServiceImpl.addClinica(clinica);
 					
 					Profesional profesional = new Profesional();
@@ -138,18 +138,15 @@ public class UserController {
 				}
 				
 				model.addAttribute("result", 1);
+				model.addAttribute("success","El usuario fue registrado exitosamente!");
 				
-				//String message = form.getBody() +"\n\n Datos de contacto: " + "\nNombre: " + form.getName() + "\nE-mail: " + form.getMail();
-		        String message = "Bienvenido a Agenda Online, para inciar sesión haz click aqui: \n" + "http://localhost:8080/calendar";
-				String subject = "Bienvenido";
+		        String message = "Bienvenido a Clinic Calendar, para inciar sesión haz click aqui: \n" + "https://clinic-calendar.herokuapp.com";
+				String subject = "Bienvenido a Clinic Calendar";
 		        mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
 				
-				//long idCentro = clinicaNew.getId();
-				//long idUsuario = user.getIdusuario();
-				LOG.info("id usuario:" + user.getIdusuario() +' '+ "idCentro:" + clinica.getId());
 				usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), clinica.getId());
 				
-		        return "register";
+				return "redirect:/user/register?success=1";
 			}else {
 				model.addAttribute("result", 0);
 			}
@@ -167,11 +164,20 @@ public class UserController {
 				//el usuario ya está registrado
 				return "redirect:/user/register?errormail";
 			}else {
+				long clinica = (long) session.getAttribute("activeCentro");
+				int user = (int) session.getAttribute("idUsuario");
+				
+				Clinica clinicaDb = clinicaServiceImpl.findClinicaById(clinica);
+				
+				LOG.info("nombre clinica: "+ clinicaDb.getNombreClinica()+ "user: "+ user);
+				
 				if(null != invitationServiceImpl.addInvitation(invitation)) {
 					
 					//envia correo al invitado
-					String message = "Has sido invitado a utilizar Agenda Online por "+session.getAttribute("username") +". Para inciar sesión haz click aqui: \n" + "http://localhost:8080/user/invitationregister";
-					String subject = "Invitación a utilizar Agenda Online";
+					String message = "Has sido invitado a utilizar Clinic Calendar por "
+					+session.getAttribute("username") +" en "+ clinicaDb.getNombreClinica() +
+							". Para registrarte haz click aqui: \n" + "https://clinic-calendar.herokuapp.com/user/invitationregister";
+					String subject = "Invitación a utilizar Clinic Calendar";
 			        mailService.sendMail("clinic-calendar@outlook.com",email_inv,subject,message);
 				}
 			}
@@ -184,7 +190,12 @@ public class UserController {
 	}
 	
 	@GetMapping("/invitationregister")
-	public String invitationRegister(Model model, User user) {	
+	public String invitationRegister(Model model, User user,
+			@RequestParam(name="errormail",required = false)String errormail,
+			@RequestParam(name="success",required = false)String success) {	
+		
+		model.addAttribute("success",success);
+		model.addAttribute("errormail",errormail);
 		return ViewConstant.REGISTERINV;
 	}
 	
@@ -192,7 +203,8 @@ public class UserController {
 	@PostMapping("/adduserinvitation")
 	public String addUserInvitation(@ModelAttribute(name = "user") User user,
 			Model model,@ModelAttribute(name="form") MailForm form,
-			@RequestParam("email") String email){
+			@RequestParam("email") String email,@RequestParam(name="errormail",required = false)String errormail,
+			@RequestParam(name="success",required = false)String success){
 		
 		User userDb = userService.findUserByEmail(email);
 		Invitation invitation = invitationService.findInvitationByEmailAndEstado(email, 1);
@@ -201,7 +213,7 @@ public class UserController {
 		if(userDb != null){
 			LOG.info("usuario ya existe");
 			model.addAttribute("errormail",true);
-			return "redirect:/user/register?errormail";
+			return "redirect:/user/register-invitation?errormail";
 		}else{
 		
 			//user.setPass(passwordEncoder.encode(user.getPass()));
@@ -226,15 +238,13 @@ public class UserController {
 				}
 				
 				model.addAttribute("result", 1);
-				
-				//String message = form.getBody() +"\n\n Datos de contacto: " + "\nNombre: " + form.getName() + "\nE-mail: " + form.getMail();
-		        String message = "Bienvenido a Agenda Online, para inciar sesión haz click aqui: \n" + "http://localhost:8080/calendar";
-				String subject = "Bienvenido";
+		        String message = "Bienvenido a Clinic Calendar, para inciar sesión haz click aqui: \n" + "https://clinic-calendar.herokuapp.com";
+				String subject = "Bienvenido a Clinic Calendar";
 		        mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
 				
 				usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), invitation.getFk_idClinica());
 				
-		        return "register-invitation";
+				return "redirect:/user/register-invitation?success=1";
 			}else {
 				model.addAttribute("result", 0);
 			}
@@ -244,9 +254,8 @@ public class UserController {
 
 	
 	@GetMapping("/profesional")
-	public ModelAndView profesional() {
-		ModelAndView mv = new ModelAndView("profesional");
-		return mv;
+	public String profesional() {
+		return "profesional";
 	}
 	
 }

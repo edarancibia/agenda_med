@@ -2,6 +2,7 @@ package com.calendar.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,8 +24,13 @@ public class ClinicaServiceImpl implements ClinicaService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getClinicaByUser(int idUser, int idCmed) {
+	public List<Map<String, Object>> getClinicaByUser(int idUser, long idCmed) {
 		return clinicaRepository.getClinicaByUser(idUser, idCmed);
+	}
+
+	@Override
+	public Clinica findClinicaById(Long idClinica) {
+		return clinicaRepository.findClinicaById(idClinica);
 	}
 
 }

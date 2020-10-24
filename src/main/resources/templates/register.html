@@ -16,7 +16,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									<input type="text" id="txt_reg_nombre" name="nombre" class="form-control" th:field="*{user.nombre}"  placeholder="Ingresa tu nombre"/>
+									<input type="text" id="txt_reg_nombre" name="nombre" class="form-control" th:field="*{user.nombre}"  placeholder="Ingresa tu nombre" required/>
 								</div>
 							</div>
 						</div>
@@ -26,7 +26,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									<input type="text" th:field="*{user.apat}"  class="form-control" name="a_pat" id="txt_reg_apat"  placeholder="Ingresa tu apellido"/>
+									<input type="text" th:field="*{user.apat}"  class="form-control" name="a_pat" id="txt_reg_apat"  placeholder="Ingresa tu apellido" required/>
 								</div>
 							</div>
 						</div>
@@ -46,7 +46,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-									<input type="email" th:field="*{user.email}"  pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" name="email" id="txt_reg_email"  placeholder="Ingresa tu Email"/>
+									<input type="email" th:field="*{user.email}"  pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" name="email" id="txt_reg_email"  placeholder="Ingresa tu Email" required/>
 								</div>
 							</div>
 						</div>
@@ -56,7 +56,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-									<input type="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" name="email_confirm" id="txt_mail_confirm"  placeholder="Confirma tu Email" />
+									<input type="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" name="email_confirm" id="txt_mail_confirm"  placeholder="Confirma tu Email" required />
 								</div>
 							</div>
 						</div>
@@ -67,7 +67,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-									<input type="password" th:field="*{user.pass}" class="form-control" name="password" id="txt_reg_pass"  placeholder="Ingresa tu Password"/>
+									<input type="password" th:field="*{user.pass}" class="form-control" name="password" id="txt_reg_pass"  placeholder="Ingresa tu Password" required/>
 								</div>
 							</div>
 						</div>
@@ -77,7 +77,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-									<input type="password" class="form-control" name="confirm" id="confirmPass"  placeholder="Confirma tu Password"/>
+									<input type="password" class="form-control" name="confirm" id="confirmPass"  placeholder="Confirma tu Password" required/>
 								</div>
 							</div>
 						</div>
@@ -87,7 +87,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-h-square" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="nombreClinica" id="nombreClinica"  placeholder="Nombre de la Clínica"/>
+									<input type="text" class="form-control" name="nombreClinica" id="nombreClinica"  placeholder="Nombre de la Clínica" required/>
 								</div>
 							</div>
 						</div>
@@ -116,35 +116,37 @@
 						</div>
 
 						<div class="form-group ">
-						<div th:if="${errormail != null}" class="alert alert-danger" role="alert">El correo ya está registrado</div>
-						<div th:if="${error != null}" class="alert alert-info" role="alert">Registrado exitosamente</div>
-							<button class="btn btn-lg btn-primary btn-block" type="submit">
-								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Aceptar
-							</button>
+							<div th:if="${errormail == 1}">
+								<p th:text="${errormail}"></p>
+							</div>
+							<!-- Instead of div below, you could supply a modal and pice of javascript opening it -->
+							<div th:if="${errormail == 1}">
+								<h3>Error occurred:</h3>
+								<p th:text="${errormail}"></p>
+							</div>
+							
+							<div th:if="${success == 1}">
+								<p th:text="${success}"></p>
+							</div>
 
-							<a href="/" class="btn btn-lg btn-info btn-block" type="submit">
-								<span class="glyphicon glyphicon-user" aria-hideen="true"></span> Ir a iniciar sesión
-							</a>
+							<div th:if="${errormail != null}" class="alert alert-danger" role="alert">El correo ya está registrado</div>
+							<div th:if="${success != null}" class="alert alert-info" role="alert">Usuario registrado exitosamente</div>
+								<button class="btn btn-lg btn-primary btn-block" type="submit">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Aceptar
+								</button>
+
+								<a href="/" class="btn btn-lg btn-info btn-block" type="submit">
+									<span class="glyphicon glyphicon-user" aria-hideen="true"></span> Ir a iniciar sesión
+								</a>
 						</div> 
-						
 					</form>
-
-					<div th:if="${errormail}" th:text="${message}" th:class="${'alert ' + alertClass}"/>
-				</div>
-				</div>
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-		function validaEmails(){
-			var email1 = document.getElementById("txt_reg_email");
-			var email2 = document.getElementById("txt_mail_confirm");
-
-			if(email1 != email2){
-				alert('Los correos no coinciden!');
-				document.getElementById("txt_reg_email").focus();
-			}
-		}
+	</div>
+		<script th:if="${errormail == 1}">
+			alert('El correo ya está registrado');
+			location.href = "redirect:/user/register?errormail";
 		</script>
 </body>
 </html>
