@@ -93,8 +93,12 @@ public class UserController {
 	}
 	
 	@GetMapping("/invitation")
-	public ModelAndView invitacion(Invitation invitation, HttpSession session, Model model) {
+	public ModelAndView invitacion(Invitation invitation, HttpSession session, Model model,
+			@RequestParam(name="errormail",required = false)String errormail,
+			@RequestParam(name="success",required = false)String success) {
 		ModelAndView mv = new ModelAndView("invitation");
+		model.addAttribute("success",success);
+		model.addAttribute("errormail",errormail);
 		model.addAttribute("activeUser",session.getAttribute("username"));
 		model.addAttribute("activePerfil",session.getAttribute("tipoUser"));
 		return mv;
@@ -132,6 +136,7 @@ public class UserController {
 					profesional.setA_mat(user.getAmat());
 					profesional.setEmail(user.getEmail());
 					profesional.setCod_centro(clinica.getId());
+					profesional.setVigente(1);
 					profesionalServiceImpl.addProfesional(profesional);
 					LOG.info("profesional guardado ok");
 					
@@ -142,7 +147,7 @@ public class UserController {
 				
 		        String message = "Bienvenido a Clinic Calendar, para inciar sesión haz click aqui: \n" + "https://clinic-calendar.herokuapp.com";
 				String subject = "Bienvenido a Clinic Calendar";
-		        mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
+		       //mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
 				
 				usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), clinica.getId());
 				
@@ -160,9 +165,9 @@ public class UserController {
 			@RequestParam("perfil") String perfil_inv, HttpSession session) {
 		
 		if(null != email_inv) {
-			if( null != userService.findUserByEmail(email_inv)) {
+			if( null != userService.findUserByEmailAndVigente(email_inv, 1)) {
 				//el usuario ya está registrado
-				return "redirect:/user/register?errormail";
+				return "redirect:/user/invitation?errormail=1";
 			}else {
 				long clinica = (long) session.getAttribute("activeCentro");
 				int user = (int) session.getAttribute("idUsuario");
@@ -179,6 +184,8 @@ public class UserController {
 							". Para registrarte haz click aqui: \n" + "https://clinic-calendar.herokuapp.com/user/invitationregister";
 					String subject = "Invitación a utilizar Clinic Calendar";
 			        mailService.sendMail("clinic-calendar@outlook.com",email_inv,subject,message);
+			        
+			        return "redirect:/user/invitation?success=1";
 				}
 			}
 

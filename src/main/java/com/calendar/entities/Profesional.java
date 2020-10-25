@@ -45,6 +45,9 @@ public class Profesional {
 	
 	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "vigente")
+	private int vigente;
 
 	public Long getIdProfesional() {
 		return idProfesional;
@@ -133,10 +136,22 @@ public class Profesional {
 	public void setCod_centro(Long cod_centro) {
 		this.cod_centro = cod_centro;
 	}
+	
+
+	public int getVigente() {
+		return vigente;
+	}
+
+	public void setVigente(int vigente) {
+		this.vigente = vigente;
+	}
+
+	public Profesional() {
+		
+	}
 
 	public Profesional(Long idProfesional, int fkIdUsuario, String nombre, String a_pat, String a_mat, String direccion,
-			String telefono, int cod_esp, int tipo_ficha, Long cod_centro, String email) {
-		super();
+			String telefono, int cod_esp, int tipo_ficha, Long cod_centro, String email, int vigente) {
 		this.idProfesional = idProfesional;
 		this.fkIdUsuario = fkIdUsuario;
 		this.nombre = nombre;
@@ -148,17 +163,17 @@ public class Profesional {
 		this.tipo_ficha = tipo_ficha;
 		this.cod_centro = cod_centro;
 		this.email = email;
-	}
-
-	public Profesional() {
-		
+		this.vigente = vigente;
 	}
 
 	@Override
 	public String toString() {
-		return "Profesional [idProfesional=" + idProfesional + ", fkIdUsuario=" + fkIdUsuario + ", nombre=" + nombre + ", a_pat="
-				+ a_pat + ", a_mat=" + a_mat + ", direccion=" + direccion + ", telefono=" + telefono + ", cod_esp="
-				+ cod_esp + ", tipo_ficha=" + tipo_ficha + ", cod_centro=" + cod_centro + ", email=" + email + "]";
-	}	
+		return "Profesional [idProfesional=" + idProfesional + ", fkIdUsuario=" + fkIdUsuario + ", nombre=" + nombre
+				+ ", a_pat=" + a_pat + ", a_mat=" + a_mat + ", direccion=" + direccion + ", telefono=" + telefono
+				+ ", cod_esp=" + cod_esp + ", tipo_ficha=" + tipo_ficha + ", cod_centro=" + cod_centro + ", email="
+				+ email + ", vigente=" + vigente + "]";
+	}
+
+	
 	
 }

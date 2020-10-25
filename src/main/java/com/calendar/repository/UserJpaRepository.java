@@ -23,4 +23,5 @@ public interface UserJpaRepository extends JpaRepository<User, Long> {
 			"where u.perfil = 1 and u.id = p.fk_idUsuario and p.cod_centro=:idCentro", nativeQuery = true)
 	List<Map<String, Object>> getUserProfesionals(@Param("idCentro") int idCentro);
 
+	public abstract User findUserByEmailAndVigente(String email, int vigente);
 }

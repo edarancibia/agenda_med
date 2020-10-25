@@ -33,6 +33,9 @@ public class User {
 	
 	@Column(name="perfil")
 	private int perfil;
+	
+	@Column(name = "vigente")
+	private int vigente;
 
 	public long getIdusuario() {
 		return idusuario;
@@ -90,7 +93,19 @@ public class User {
 		this.perfil = perfil;
 	}
 
-	public User(long idusuario, String apat, String nombre, String amat, String email, String pass, int perfil) {
+	
+	public int getVigente() {
+		return vigente;
+	}
+
+	public void setVigente(int vigente) {
+		this.vigente = vigente;
+	}
+
+	
+
+	public User(long idusuario, String apat, String nombre, String amat, String email, String pass, int perfil,
+			int vigente) {
 		this.idusuario = idusuario;
 		this.apat = apat;
 		this.nombre = nombre;
@@ -98,6 +113,7 @@ public class User {
 		this.email = email;
 		this.pass = pass;
 		this.perfil = perfil;
+		this.vigente = vigente;
 	}
 
 	public User() {
@@ -107,8 +123,9 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [idusuario=" + idusuario + ", apat=" + apat + ", nombre=" + nombre + ", amat=" + amat + ", email="
-				+ email + ", pass=" + pass + ", perfil=" + perfil + "]";
+				+ email + ", pass=" + pass + ", perfil=" + perfil + ", vigente=" + vigente + "]";
 	}
+
 	
 	
 }

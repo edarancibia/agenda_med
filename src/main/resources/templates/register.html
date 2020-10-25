@@ -115,6 +115,8 @@
 							</div>
 						</div>
 
+						<input type="hidden" name="txtVigente" th:field="*{user.vigente}" value="1">
+
 						<div class="form-group ">
 							<div th:if="${errormail == 1}">
 								<p th:text="${errormail}"></p>

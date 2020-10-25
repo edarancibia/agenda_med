@@ -13,5 +13,6 @@ public interface UserService {
 	public abstract User findUserByEmail(String email);
 	public abstract User findByEmailAndPass(String email, String pass);
 	public abstract List<Map<String, Object>> getUserProfesionals(int idCentro);
+	public abstract User findUserByEmailAndVigente(String email, int vigente);
 
 }

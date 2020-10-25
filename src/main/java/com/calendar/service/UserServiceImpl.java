@@ -41,5 +41,10 @@ public class UserServiceImpl implements UserService {
 		return userRepository.getUserProfesionals(idCentro);
 	}
 
+	@Override
+	public User findUserByEmailAndVigente(String email, int vigente) {
+		return userRepository.findUserByEmailAndVigente(email, vigente);
+	}
+
 	
 }
