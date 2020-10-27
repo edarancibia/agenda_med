@@ -13,7 +13,7 @@ public interface ProfesionalService {
 	
 	public abstract Profesional findProfesionalByIdProfesional(Long idProfesional);
 	
-	List<Map<String, Object>> getProfByCentro(int idCentro);
+	List<Map<String, Object>> getProfByCentro(Long idCentro);
 	
 	public abstract Profesional findProfesionalByFkIdUsuario(Long idUsuario);
 }

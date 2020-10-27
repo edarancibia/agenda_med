@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getUserProfesionals(int idCentro) {
+	public List<Map<String, Object>> getUserProfesionals(Long idCentro) {
 		return userRepository.getUserProfesionals(idCentro);
 	}
 

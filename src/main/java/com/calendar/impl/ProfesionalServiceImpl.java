@@ -29,7 +29,7 @@ public class ProfesionalServiceImpl implements ProfesionalService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getProfByCentro(int idCentro) {
+	public List<Map<String, Object>> getProfByCentro(Long idCentro) {
 		return profesionalRepository.getProfByCentro(idCentro);
 	}
 

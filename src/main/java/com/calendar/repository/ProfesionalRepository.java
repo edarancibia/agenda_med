@@ -21,7 +21,7 @@ public interface ProfesionalRepository extends JpaRepository<Profesional, Long> 
 			"u.id ,u.email ,CONCAT(u.a_pat ,' ',u.a_mat , ' ', u.nombre ) as prof \r\n" + 
 			"FROM usuario_centro uc ,users u \r\n" + 
 			"where uc.idCentro = :idCentro and u.id = uc.idUsuario and u.perfil =1", nativeQuery = true)
-	List<Map<String, Object>> getProfByCentro(int idCentro);
+	List<Map<String, Object>> getProfByCentro(Long idCentro);
 	
 	public abstract Profesional findProfesionalByIdProfesional(Long idProfesional);
 	

@@ -62,7 +62,7 @@ public class EventController {
 	@Autowired
 	public ProfesionalServiceImpl profesionalService;
 	
-	public long centro; 
+	public Long centro; 
 	public Long idUsuario;
 	public int tipoUsuario;
 	
@@ -183,7 +183,7 @@ public class EventController {
 	@GetMapping("/getProfetionals")
 	public @ResponseBody List<Map<String, Object>> getProfetionals(){
 		//carga lista de profesionales
-		int idCentro = (int)centro;
+		Long idCentro = centro;
 		List<Map<String, Object>> profs = userService.getUserProfesionals(idCentro);
 		LOG.info("Profesionales: "+ profs);
 		return profs;
