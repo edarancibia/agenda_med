@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -147,7 +148,7 @@ public class UserController {
 				
 		        String message = "Bienvenido a Clinic Calendar, para inciar sesión haz click aqui: \n" + "https://clinic-calendar.herokuapp.com";
 				String subject = "Bienvenido a Clinic Calendar";
-		       //mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
+		        mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
 				
 				usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), clinica.getId());
 				
@@ -259,6 +260,11 @@ public class UserController {
 		return "register-invitation";
 	}
 
+	@GetMapping("/list/{idCentro}")
+	public @ResponseBody List<Map<String, Object>> getUsersList(@RequestParam int idCentro){
+		List<Map<String, Object>> users = userService.getListaUsuariosCentro(idCentro);
+		return users;
+	}
 	
 	@GetMapping("/profesional")
 	public String profesional() {

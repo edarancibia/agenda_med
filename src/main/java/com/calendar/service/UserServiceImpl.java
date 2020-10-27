@@ -46,5 +46,10 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findUserByEmailAndVigente(email, vigente);
 	}
 
+	@Override
+	public List<Map<String, Object>> getListaUsuariosCentro(int idCentro) {
+		return userRepository.getListaUsuariosCentro(idCentro);
+	}
+
 	
 }

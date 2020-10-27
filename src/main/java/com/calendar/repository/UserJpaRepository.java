@@ -24,4 +24,11 @@ public interface UserJpaRepository extends JpaRepository<User, Long> {
 	List<Map<String, Object>> getUserProfesionals(@Param("idCentro") int idCentro);
 
 	public abstract User findUserByEmailAndVigente(String email, int vigente);
+	
+	//LISTA DE USUARIOS PARA PANEL DE ADMINISTRACION
+	@Query("select concat(u.a_pat,' ',u.a_mat,' ',u.nombre) as nombre,\n" + 
+			"if(u.perfil = 1,'Atención Profesional','Agenda') as perfil\n" + 
+			"from users u, usuario_centro uc\n" + 
+			"where u.id = uc.idUsuario and uc.idCentro = :idCentro")
+	List<Map<String, Object>> getListaUsuariosCentro(int idCentro);
 }
