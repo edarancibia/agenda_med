@@ -17,7 +17,7 @@ public class Profesional {
 	private Long idProfesional;
 	
 	@Column(name = "fk_idUsuario")
-	private int fkIdUsuario;
+	private Long fkIdUsuario;
 	
 	@Column(name = "nombre")
 	private String nombre;
@@ -65,11 +65,11 @@ public class Profesional {
 		this.idProfesional = idProfesional;
 	}
 
-	public int getFkIdUsuario() {
+	public Long getFkIdUsuario() {
 		return fkIdUsuario;
 	}
 
-	public void setFkIdUsuario(int fkIdUsuario) {
+	public void setFkIdUsuario(Long fkIdUsuario) {
 		this.fkIdUsuario = fkIdUsuario;
 	}
 
@@ -150,7 +150,7 @@ public class Profesional {
 		
 	}
 
-	public Profesional(Long idProfesional, int fkIdUsuario, String nombre, String a_pat, String a_mat, String direccion,
+	public Profesional(Long idProfesional, Long fkIdUsuario, String nombre, String a_pat, String a_mat, String direccion,
 			String telefono, int cod_esp, int tipo_ficha, Long cod_centro, String email, int vigente) {
 		this.idProfesional = idProfesional;
 		this.fkIdUsuario = fkIdUsuario;

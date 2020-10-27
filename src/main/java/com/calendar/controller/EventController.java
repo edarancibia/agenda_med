@@ -63,7 +63,7 @@ public class EventController {
 	public ProfesionalServiceImpl profesionalService;
 	
 	public long centro; 
-	public int idUsuario;
+	public Long idUsuario;
 	public int tipoUsuario;
 	
 	@GetMapping("/")
@@ -83,7 +83,7 @@ public class EventController {
 			session.setAttribute("username",username.getNombre()+' '+ username.getApat()+' '+ username.getAmat());
 			
 			UsuarioCentro usCentro = usuarioCentro.findByIdUsuario(username.getIdusuario());
-			idUsuario = (int) usCentro.getIdUsuario();
+			idUsuario = usCentro.getIdUsuario();
 			tipoUsuario = username.getPerfil();
 			session.setAttribute("tipoUser", tipoUsuario);
 			session.setAttribute("idUsuario", idUsuario);

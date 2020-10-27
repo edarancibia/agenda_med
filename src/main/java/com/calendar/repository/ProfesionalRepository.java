@@ -25,5 +25,5 @@ public interface ProfesionalRepository extends JpaRepository<Profesional, Long> 
 	
 	public abstract Profesional findProfesionalByIdProfesional(Long idProfesional);
 	
-	public abstract Profesional findProfesionalByFkIdUsuario(int idUsuario);
+	public abstract Profesional findProfesionalByFkIdUsuario(Long idUsuario);
 }

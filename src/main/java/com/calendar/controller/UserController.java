@@ -131,7 +131,7 @@ public class UserController {
 					clinicaServiceImpl.addClinica(clinica);
 					
 					Profesional profesional = new Profesional();
-					profesional.setFkIdUsuario((int) user.getIdusuario());
+					profesional.setFkIdUsuario(user.getIdusuario());
 					profesional.setNombre(user.getNombre());
 					profesional.setA_pat(user.getApat());
 					profesional.setA_mat(user.getAmat());
@@ -234,7 +234,7 @@ public class UserController {
 					LOG.info("es profesional");
 					
 					Profesional profesional = new Profesional();
-					profesional.setFkIdUsuario((int) user.getIdusuario());
+					profesional.setFkIdUsuario(user.getIdusuario());
 					profesional.setNombre(user.getNombre());
 					profesional.setA_pat(user.getApat());
 					profesional.setA_mat(user.getAmat());
@@ -261,7 +261,7 @@ public class UserController {
 	}
 
 	@GetMapping("/list/{idCentro}")
-	public @ResponseBody List<Map<String, Object>> getUsersList(@RequestParam int idCentro){
+	public @ResponseBody List<Map<String, Object>> getUsersList(@RequestParam Long idCentro){
 		List<Map<String, Object>> users = userService.getListaUsuariosCentro(idCentro);
 		return users;
 	}

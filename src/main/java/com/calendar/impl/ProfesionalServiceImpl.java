@@ -39,7 +39,7 @@ public class ProfesionalServiceImpl implements ProfesionalService {
 	}
 
 	@Override
-	public Profesional findProfesionalByFkIdUsuario(int idUsuario) {
+	public Profesional findProfesionalByFkIdUsuario(Long idUsuario) {
 		return profesionalRepository.findProfesionalByFkIdUsuario(idUsuario);
 	}
 

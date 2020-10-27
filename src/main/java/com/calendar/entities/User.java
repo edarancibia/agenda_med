@@ -14,7 +14,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private long idusuario;
+	private Long idusuario;
 	
 	@Column(name="a_pat")
 	private String apat;
@@ -37,11 +37,11 @@ public class User {
 	@Column(name = "vigente")
 	private int vigente;
 
-	public long getIdusuario() {
+	public Long getIdusuario() {
 		return idusuario;
 	}
 
-	public void setIdusuario(long idusuario) {
+	public void setIdusuario(Long idusuario) {
 		this.idusuario = idusuario;
 	}
 
@@ -104,7 +104,7 @@ public class User {
 
 	
 
-	public User(long idusuario, String apat, String nombre, String amat, String email, String pass, int perfil,
+	public User(Long idusuario, String apat, String nombre, String amat, String email, String pass, int perfil,
 			int vigente) {
 		this.idusuario = idusuario;
 		this.apat = apat;

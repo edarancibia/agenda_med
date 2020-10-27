@@ -14,39 +14,39 @@ public class UsuarioCentro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private long id;
+	private Long id;
 	
 	@Column(name = "idUsuario")
-	private long idUsuario;
+	private Long idUsuario;
 	
 	@Column(name = "idCentro")
-	private long idCentro;
+	private Long idCentro;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getIdUsuario() {
+	public Long getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(long idUsuario) {
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
-	public long getIdCentro() {
+	public Long getIdCentro() {
 		return idCentro;
 	}
 
-	public void setIdCentro(long idCentro) {
+	public void setIdCentro(Long idCentro) {
 		this.idCentro = idCentro;
 	}
 
-	public UsuarioCentro(long id, long idUsuario, long idCentro) {
+	public UsuarioCentro(Long id, Long idUsuario, Long idCentro) {
 		this.id = id;
 		this.idUsuario = idUsuario;
 		this.idCentro = idCentro;

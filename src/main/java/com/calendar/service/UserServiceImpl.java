@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getListaUsuariosCentro(int idCentro) {
+	public List<Map<String, Object>> getListaUsuariosCentro(Long idCentro) {
 		return userRepository.getListaUsuariosCentro(idCentro);
 	}
 
