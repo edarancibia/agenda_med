@@ -18,6 +18,8 @@
         var base_url = 'https://clinic-calendar.herokuapp.com/';
         var idCentro = $('#txtIdCentro').val();
 
+        llenaTabla();
+
         function llenaTabla(){
             $.ajax({
                 type: 'get',
@@ -33,6 +35,9 @@
                         "<td><button id='btnEliminaUser' type='button' data-id="+data[i].id+" data-toggle='modal' data-target='#modalEliminaUser' class='btn btn-info'> <span class='glyphicon glyphicon-remove'></span> Eliminar</button></td></tr>").appendTo('#listaLotes');
                          
                     });
+                },
+                error: function(){
+                    console.log('error al cargar tabla usuarios');
                 }
             });
         }
