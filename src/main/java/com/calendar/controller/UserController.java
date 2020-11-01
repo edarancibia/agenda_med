@@ -270,7 +270,7 @@ public class UserController {
 		return users;
 	}
 	
-	@PutMapping("/{idUser}")
+	@PutMapping("/delete/{idUser}")
 	public ResponseEntity<?> eliminaUsuario(@PathVariable Long idusuario){
 		User userBd = userService.findUserById(idusuario);
 		
@@ -284,6 +284,20 @@ public class UserController {
 		}
 	}
 	
+	@PutMapping("/{idUser}")
+	public ResponseEntity<?> editaUsuario(@PathVariable Long idusuario){
+		User userBd = userService.findUserById(idusuario);
+		
+		if(userBd == null) {
+			return ResponseEntity.notFound().build();
+		}else {
+			userBd.setPerfil(1);
+			userBd.setUpdated_at(new Date());
+			userService.addUser(userBd);
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
 	@GetMapping("/administration")
 	public ModelAndView administration(Invitation invitation, HttpSession session, Model model) {
 		ModelAndView mv = new ModelAndView("user-admin");
@@ -291,6 +305,7 @@ public class UserController {
 		model.addAttribute("activePerfil",session.getAttribute("tipoUser"));
 		return mv;
 	}
+	
 	
 	@GetMapping("/profesional")
 	public String profesional() {

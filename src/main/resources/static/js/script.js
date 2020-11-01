@@ -174,4 +174,28 @@ $(document).ready(function(){
 		$("#div-datosProf").hide();
 	});
 
+	//USUARIOS
+	$('#modalEliminaUser').on('shown.bs.modal', function(e){
+		e.stopImmediatePropagation();
+		var boton = e.relegatedTarget;
+		var idUser = $(boton).attr('data-id');
+		$('#txtHiddenUser').val(idUser);
+	});
+
+	$('#btnEliminaUser').on('click', function(e){
+		e.stopImmediatePropagation();
+		var idUser = $('#txtHiddenUser').val();
+		
+		$.ajax({
+			type: 'put',
+			url: base_url + 'delete/'+idUser,
+			success: function(){
+				$('#modalEliminaUser').modal('hide');
+			},
+			error: function(){
+				console.log('error al eliminar usuario');
+			}
+		});
+	});
+
 });
