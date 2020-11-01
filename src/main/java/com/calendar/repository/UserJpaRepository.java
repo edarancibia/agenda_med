@@ -13,7 +13,7 @@ import com.calendar.entities.User;
 @Repository
 public interface UserJpaRepository extends JpaRepository<User, Long> {
 	
-	User findUserByIdUsuario(Long idusuario);
+	User findUserByIdusuario(Long idusuario);
 	User findByEmail(String email);
 	User findByEmailAndPass(String email, String pass);
 	
