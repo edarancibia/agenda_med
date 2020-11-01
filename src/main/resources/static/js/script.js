@@ -175,6 +175,11 @@ $(document).ready(function(){
 	});
 
 	//USUARIOS
+	$('#btnEliminaUser').on('click', function(e){
+		e.stopImmediatePropagation();
+		$('#modalEliminaUser').modal('show'); 
+	});
+
 	$('#modalEliminaUser').on('shown.bs.modal', function(e){
 		e.stopImmediatePropagation();
 		var boton = e.relegatedTarget;
@@ -182,7 +187,7 @@ $(document).ready(function(){
 		$('#txtHiddenUser').val(idUser);
 	});
 
-	$('#btnEliminaUser').on('click', function(e){
+	$('#btnEliminaUserPerfil').on('click', function(e){
 		e.stopImmediatePropagation();
 		var idUser = $('#txtHiddenUser').val();
 		
