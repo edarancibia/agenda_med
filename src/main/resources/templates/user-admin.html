@@ -5,9 +5,12 @@
     <div class="container">
         <div class="row col-md-9 col-md-offset-2 col-sm-6 col-sm-offset-2" style="margin-top: 10px;">
             <h3>Administración de Usuarios</h3>
+            <br>
 			<div class="main-login main-center">
                 <table id="table-usuarios" class="table table-hover">
-
+                    <thead>
+	        	   
+                    </thead>
                 </table>
 			</div>
 		</div>
@@ -80,7 +83,7 @@
                         "<td style='display:none;'>"+data[i].id+"</td>"+
                         "<td>"+data[i].nombre+"</td><td>"+data[i].perfil+"</td>"+
                         "<td><button id='btnEditaUser' type='button' data-id="+data[i].id+" data-toggle='modal' data-target='#modalEditaUser' class='btn btn-info'><span class='glyphicon glyphicon-pencil'></span> Modificar perfil</button></td>"+
-                        "<td><button id='btnEliminaUser' type='button' data-id="+data[i].id+" data-target='#modalEliminaUser' class='btn btn-danger'> <span class='glyphicon glyphicon-remove'></span> Eliminar</button></td></tr>").appendTo('#table-usuarios');
+                        "<td><button id='btnEliminaUser' type='button' data-id="+data[i].id+" data-toggle='modal' data-target='#modalEliminaUser' class='btn btn-danger'> <span class='glyphicon glyphicon-remove'></span> Eliminar</button></td></tr>").appendTo('#table-usuarios');
                          
                     });
                 },
