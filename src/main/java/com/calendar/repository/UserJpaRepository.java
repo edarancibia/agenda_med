@@ -13,6 +13,7 @@ import com.calendar.entities.User;
 @Repository
 public interface UserJpaRepository extends JpaRepository<User, Long> {
 	
+	User findUserByIdUsuario(Long idusuario);
 	User findByEmail(String email);
 	User findByEmailAndPass(String email, String pass);
 	
@@ -26,7 +27,7 @@ public interface UserJpaRepository extends JpaRepository<User, Long> {
 	public abstract User findUserByEmailAndVigente(String email, int vigente);
 	
 	//LISTA DE USUARIOS PARA PANEL DE ADMINISTRACION
-	@Query(value="select concat(u.a_pat,' ',u.a_mat,' ',u.nombre) as nombre, \n" + 
+	@Query(value="select u.id, concat(u.a_pat,' ',u.a_mat,' ',u.nombre) as nombre, \n" + 
 			"if(u.perfil = 1,'Atención Profesional','Agenda') as perfil \n" + 
 			"from users u, usuario_centro uc \n" + 
 			"where u.id = uc.idUsuario and uc.idCentro = :idCentro", nativeQuery = true)

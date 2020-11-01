@@ -8,6 +8,7 @@ import com.calendar.entities.User;
 
 public interface UserService {
 
+	public abstract User findUserById(Long idusuario);
 	public abstract User addUser(User user);
 	
 	public abstract User findUserByEmail(String email);

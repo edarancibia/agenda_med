@@ -12,5 +12,31 @@
 			</div>
 		</div>
     </div>
+    <script>
+    $(document).one('ready', function(e){
+        e.stopImmediatePropagation();
+        var base_url = 'https://clinic-calendar.herokuapp.com/';
+        var idCentro = $('#txtIdCentro').val();
+
+        function llenaTabla(){
+            $.ajax({
+                type: 'get',
+                url: base_url +'user/list/'+idCentro,
+                success: function(data){
+                    $("#table-usuarios thead").append("<th style='display:none;'>Id</th><th>Nombre Usuario</th><th>Perfil</th><th></th><th></th>");
+					$('#table-usuarios tr').remove();
+                    $.each(data, function(i, item){
+					$('<tr>').html(
+                        "<td>"+data[0].id+"</td>"+
+                        "<td>"+data[0].nombre+"</td><td>"+data[0].perfil+"</td>"+
+                        "<td><button id='btnEditaUser' type='button' data-id="+data[i].id+" data-toggle='modal' data-target='#modalEditaUser' class='btn btn-info'><span class='glyphicon glyphicon-pencil'></span> Modificar perfil</button></td>"+
+                        "<td><button id='btnEliminaUser' type='button' data-id="+data[i].id+" data-toggle='modal' data-target='#modalEliminaUser' class='btn btn-info'> <span class='glyphicon glyphicon-remove'></span> Eliminar</button></td></tr>").appendTo('#listaLotes');
+                         
+                    });
+                }
+            });
+        }
+	});
+    </script>
 </body>
 </html>

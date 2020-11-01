@@ -51,5 +51,10 @@ public class UserServiceImpl implements UserService {
 		return userRepository.getListaUsuariosCentro(idCentro);
 	}
 
+	@Override
+	public User findUserById(Long idusuario) {
+		return userRepository.findUserByIdUsuario(idusuario);
+	}
+
 	
 }

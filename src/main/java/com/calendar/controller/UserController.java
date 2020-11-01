@@ -1,5 +1,6 @@
 package com.calendar.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -265,6 +268,28 @@ public class UserController {
 	public @ResponseBody List<Map<String, Object>> getUsersList(@PathVariable Long idCentro){
 		List<Map<String, Object>> users = userService.getListaUsuariosCentro(idCentro);
 		return users;
+	}
+	
+	@PutMapping("/{idUser}")
+	public ResponseEntity<?> eliminaUsuario(@PathVariable Long idusuario){
+		User userBd = userService.findUserById(idusuario);
+		
+		if(userBd == null) {
+			return ResponseEntity.notFound().build();
+		}else {
+			userBd.setVigente(0);
+			userBd.setUpdated_at(new Date());
+			userService.addUser(userBd);
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@GetMapping("/administration")
+	public ModelAndView administration(Invitation invitation, HttpSession session, Model model) {
+		ModelAndView mv = new ModelAndView("user-admin");
+		model.addAttribute("activeUser",session.getAttribute("username"));
+		model.addAttribute("activePerfil",session.getAttribute("tipoUser"));
+		return mv;
 	}
 	
 	@GetMapping("/profesional")

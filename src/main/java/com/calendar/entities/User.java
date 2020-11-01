@@ -1,5 +1,7 @@
 package com.calendar.entities;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,6 +38,9 @@ public class User {
 	
 	@Column(name = "vigente")
 	private int vigente;
+	
+	@Column(name = "updated_at")
+	private Date updated_at;
 
 	public Long getIdusuario() {
 		return idusuario;
@@ -102,10 +107,17 @@ public class User {
 		this.vigente = vigente;
 	}
 
-	
+	public Date getUpdated_at() {
+		return updated_at;
+	}
+
+	public void setUpdated_at(Date updated_at) {
+		this.updated_at = updated_at;
+	}
+
 
 	public User(Long idusuario, String apat, String nombre, String amat, String email, String pass, int perfil,
-			int vigente) {
+			int vigente, Date updated_at) {
 		this.idusuario = idusuario;
 		this.apat = apat;
 		this.nombre = nombre;
@@ -114,6 +126,7 @@ public class User {
 		this.pass = pass;
 		this.perfil = perfil;
 		this.vigente = vigente;
+		this.updated_at = updated_at;
 	}
 
 	public User() {
@@ -123,7 +136,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [idusuario=" + idusuario + ", apat=" + apat + ", nombre=" + nombre + ", amat=" + amat + ", email="
-				+ email + ", pass=" + pass + ", perfil=" + perfil + ", vigente=" + vigente + "]";
+				+ email + ", pass=" + pass + ", perfil=" + perfil + ", vigente=" + vigente + ", updated_at="
+				+ updated_at + "]";
 	}
 
 	
