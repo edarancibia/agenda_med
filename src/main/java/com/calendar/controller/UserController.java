@@ -294,7 +294,7 @@ public class UserController {
 			userBd.setPerfil(1);
 			userBd.setUpdated_at(new Date());
 			userService.addUser(userBd);
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.ok(userBd);
 		}
 	}
 	
