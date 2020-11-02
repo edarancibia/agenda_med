@@ -174,31 +174,55 @@ $(document).ready(function(){
 		$("#div-datosProf").hide();
 	});
 
-	//USUARIOS
-	$('#btnEliminaUser').on('click', function(e){
-		e.stopImmediatePropagation();
-		$('#modalEliminaUser').modal('show'); 
-	});
-
+	//- - - - -USUARIOS
+	//ELIMINA	
 	$('#modalEliminaUser').on('shown.bs.modal', function(e){
 		e.stopImmediatePropagation();
-		var boton = e.relegatedTarget;
+		var boton = e.relatedTarget;
 		var idUser = $(boton).attr('data-id');
-		$('#txtHiddenUser').val(idUser);
+		console.log($(boton).attr('data-id'));
+		$('#txtHiddenUserElimina').val(idUser);
 	});
 
 	$('#btnEliminaUserPerfil').on('click', function(e){
 		e.stopImmediatePropagation();
-		var idUser = $('#txtHiddenUser').val();
+		var idusuario = $('#txtHiddenUserElimina').val();
 		
 		$.ajax({
 			type: 'put',
-			url: base_url + 'delete/'+idUser,
+			url: base_url + 'user/delete/'+idusuario,
 			success: function(){
 				$('#modalEliminaUser').modal('hide');
+				window.location.reload();
 			},
 			error: function(){
 				console.log('error al eliminar usuario');
+			}
+		});
+	});
+
+	//EDITA
+	$('#modalEditaUser').on('shown.bs.modal', function(e){
+		e.stopImmediatePropagation();
+		var boton = e.relatedTarget;
+		var idUser = $(boton).attr('data-id');
+		console.log($(boton).attr('data-id'));
+		$('#txtHiddenUserEdita').val(idUser);
+	});
+
+	$('#btnEditaUserPerfil').on('click', function(e){
+		e.stopImmediatePropagation();
+		var idusuario = $('#txtHiddenUserEdita').val();
+		
+		$.ajax({
+			type: 'put',
+			url: base_url + 'user/'+idusuario,
+			success: function(){
+				$('#modalEditaUser').modal('hide');
+				window.location.reload();
+			},
+			error: function(){
+				console.log('error al editar usuario');
 			}
 		});
 	});

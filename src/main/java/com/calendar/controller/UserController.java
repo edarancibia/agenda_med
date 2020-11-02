@@ -270,7 +270,7 @@ public class UserController {
 		return users;
 	}
 	
-	@PutMapping("/delete/{idUser}")
+	@PutMapping("/delete/{idusuario}")
 	public ResponseEntity<?> eliminaUsuario(@PathVariable Long idusuario){
 		User userBd = userService.findUserById(idusuario);
 		
@@ -280,11 +280,11 @@ public class UserController {
 			userBd.setVigente(0);
 			userBd.setUpdated_at(new Date());
 			userService.addUser(userBd);
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.ok(userBd);
 		}
 	}
 	
-	@PutMapping("/{idUser}")
+	@PutMapping("/{idusuario}")
 	public ResponseEntity<?> editaUsuario(@PathVariable Long idusuario){
 		User userBd = userService.findUserById(idusuario);
 		
