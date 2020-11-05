@@ -14,6 +14,11 @@
 		margin: 0 auto;
 	}
 
+  .fc-time{
+   display : none;
+}
+
+
 </style>			
 <!--</head>-->
 <div th:include="header.html" th:remove="tag"></div>
@@ -186,7 +191,7 @@
                 dow: [ 1, 2, 3, 4,5], // Monday - Thursday
   
                 start: '09:00', // a start time (10am in this example)
-                end: '19:00', // an end time (6pm in this example)
+                end: '20:00', // an end time (6pm in this example)
               },
 
                 editable: true,
@@ -200,10 +205,11 @@
                 slotMinutes: 15,
   
                 minTime: '09:00',
-                maxTime: '19:00',
+                maxTime: '20:00',
                 selectable: true,
                 allDaySlot: false,
-                timeFormat: 'h:mm t{ - h:mm t} ',
+                //timeFormat: 'h:mm t{ - h:mm t} ',
+                timeFormat: ' ',
                 dragOpacity: "0.5",
                 eventColor: '#378006',
                 eventBorderColor: 'blue',
