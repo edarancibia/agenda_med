@@ -136,13 +136,15 @@ public class UserController {
 					
 					Profesional profesional = new Profesional();
 					profesional.setFkIdUsuario(user.getIdusuario());
-					profesional.setNombre(user.getNombre());
-					profesional.setA_pat(user.getApat());
-					profesional.setA_mat(user.getAmat());
+					profesional.setNombre(user.getNombre().toUpperCase());
+					profesional.setA_pat(user.getApat().toUpperCase());
+					profesional.setA_mat(user.getAmat().toUpperCase());
 					profesional.setEmail(user.getEmail());
 					profesional.setCod_centro(clinica.getId());
 					profesional.setVigente(1);
 					profesionalServiceImpl.addProfesional(profesional);
+					
+					usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), clinica.getId());
 					LOG.info("profesional guardado ok");
 					
 				}
@@ -153,8 +155,6 @@ public class UserController {
 		        String message = "Bienvenido a Clinic Calendar, para inciar sesión haz click aqui: \n" + "https://clinic-calendar.herokuapp.com";
 				String subject = "Bienvenido a Clinic Calendar";
 		        mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
-				
-				usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), clinica.getId());
 				
 				return "redirect:/user/register?success=1";
 			}else {
@@ -239,12 +239,15 @@ public class UserController {
 					
 					Profesional profesional = new Profesional();
 					profesional.setFkIdUsuario(user.getIdusuario());
-					profesional.setNombre(user.getNombre());
-					profesional.setA_pat(user.getApat());
-					profesional.setA_mat(user.getAmat());
+					profesional.setNombre(user.getNombre().toUpperCase());
+					profesional.setA_pat(user.getApat().toUpperCase());
+					profesional.setA_mat(user.getAmat().toUpperCase());
 					profesional.setEmail(user.getEmail());
 					profesional.setCod_centro(invitation.getFk_idClinica());
 					profesionalServiceImpl.addProfesional(profesional);
+					
+					usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), invitation.getFk_idClinica());
+					
 					LOG.info("profesional guardado ok");
 					
 				}
@@ -253,8 +256,6 @@ public class UserController {
 		        String message = "Bienvenido a Clinic Calendar, para inciar sesión haz click aqui: \n" + "https://clinic-calendar.herokuapp.com";
 				String subject = "Bienvenido a Clinic Calendar";
 		        mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
-				
-				usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), invitation.getFk_idClinica());
 				
 				return "redirect:/user/register-invitation?success=1";
 			}else {
