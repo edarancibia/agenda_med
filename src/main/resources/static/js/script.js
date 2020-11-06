@@ -190,7 +190,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type: 'put',
-			url: base_url + 'user/delete/'+idusuario,
+			url: 'https://clinic-calendar.herokuapp.com/' + 'user/delete/'+idusuario,
 			success: function(){
 				$('#modalEliminaUser').modal('hide');
 				window.location.reload();
