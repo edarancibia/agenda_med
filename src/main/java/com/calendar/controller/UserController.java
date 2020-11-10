@@ -123,7 +123,7 @@ public class UserController {
 			LOG.info("usuario ya existe "+ model.getAttribute("errormail"));
 			return "redirect:/user/register?errormail=1";
 		}else{
-		
+			user.setVigente(1);
 			//user.setPass(passwordEncoder.encode(user.getPass()));
 			if(null != userService.addUser(user)){
 				//DEBE PREGUNTAR QUE PERFIL TIENE,SI ES PROFESIONAL DEBE GUARDAR EN LA TABLA DEL MISMO NOMBRE
