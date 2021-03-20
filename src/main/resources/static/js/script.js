@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	var base_url = 'https://clinic-calendar.herokuapp.com/';
-	//var base_url = 'http://localhost:8080/';
+	//var base_url = 'https://clinic-calendar.herokuapp.com/';
+	var base_url = 'http://localhost:8080/';
 	if($('#txtIdCentro').val() == ''){
 		window.location.href = base_url;
 	}
@@ -83,7 +83,7 @@ $(document).ready(function(){
 						error: function(){
 							alert('Ficha guardada exitosamente!'); // a pesar del error, aquí se guarda bien la ficha y se cierra el evento
 							console.log('Error al cerrar evento, pero se cerró');
-							window.location.href = base_url + 'calendar';
+							//window.location.href = base_url + 'calendar';
 						}
 					});
 				});

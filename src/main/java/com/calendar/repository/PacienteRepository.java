@@ -18,5 +18,14 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 			"			end as sexo \n"+
 			"			from paciente p  where p.dni = :rutnum", nativeQuery = true)
 	List<Map<String, Object>> obtienePorRut(int rutnum);
+	
+	@Query(value="select concat(p.a_pat,' ',p.a_mat,' ',p.nombre) as nombre, p.dni,p.telefono,\n" + 
+			"		case  \n" + 
+			"							when p.sexo=1 then 'F' \n" + 
+			"							when p.sexo=0 then 'M' \n" + 
+			"						end as sexo \n" + 
+			"from ficha f, paciente p\n" + 
+			"where f.rut_pac = p.dni and f.idficha=:idficha", nativeQuery = true)
+	Map<String, Object> getPacienteByFicha(int idficha);
 
 }

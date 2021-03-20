@@ -188,6 +188,11 @@
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
               
+                selectConstraint: {
+                  start: $.fullCalendar.moment().subtract(1, 'days'),
+                  end: $.fullCalendar.moment().startOf('year').add(100, 'year')
+                },
+
               select: function(start, end) {
                     $('#modalNew2').modal('show');
                     $('#txtIni').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
@@ -243,6 +248,7 @@
     function getEvents(){
         var idProfesional = $('#txtIdProf').val();
         $('#calendar').fullCalendar('removeEvents');
+        //$('#calendar').fullCalendar('addEventSource', 'http://localhost:8080/' + 'alleventsByProf/'+idProfesional);
         $('#calendar').fullCalendar('addEventSource', 'https://clinic-calendar.herokuapp.com/' + 'alleventsByProf/'+idProfesional);
     }
     

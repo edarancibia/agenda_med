@@ -215,6 +215,11 @@
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
               
+                selectConstraint: {
+                  start: $.fullCalendar.moment().subtract(1, 'days'),
+                  end: $.fullCalendar.moment().startOf('year').add(100, 'year')
+                },
+
               select: function(start, end) {
                     $('#modalNew').modal('show');
                     $('#txtIni').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
@@ -449,6 +454,7 @@
           type:'post',
           contentType: "application/json; charset=utf-8",
           dataType: "json",
+          //url: 'http://localhost:8080/' + "addevent",
           url: 'https://clinic-calendar.herokuapp.com/' + "addevent",
           data: JSON.stringify(formData),
           success:function(data){

@@ -26,4 +26,9 @@ public class PacienteServiceImpl implements PacienteService {
 		return pacienteRepository.obtienePorRut(rutnum);
 	}
 
+	@Override
+	public Map<String, Object> getPacienteByFicha(int idficha) {
+		return pacienteRepository.getPacienteByFicha(idficha);
+	}
+
 }

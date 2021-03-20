@@ -1,8 +1,12 @@
 package com.calendar.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +27,26 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.calendar.entities.Ficha;
+import com.calendar.entities.Profesional;
 import com.calendar.impl.FichaServiceImpl;
 import com.calendar.impl.ProfesionalServiceImpl;
+import com.calendar.service.PacienteServiceImpl;
+import com.calendar.util.PdfGeneratorUtil;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
@@ -32,8 +54,19 @@ import com.calendar.impl.ProfesionalServiceImpl;
 @SessionAttributes({"activeUser","centro","activeIdUser","activePerfil","activeProf","activeCentro"})
 public class FichaController {
 	
+	private static final Log LOG = LogFactory.getLog(FichaController.class);
+	
 	@Autowired
 	public FichaServiceImpl fichaService;
+	
+	@Autowired
+	PdfGeneratorUtil pdfGeneratorUtil;
+	
+	@Autowired
+	PacienteServiceImpl pacienteService;
+	
+	@Autowired
+	ProfesionalServiceImpl profesionalService;
 	
 	@GetMapping("/{rut_num}/{idEvento}")
 	public ModelAndView index(HttpSession session, Model model, @PathVariable int rut_num,@PathVariable int idEvento) {
@@ -85,5 +118,63 @@ public class FichaController {
 		}else {
 			return new ResponseEntity<Ficha>(ficha,HttpStatus.OK);
 		}
+	}
+	
+	@GetMapping("/export/{idficha}")
+	HttpEntity<byte[]> createPdf(
+            @PathVariable("idficha") String fileName, HttpServletResponse response, HttpSession session) throws IOException {
+
+
+		/* first, get and initialize an engine */
+		VelocityEngine ve = new VelocityEngine();
+
+		/* next, get the Template */
+		ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+		ve.setProperty("classpath.resource.loader.class",
+				ClasspathResourceLoader.class.getName());
+		ve.init();
+		Template t = ve.getTemplate("templates/pdf.vm", "UTF-8");
+		/* create a context and add data */
+		VelocityContext context = new VelocityContext();
+		
+		int idficha = Integer.parseInt(fileName);
+		Ficha ficha = fichaService.findFichaByIdFicha(Long.valueOf(idficha));
+		//Map<String, Object> cab = atMedService.getDatosPacientePdf(idficha);
+		Map<String, Object> pac = pacienteService.getPacienteByFicha(idficha);
+		
+		context.put("nombre", pac.get("nombre").toString());
+		context.put("rut", pac.get("dni").toString());
+		
+		context.put("antece",ficha.getAntecedentes().toString());
+		context.put("motivo", ficha.getMotivo().toString());
+		context.put("exfi", ficha.getExamenFisico().toString());
+		context.put("diag", ficha.getDiagnostico().toString());
+		context.put("ind", ficha.getIndicaciones().toString());
+		context.put("solex", ficha.getSolExamen().toString());
+		
+		
+		Profesional prof = profesionalService.findProfesionalByFkIdUsuario((Long) session.getAttribute("activeProf"));
+		LOG.info("datos: "+ session.getAttribute("activeProf"));
+		String usu = prof.getNombre() +' '+ prof.getA_pat() +' '+ prof.getA_mat();	
+		context.put("medico", "DR(A). " + usu.toString());
+		
+		/* now render the template into a StringWriter */
+		StringWriter writer = new StringWriter();
+		t.merge(context, writer);
+		/* show the World */
+		System.out.println(writer.toString());
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+		baos = pdfGeneratorUtil.generatePdf(writer.toString());
+
+		HttpHeaders header = new HttpHeaders();
+	    header.setContentType(MediaType.APPLICATION_PDF);
+	    header.set(HttpHeaders.CONTENT_DISPOSITION,
+	                   "attachment; filename=" + fileName.replace(" ", "_"));
+	    header.setContentLength(baos.toByteArray().length);
+
+	    return new HttpEntity<byte[]>(baos.toByteArray(), header);
+
 	}
 }

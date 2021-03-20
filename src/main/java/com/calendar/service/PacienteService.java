@@ -10,4 +10,6 @@ public interface PacienteService {
 	public abstract Paciente addPaciente(Paciente paciente);
 	
 	List<Map<String, Object>> obtienePorRut(int rutnum);
+	
+	Map<String, Object> getPacienteByFicha(int idficha);
 }
