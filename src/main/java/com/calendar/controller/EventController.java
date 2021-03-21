@@ -107,12 +107,15 @@ public class EventController {
 				return new ModelAndView(vista);
 			}else {
 				vista = "calendar";
+				model.addAttribute("errormail","Usuario o contraseña incorrectos");
 				return new ModelAndView(vista);
 			}
 			
 		}else {
 			LOG.info("no pasa");
-			return this.loginForm(user);
+			model.addAttribute("errormail","Usuario o contraseña incorrectos");
+			//return this.loginForm(user);
+			return new ModelAndView("login");
 		}
 	}
 	
