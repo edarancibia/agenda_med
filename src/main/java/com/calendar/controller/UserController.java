@@ -175,13 +175,22 @@ public class UserController {
 				return "redirect:/user/invitation?errormail=1";
 			}else {
 				long clinica = (long) session.getAttribute("activeCentro");
-				int user = (int) session.getAttribute("idUsuario");
+				
+				Long idUsuario2 = (Long) session.getAttribute("idUsuario");
+				int user = idUsuario2.intValue();
 				
 				Clinica clinicaDb = clinicaServiceImpl.findClinicaById(clinica);
+				Invitation invitationNew = new Invitation();
+				invitationNew.setFecha(new Date());
+				invitationNew.setFk_idUsuario(user);
+				invitationNew.setFk_idClinica(clinica);
+				invitationNew.setPerfil(invitation.getPerfil());
+				invitationNew.setEmail(invitation.getEmail());
+				invitationNew.setEstado(0);
 				
 				LOG.info("nombre clinica: "+ clinicaDb.getNombreClinica()+ "user: "+ user);
 				
-				if(null != invitationServiceImpl.addInvitation(invitation)) {
+				if(null != invitationServiceImpl.addInvitation(invitationNew)) {
 					
 					//envia correo al invitado
 					String message = "Has sido invitado a utilizar Clinic Calendar por "
