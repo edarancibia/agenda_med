@@ -188,7 +188,7 @@ public class UserController {
 				invitationNew.setEmail(invitation.getEmail());
 				invitationNew.setEstado(0);
 				
-				LOG.info("nombre clinica: "+ clinicaDb.getNombreClinica()+ "user: "+ user);
+				LOG.info("DATOS INVITACION: "+ invitationNew);
 				
 				if(null != invitationServiceImpl.addInvitation(invitationNew)) {
 					
