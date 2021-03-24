@@ -146,9 +146,20 @@
 			</div>
 		</div>
 	</div>
-		<script th:if="${errormail == 1}">
-			alert('El correo ya está registrado');
-			location.href = "redirect:/user/register?errormail";
-		</script>
+	<script>
+		$('#txt_mail_confirm').blur(function(){
+			if($('#txt_reg_email').val() != $('#txt_mail_confirm').val()){
+				alert('Los correos no coinciden');
+				$('#txt_reg_email').focus();
+			}
+		});
+
+		$('#confirmPass').blur(function(){
+			if($('#txt_reg_pass').val() != $('#confirmPass').val()){
+				alert('Las contraseñas no coinciden');
+				$('#txt_reg_pass').focus();
+			}
+		});
+	</script>
 </body>
 </html>

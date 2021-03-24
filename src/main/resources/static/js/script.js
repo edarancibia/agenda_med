@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	var base_url = 'https://clinic-calendar.herokuapp.com/';
-	//var base_url = 'http://localhost:8080/';
+	//var base_url = 'https://clinic-calendar.herokuapp.com/';
+	var base_url = 'http://localhost:8080/';
 	if($('#txtIdCentro').val() == ''){
 		window.location.href = base_url;
 	}

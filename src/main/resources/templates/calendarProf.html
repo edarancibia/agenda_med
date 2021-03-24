@@ -148,7 +148,8 @@
 
   $(document).ready(function() {
   
-    var base_url = 'https://clinic-calendar.herokuapp.com/';
+    var base_url = 'http://localhost:8080/';
+    //var base_url = 'https://clinic-calendar.herokuapp.com/';
     var idCentro = $('#txtIdCentro').val();
     
     $('#calendar').fullCalendar({
@@ -249,7 +250,7 @@
         var idProfesional = $('#txtIdProf').val();
         $('#calendar').fullCalendar('removeEvents');
         //$('#calendar').fullCalendar('addEventSource', 'http://localhost:8080/' + 'alleventsByProf/'+idProfesional);
-        $('#calendar').fullCalendar('addEventSource', 'https://clinic-calendar.herokuapp.com/' + 'alleventsByProf/'+idProfesional);
+        $('#calendar').fullCalendar('addEventSource', base_url + 'alleventsByProf/'+idProfesional);
     }
     
     	//BUSCAR PACIENTE POR RUT AL PRESIONAR BOTON BUSCAR
@@ -261,17 +262,24 @@
 				
 				  $.ajax({
 					type: 'get',
-					url: 'https://clinic-calendar.herokuapp.com/paciente/'+rut,
+					url: base_url +'paciente/'+rut,
           //url: base_url+ 'paciente/'+rut,
 					data: {dni: rut},
 					success: function(data){
             console.log(data);
-					  $('#txtNomPac2').val(data[0].nombre+' '+data[0].a_pat+' '+data[0].a_mat);
-					  $('#txtobs2').focus();
-	
-					  if (data.rutnum > 1) {
-						  $('#btnOK2').attr("disabled", false);
-					  }
+
+            if(data.length > 0){
+              $('#txtNomPac2').val(data[0].nombre+' '+data[0].a_pat+' '+data[0].a_mat);
+              $('#txtobs2').focus();
+    
+              if (data.rutnum > 1) {
+                $('#btnOK2').attr("disabled", false);
+              }
+            }else{
+              $('#modalPreguntaPac2').modal('show');
+              $('#txtNomPac2').val('');
+              $('#txtRutPac2').val($('#txtPaciente').val());
+            }
 					},
 					error:function(){
 						$('#modalPreguntaPac2').modal('show');
@@ -318,7 +326,7 @@
           }else{
             $.ajax({
               type: 'post',
-              url: 'https://clinic-calendar.herokuapp.com/' + "addpaciente",
+              url: base_url + "addpaciente",
               contentType: "application/json; charset=utf-8",
               dataType: "json",
               data: JSON.stringify(formPac),
@@ -379,7 +387,7 @@
           type:'post',
           contentType: "application/json; charset=utf-8",
           dataType: "json",
-          url: 'https://clinic-calendar.herokuapp.com/' + "addevent",
+          url: base_url + "addevent",
           data: JSON.stringify(formData),
           success:function(data){
             console.log(data);
@@ -402,7 +410,7 @@
 
 		$.ajax({
 			type: 'put',
-      url: 'https://clinic-calendar.herokuapp.com/' + 'confirmar/'+ idEvento,
+      url: base_url + 'confirmar/'+ idEvento,
       contentType: "application/json; charset=utf-8",
       dataType: "json",
 			data: JSON.stringify(formData),
@@ -428,7 +436,7 @@
 
 		$.ajax({
 			type: 'put',
-      url: 'https://clinic-calendar.herokuapp.com/' + 'cancelar/'+ idEvento,
+      url: base_url + 'cancelar/'+ idEvento,
       contentType: "application/json; charset=utf-8",
       dataType: "json",
 			data: JSON.stringify(formData),
@@ -460,7 +468,7 @@
             type:'post',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            url: "addevent",
+            url: base_url + "addevent",
             data: JSON.stringify(formData),
             success:function(data){
               console.log(data);
