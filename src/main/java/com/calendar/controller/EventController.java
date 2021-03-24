@@ -166,7 +166,7 @@ public class EventController {
 		
 		eventoDb.setEstado(events.getEstado());
 		eventService.addEvent(eventoDb);
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(eventoDb);
 	}
 	
 	//CANCELA CITA

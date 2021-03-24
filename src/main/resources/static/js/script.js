@@ -34,8 +34,8 @@ $(document).ready(function(){
 
 		if($('#btnConfirmFicha').on('click', function(){
 
-			if($('#txtMotivo').val() == '' || $('#txtDiagnostico').val() == '' || $('#txtIndicaciones').val() == ''){
-				alert('Debe copletar los datos del formulario');
+			if($('#txtDiagnostico').val() == ''){
+				alert('Debe al menos indicar un diagnóstico');
 			}else{
 				var idEvento = $('#txtIdEventoFicha').val();
 
@@ -79,11 +79,28 @@ $(document).ready(function(){
 						data: JSON.stringify(formData),
 						success: function(){
 							console.log('Evento cerrado!');
+							$('#txtAntecedentes').attr('disabled',true);
+							$('#txtMotivo').attr('disabled',true);
+							$('#txtExamen').attr('disabled',true);
+							$('#txtDiagnostico').attr('disabled',true);
+							$('#txtIndicaciones').attr('disabled',true);
+							$('#txtSolEx').attr('disabled',true);
+							$('#txtPeso').attr('disabled',true);
+							$('#txtEstatura').attr('disabled',true);
+							$('#btnGuardaFicha').attr('disabled', true);
 						},
 						error: function(){
 							alert('Ficha guardada exitosamente!'); // a pesar del error, aquí se guarda bien la ficha y se cierra el evento
 							console.log('Error al cerrar evento, pero se cerró');
-							//window.location.href = base_url + 'calendar';
+							$('#txtAntecedentes').attr('disabled',true);
+							$('#txtMotivo').attr('disabled',true);
+							$('#txtExamen').attr('disabled',true);
+							$('#txtDiagnostico').attr('disabled',true);
+							$('#txtIndicaciones').attr('disabled',true);
+							$('#txtSolEx').attr('disabled',true);
+							$('#txtPeso').attr('disabled',true);
+							$('#txtEstatura').attr('disabled',true);
+							$('#btnGuardaFicha').attr('disabled', true);
 						}
 					});
 				});

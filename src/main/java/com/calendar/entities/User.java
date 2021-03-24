@@ -39,6 +39,9 @@ public class User {
 	@Column(name = "vigente")
 	private int vigente;
 	
+	@Column(name = "created_at")
+	private Date created_at;
+	
 	@Column(name = "updated_at")
 	private Date updated_at;
 
@@ -116,8 +119,17 @@ public class User {
 	}
 
 
+	public Date getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
+	}
+
+	
 	public User(Long idusuario, String apat, String nombre, String amat, String email, String pass, int perfil,
-			int vigente, Date updated_at) {
+			int vigente, Date created_at, Date updated_at) {
 		this.idusuario = idusuario;
 		this.apat = apat;
 		this.nombre = nombre;
@@ -126,6 +138,7 @@ public class User {
 		this.pass = pass;
 		this.perfil = perfil;
 		this.vigente = vigente;
+		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}
 
@@ -136,10 +149,9 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [idusuario=" + idusuario + ", apat=" + apat + ", nombre=" + nombre + ", amat=" + amat + ", email="
-				+ email + ", pass=" + pass + ", perfil=" + perfil + ", vigente=" + vigente + ", updated_at="
-				+ updated_at + "]";
+				+ email + ", pass=" + pass + ", perfil=" + perfil + ", vigente=" + vigente + ", created_at="
+				+ created_at + ", updated_at=" + updated_at + "]";
 	}
 
-	
 	
 }

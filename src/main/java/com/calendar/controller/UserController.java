@@ -124,6 +124,7 @@ public class UserController {
 			return "redirect:/user/register?errormail=1";
 		}else{
 			user.setVigente(1);
+			user.setCreated_at(new Date());
 			//user.setPass(passwordEncoder.encode(user.getPass()));
 			if(null != userService.addUser(user)){
 				//DEBE PREGUNTAR QUE PERFIL TIENE,SI ES PROFESIONAL DEBE GUARDAR EN LA TABLA DEL MISMO NOMBRE

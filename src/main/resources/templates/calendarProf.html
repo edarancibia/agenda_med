@@ -305,7 +305,7 @@
 		  var fnac = $('#txtFnac').val();
 	
 		  var formPac = {
-			'dni'   : $('#txtRutPac').val(),
+			'dni'   : $('#txtPaciente2').val(),
 			'nombre'  : $('#txtNomPacReg2').val(),
 			'a_pat'  : $('#txtApat').val(),
 			'a_mat'  : $('#txtAmat').val(),
@@ -333,7 +333,7 @@
               success: function(){
               //toastr.success('Paciente guardado!');
               $('#modalNewPaciente2').modal('hide');
-              $('#txtNomPac').val(nom+' '+apat+' '+amat);
+              $('#txtNomPac2').val(nom+' '+apat+' '+amat);
                 $('#modalNewPaciente2').modal('hide');
               $('#btnOK2').attr("disabled", false);
               },
