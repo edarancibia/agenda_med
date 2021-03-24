@@ -235,15 +235,17 @@ public class UserController {
 		if(userDb != null){
 			LOG.info("usuario ya existe");
 			model.addAttribute("errormail",true);
-			return "redirect:/user/register-invitation?errormail";
+			return "redirect:/user/invitationregister?errormail";
 		}else{
 		
 			//user.setPass(passwordEncoder.encode(user.getPass()));
+			user.setCreated_at(new Date());
+			user.setPerfil(invitation.getPerfil());
 			if(null != userService.addUser(user)){
 				//DEBE PREGUNTAR QUE PERFIL TIENE,SI ES PROFESIONAL DEBE GUARDAR EN LA TABLA DEL MISMO NOMBRE
 				if(user.getPerfil() == 0) {
 					LOG.info("no es profesional");
-					
+					usuarioCentroServiceImpl.addUsuarioCentro(user.getIdusuario(), invitation.getFk_idClinica());
 				}else {
 					LOG.info("es profesional");
 					
@@ -267,7 +269,7 @@ public class UserController {
 				String subject = "Bienvenido a Clinic Calendar";
 		        mailService.sendMail("clinic-calendar@outlook.com",email,subject,message);
 				
-				return "redirect:/user/register-invitation?success=1";
+				return "redirect:/user/invitationregister?success=1";
 			}else {
 				model.addAttribute("result", 0);
 			}
